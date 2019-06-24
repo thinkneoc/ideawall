@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+<head>
+    <title>[README] - ideawall</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../assets/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../../assets/lib/iview/css/iview.css">
+    <link rel="stylesheet" href="../../assets/lib/element-ui/css/element.css">
+    <link rel="stylesheet" href="../../assets/css/ideawall.css">
+    <link rel="stylesheet" href="../../assets/css/animate.css">
+    <link rel="stylesheet" href="../../assets/css/wall.css">
+</head>
+
+<body style="overflow:hidden;">
+<div id="app" v-cloak>
+    <div class="zxx-loading" style="display:block;z-index:999;">
+        <div class="zxx-loading-panel">
+            <i class="el-icon-loading"></i>
+        </div>
+    </div>
+    <iframe id="iframe_desktop" class="iframe_wall iframe_abs" name="iframe_desktop" width="100%"
+            data-nopreload="true"
+            :data-src="proxy.link('[SOURCE]')" frameborder="0" scrolling="no"
+            allowtransparency="true"></iframe>
+</div>
+</body>
+<script src="../../core/Proxy.js"></script>
+<script src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/js/vue.min.js"></script>
+<script src="../../assets/lib/iview/js/iview.min.js"></script>
+<script src="../../assets/lib/element-ui/js/element.min.js"></script>
+<script src="../../assets/js/zxx.min.js"></script>
+<script src="../../controller/ReadmeController.js"></script>
+</html>

@@ -1,0 +1,166 @@
+.zxx-desk-list-container {
+    width: 100%;
+    word-wrap: break-word;
+    word-break: break-all;
+    padding: 5px 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.zxx-desk-info-container {
+    width: 455px;
+    border-left: 1px solid #eee;
+    padding-top: 5px;
+}
+
+.el-dropdown {
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.el-card, .el-card__body {
+    width: 200px;
+    height: 142px;
+}
+
+.zxx-desk-bg {
+    width: 200px;
+    height: 112px;
+}
+
+.el-card__body {
+    padding: 0;
+}
+
+.el-tag {
+    margin-right: 8px;
+    margin-left: 1px;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.zxx-desk-con {
+    float: left;
+    margin: 10px;
+}
+
+.zxx-desk-panel {
+    position: relative;
+    cursor: pointer;
+}
+
+.zxx-desk-overlay-control {
+    position: absolute;
+    top: 45px;
+    left: 85px;
+    font-size: 25px;
+    font-weight: bold;
+    color: #0094E3;
+}
+
+.zxx-desk-tooltip{
+    overflow: hidden;
+}
+
+.zxx-desk-tooltip-control {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 25px;
+    font-weight: bold;
+    color: #67c23a;
+}
+
+.zxx-desk-tooltip-control2 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 12px;
+    color: #fff;
+    background: #409eff;
+    border: 1px solid #409eff;
+    border-radius: 3px;
+    padding: 2px;
+}
+
+.zxx-desk-tooltip-edit {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    color: #fff;
+    background: #000;
+    opacity: 0.5;
+    padding: 0 2px;
+    z-index: 520;
+    font-size: 12px;
+    line-height: 20px;
+    height: 20px;
+    font-family: normal;
+    padding-left: 5px;
+}
+
+.zxx-desk-tooltip-init{
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 12px;
+    color: #000;
+    background: #FFF;
+    border: 1px solid #eee;
+    border-bottom-right-radius: 5px;
+    padding: 3px 4px;
+}
+
+.zxx-desk-m-title {
+    border-bottom: 1px solid #eee;
+    margin: 5px 0;
+    font-weight: normal;
+    padding-bottom: 3px;
+}
+
+#my-device {
+    min-height: 194px;
+}
+
+#my-desktop {
+    margin-top: 20px;
+}
+
+.zxx-desk-info-container .el-tabs__content {
+    height: calc(100% - 30px);
+}
+
+.zxx-desk-info-container .el-tabs__header {
+    padding: 0 5px;
+}
+
+.zxx-desk-info-container .el-tabs__item {
+    height: 30px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 30px;
+    -webkit-app-region: no-drag;
+    z-index: 20190105;
+}
+
+.zxx-desk-info-name {
+    width: calc(100% - 45px);
+    float: left;
+    line-height: 21px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.zxx-desk-info-type {
+    float: right;
+    margin-right: -8px;
+}
+
+.zxx-desk-overlay-top {
+    opacity: 0.1;
+    background: transparent;
+    z-index: 20001 !important;
+    display: block !important;
+}

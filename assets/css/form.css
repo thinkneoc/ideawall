@@ -1,0 +1,179 @@
+html, body, #app {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#form-containter {
+    margin-top: 2px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.el-form-item--mini .el-form-item__content, .el-form-item--mini .el-form-item__label {
+    line-height: 8px;
+}
+
+.el-color-dropdown {
+    width: 200px;
+}
+
+.el-color-svpanel {
+    width: 180px;
+}
+
+.el-color-dropdown__value {
+    width: 100px;
+}
+
+.el-date-picker {
+    width: 250px;
+}
+
+.el-date-picker .el-picker-panel__content {
+    width: 245px;
+}
+
+.el-date-picker__header, .el-picker-panel__content {
+    margin: 2px;
+}
+
+.el-form {
+    background: #fff;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+#form-containter p {
+    font-size: 12px;
+    font-weight: 400;
+    color: #666;
+    margin: 10px 10px 0;
+}
+
+.el-carousel {
+    background: #fff;
+}
+
+.el-carousel__arrow {
+    background-color: rgba(31, 45, 61, .3);
+}
+
+.el-form-item__label {
+    font-size: 12px;
+}
+
+.el-form-item {
+    margin-bottom: 0 !important;
+}
+
+.el-input-group__append, .el-input-group__prepend {
+    padding: 0 10px;
+}
+
+.ld-readme-btn, .ld-source-radio-group, .ld-source-radio-group label span {
+    width: 100%;
+}
+
+.ld-source-radio-group label {
+    width: 50%;
+}
+
+/*.el-upload-list--picture-card .el-upload-list__item{*/
+/*    width: 130px;*/
+/*    height: 130px;*/
+/*}*/
+
+/*.el-upload--picture-card{*/
+/*    width: 130px;*/
+/*    height: 130px;*/
+/*}*/
+
+.el-upload {
+    width: 100%;
+}
+
+.el-upload-dragger {
+    width: 100%;
+    height: 90px;
+}
+
+.el-upload-dragger .zxx-form-file-select {
+    font-size: 32px;
+    line-height: 0;
+    margin: 30px 0 28px;
+    color: #c0c4cc;
+}
+
+.el-upload-list__item, .el-upload-dragger .el-upload__text {
+    font-size: 12px;
+}
+
+.el-upload-list--picture .el-upload-list__item {
+    height: 80px;
+    padding: 4px 5px 5px 90px;
+    margin-top: 5px;
+}
+
+.el-upload__tip {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    text-align: right;
+    font-size: 11px;
+}
+
+.el-upload-list--picture .el-upload-list__item.is-success .el-upload-list__item-name {
+    line-height: 70px;
+    margin-top: 0;
+}
+
+.el-upload-list--picture .el-upload-list__item-name i {
+    top: 0;
+}
+
+.el-form {
+    position: relative;
+}
+
+.el-form-tool {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
+}
+
+.disable-style textarea[disabled], textarea[disabled] {
+    cursor: default !important;
+    color: #888 !important;
+}
+
+.zxx-apply-panel{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: calc(100% - 20px);
+    height: 30px;
+    line-height: 30px;
+    padding: 10px;
+    background: #fff;
+    border-top: 1px solid #eee;
+    z-index: 10000;
+    box-shadow: rgb(221, 216, 218) 1px -1px 0px 0px;
+}
+
+.zxx-apply-desc{
+    float: left;
+    text-align: left;
+    color: #606266;
+}
+
+.zxx-apply-btns{
+    float: right;
+    text-align: center;
+}

@@ -1,0 +1,48 @@
+#info-containter {
+    margin-bottom: 10px;
+}
+
+.el-collapse {
+    padding: 10px 0;
+    border: none;
+}
+
+.el-collapse-item__header {
+    height: 35px;
+    line-height: 35px;
+    margin: 0 10px;
+    font-weight: 400;
+}
+
+.el-collapse-item div {
+    background: #fff;
+}
+
+.el-collapse-item__wrap {
+    padding: 10px 10px 0;
+}
+
+.el-collapse-item.is-active div[role='tab'] {
+    box-shadow: rgb(221, 216, 218) 1px 2px 2px 0px;
+    z-index: 11;
+    position: relative;
+}
+
+.el-collapse-item.is-active + .el-collapse-item div[role='tab'] {
+    box-shadow: rgb(221, 216, 218) 1px -2px 2px 0px;
+    z-index: 10;
+    position: relative;
+}
+
+.zxx-collapse-content {
+    white-space: nowrap;
+    overflow-x: auto;
+    -webkit-user-select: text;
+    user-select: text;
+    margin-bottom: -25px;
+    padding-bottom: 25px;
+}
+
+.el-collapse-item:last-child .el-collapse-item__header {
+    border-bottom: none;
+}

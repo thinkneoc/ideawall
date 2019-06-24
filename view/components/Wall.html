@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../assets/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../../assets/lib/iview/css/iview.css">
+    <link rel="stylesheet" href="../../assets/lib/element-ui/css/element.css">
+    <link rel="stylesheet" href="../../assets/css/ideawall.css">
+    <link rel="stylesheet" href="../../assets/css/animate.css">
+    <link rel="stylesheet" href="../../assets/css/wall.css">
+</head>
+
+<body style="overflow:hidden;">
+<div id="app" v-cloak>
+    <div class="wallpaper-loading">
+        <div class="wallpaper-loading-panel" v-show="wallpaperLoading">
+            <i class="el-icon-loading"></i>
+            <div>ideawall - 创意者桌面</div>
+        </div>
+    </div>
+    <div class="wallpaper-empty" v-show="wallpaperEmpty">
+        <div class="wallpaper-empty-panel">
+            <img src="../../assets/images/kong.png" alt="">
+            <div>{{wallaperEmptyTip}}</div>
+        </div>
+    </div>
+    <iframe id="iframe_desktop" class="iframe_wall" name="iframe_desktop" width="100%"
+            data-nopreload="true" style="display: none;"
+            :data-src="proxy.link('[SOURCE]')" frameborder="0" scrolling="no"
+            allowtransparency="true"></iframe>
+</div>
+</body>
+<script src="../../core/Proxy.js"></script>
+<script src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/js/vue.min.js"></script>
+<script src="../../assets/lib/iview/js/iview.min.js"></script>
+<script src="../../assets/lib/element-ui/js/element.min.js"></script>
+<script src="../../assets/js/zxx.min.js"></script>
+<script src="../../controller/WallController.js"></script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=66445930" charset="UTF-8" v-if="netstatus == 'online'"></script>
+</html>

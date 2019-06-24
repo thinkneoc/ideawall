@@ -1,0 +1,501 @@
+html, body {
+    background: none;
+    border: none !important;
+    margin: 0;
+    padding: 0;
+    /*使用系统字体.*/
+    font: caption !important;
+    height: 100% !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+}
+
+[v-cloak] { /*vue标签添加, 会在vue数据渲染完毕之后再显示.*/
+    display: none;
+}
+
+pre.zxx-pre {
+    font-size: 12px;
+    background: rgb(253, 240, 240);
+    color: rgb(241, 19, 27);
+    border: 1px solid rgb(251, 214, 214);
+    padding: 2px 5px;
+}
+
+.zxx-loading {
+    position: absolute;
+    top: 27%;
+    left: 0;
+    z-index: 1001;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    display: none;
+}
+
+.zxx-loading-panel {
+    width: 82px;
+    height: 82px;
+    line-height: 70px;
+    background: #000;
+    border-radius: 15px;
+    margin: 0 auto;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+.zxx-loading-panel i {
+    font-size: 27px;
+}
+
+.zxx-abs {
+    position: absolute;
+}
+
+.ivu-message {
+    top: 64px !important;
+    z-index: 19951224 !important;
+}
+
+.zxx-noscroll {
+    overflow: hidden;
+    height: 100%;
+}
+
+.zxx-auto-height {
+    height: 100%;
+}
+
+.zxx-smartscroll {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
+    scrollbar-base-color: transparent;
+    scrollbar-darkshadow-color: transparent;
+    scrollbar-highlight-color: transparent;
+    scrollbar-face-color: transparent;
+}
+
+/*智能滚动条: 鼠标放进去才显示, 移出隐藏滚动条.*/
+.zxx-sscroll {
+    overflow: hidden;
+}
+
+.zxx-sscroll:hover {
+    overflow-y: auto;
+}
+
+template {
+    display: block;
+}
+
+.window-drag {
+    user-select: none;
+    -webkit-app-region: drag;
+    z-index: 20190104;
+}
+
+.window-nodrag {
+    -webkit-app-region: no-drag;
+    z-index: 20190105;
+}
+
+.exclude-events{
+    pointer-events: none;
+}
+
+.os-btns {
+    z-index: 20190106;
+}
+
+.overhidden {
+    overflow: hidden;
+}
+
+/*禁止文字被鼠标选中*/
+.zxx-noselect {
+    moz-user-select: -moz-none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.zxx-select {
+    -webkit-user-select: text;
+    user-select: text;
+}
+
+/*自定义title样式 => tooltip实体, 只需要携带.zxx-tooltip, 并设定title属性即可; 如需设定定位方向, 设置placement属性; 增加偏移, 设置offset属性.*/
+.zxx-tooltip-entity {
+    position: absolute;
+    display: none;
+    z-index: 19951224;
+}
+
+.zxx-tooltip-context {
+    /*opacity: 0.8;*/
+    white-space: nowrap; /*强制span不换行*/
+    display: inline-block; /*将span当做块级元素对待*/
+    border: 1px solid #333;
+    border-radius: 3px;
+    background: #333;
+    color: #fff;
+    z-index: 19951225;
+    font-size: 11px;
+    padding: 3px 6px;
+    margin: auto;
+    font-weight: 500;
+    text-shadow: none;
+    box-shadow: #333 1px 1px 1px 1px;
+}
+
+.zxx-tooltip-context2 {
+    /*white-space: nowrap; !*强制span不换行*!*/
+    display: inline-block; /*将span当做块级元素对待*/
+    background-color: rgba(70, 76, 91, .9);
+    border-radius: 4px;
+    color: #fff;
+    z-index: 19951225;
+    font-size: 11px;
+    padding: 3px 6px;
+    margin: auto;
+    font-weight: 500;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+}
+
+/*对象高斯模糊*/
+.zxx-gaosi {
+    -webkit-filter: blur(4px);
+}
+
+/*目标阴影*/
+.zxx-shadow {
+    box-shadow: darkgrey 1px 1px 7px 1px;
+    z-index: 20181231;
+    position: relative;
+}
+
+.zxx-tag {
+    height: 18px !important;
+    line-height: 18px !important;
+    padding: 0 5px !important;
+}
+
+.zxx-ubdershadow {
+    z-index: 20181230;
+    position: relative;
+}
+
+.curved_box {
+    display: inline-block;
+    *display: inline;
+    width: 200px;
+    height: 248px;
+    margin: 20px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 60px rgba(0, 0, 0, 0.06) inset;
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+    position: relative;
+    *zoom: 1;
+}
+
+.curved_box:before {
+    -webkit-transform: skew(-15deg) rotate(-6deg);
+    -moz-transform: skew(-15deg) rotate(-6deg);
+    transform: skew(-15deg) rotate(-6deg);
+    left: 15px;
+}
+
+.curved_box:after {
+    -webkit-transform: skew(15deg) rotate(6deg);
+    -moz-transform: skew(15deg) rotate(6deg);
+    transform: skew(15deg) rotate(6deg);
+    right: 15px;
+}
+
+.curved_box:before, .curved_box:after {
+    width: 70%;
+    height: 55%;
+    content: ' ';
+
+    -webkit-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+
+    position: absolute;
+    bottom: 10px;
+    z-index: -1;
+}
+
+/*!*重写chrome默认的滚动条样式*!*/
+::-webkit-scrollbar { /*指滚动条整体部分，它的属性有width,height,background等*/
+    position: absolute !important;
+    width: 5px !important; /*纵向*/
+    height: 5px !important; /*横向*/
+    background: transparent !important;
+}
+
+::-webkit-scrollbar-button { /*指滚动条两边的按钮。当不需要时可以用display:none将其隐藏*/
+
+}
+
+::-webkit-scrollbar-track { /*指外层轨道部分，当不需要时可以用display:none将其隐藏，也可以添加你想要的颜色*/
+    border: none !important;
+    background-color: transparent !important;
+    position: absolute !important;
+}
+
+::-webkit-scrollbar-track-piece { /*指内层轨道部分，即滚动条中间的部分*/
+    position: absolute !important;
+}
+
+::-webkit-scrollbar-thumb { /*指滚动条里面可以拖动的部分，也就是滑块*/
+    background: rgb(195, 195, 195, .5);
+    border-radius: 10px !important;
+}
+
+::-webkit-scrollbar-corner { /*指边角部分*/
+
+}
+
+::-webkit-resizer { /*指右下角滑块部分*/
+
+}
+
+::-webkit-scrollbar-button:horizontal:decrement:hover { /*当鼠标在水平滚动条下面的按钮上的状态*/
+
+}
+
+::-webkit-scrollbar-thumb:window-inactive { /*当焦点不在当前区域滑块的状态*/
+    background: transparent;
+}
+
+
+/*拖拽div改变大小的控件样式*/
+.resize-item-handler {
+    cursor: col-resize;
+    position: absolute;
+    top: 0 !important;
+    right: -5px !important;
+    width: 7px;
+    height: 100% !important;
+    z-index: 999999999;
+    background: #000;
+    opacity: 0;
+}
+
+/*自定义字体图标*/
+@font-face {
+    font-family: 'inicon';
+    src: url('../fonts/infonts/alipay/alipay.eot?90a9gr');
+    src: url('../fonts/infonts/alipay/alipay.eot?90a9gr#iefix') format('embedded-opentype'),
+    url('../fonts/infonts/alipay/alipay.ttf?90a9gr') format('truetype'),
+    url('../fonts/infonts/alipay/alipay.woff?90a9gr') format('woff'),
+    url('../fonts/infonts/alipay/alipay.svg?90a9gr#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="inicon-"], [class*=" inicon-"] {
+    font-family: 'inicon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.inicon.inicon-alipay:before {
+    content: "\e900";
+}
+
+/*为下拉框展开时添加名称为slide-down的关键帧动画*/
+@-webkit-keyframes slide-down-tiaopi {
+    0% {
+        transform: scale(1, 0);
+    }
+    25% {
+        transform: scale(1, 1.2);
+    }
+    50% {
+        transform: scale(1, 0.85);
+    }
+    75% {
+        transform: scale(1, 1.05);
+    }
+    100% {
+        transform: scale(1, 1);
+    }
+}
+
+@-webkit-keyframes slide-down {
+    0% {
+        transform: scale(1, 0);
+    }
+    25% {
+        transform: scale(1, 0.75);
+    }
+    50% {
+        transform: scale(1, 1);
+    }
+    75% {
+        transform: scale(1, 1);
+    }
+    100% {
+        transform: scale(1, 1);
+    }
+}
+
+.zxx-page-panel {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.ivu-page {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.ivu-page-item {
+    min-width: 25px;
+    height: 25px;
+    line-height: 23px;
+    margin-right: 1px;
+}
+
+.ivu-page-item-jump-next, .ivu-page-item-jump-prev, .ivu-page-next, .ivu-page-prev {
+    min-width: 25px;
+    height: 25px;
+    line-height: 23px;
+    margin-right: 1px;
+}
+
+.ivu-page-disabled {
+    cursor: default;
+}
+
+.liner-box {
+    margin: 10px 0;
+    max-height: 25px;
+    overflow: hidden;
+}
+
+.hr {
+    background-color: #1E90FF;
+    width: 3px;
+    height: 5px;
+    float: left;
+    margin-left: 12px;
+    animation: liner 0.2s ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    clear: inherit;
+}
+
+.hr1 {
+    animation-delay: -2s;
+}
+
+.hr2 {
+    animation-delay: -1.9s;
+}
+
+.hr3 {
+    animation-delay: -1.8s;
+}
+
+.hr4 {
+    animation-delay: -1.7s;
+}
+
+.hr5 {
+    animation-delay: -1.6s;
+}
+
+.hr6 {
+    animation-delay: -1.5s;
+}
+
+.hr7 {
+    animation-delay: -1.4s;
+}
+
+.hr8 {
+    animation-delay: -1.3s;
+}
+
+.hr9 {
+    animation-delay: -1.2s;
+}
+
+.hr10 {
+    animation-delay: -1.1s;
+}
+
+.clearfix {
+    clear: both;
+}
+
+@keyframes liner {
+    0% {
+        transform: scaleY(1);
+    }
+    100% {
+        transform: scaleY(6);
+    }
+}
+
+.animate-paused {
+    animation-play-state: paused;
+}
+
+.animate-play {
+    animation-play-state: running;
+}
+
+/*遮罩层*/
+.zxx-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10001;
+    display: none;
+    filter: alpha(opacity=60);
+    background-color: #000;
+    opacity: 0.4;
+}
+
+.zxx-overlay-nofilter {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10002;
+    display: none;
+    background-color: transparent;
+}
+
+/*字体超出变省略号*/
+.zxx-word-elp {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.zxx-word-auto-space {
+    word-wrap: normal;
+}
+
+.zxx-word-no-space {
+    white-space: nowrap;
+    overflow-x: auto;
+}

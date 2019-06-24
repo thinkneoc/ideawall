@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>控制面板 - ideawall</title>
+    <link rel="stylesheet" href="../../assets/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../../assets/lib/iview/css/iview.css">
+    <link rel="stylesheet" href="../../assets/lib/element-ui/css/element.css">
+    <link rel="stylesheet" href="../../assets/css/animate.css">
+    <link rel="stylesheet" href="../../assets/css/ideawall.css">
+    <link rel="stylesheet" href="../../assets/css/control.css">
+</head>
+<body>
+<div id="app" v-cloak class="animated fadeIn">
+    <div v-if="!loadingControl && loadingMaster"
+         style="position: absolute;top: -20px;right: -20px;pointer-events: none;">
+        <img src="../../assets/images/loading.jpg" alt="" style="width: 70px;height: 60px;">
+    </div>
+
+    <el-container>
+        <el-header id="zxx-drag" height="25px" class="win-maximize-dblclick zxx-title">
+            控制面板 - ideawall{{netstatus == 'offline'?'[连接已断开]':''}}
+        </el-header>
+        <el-tabs v-model="activeTab" @tab-click="handleClick">
+            <el-tab-pane :name="item.name" v-for="(item, index) in tabs">
+                <span slot="label"><i :class="item.icon"></i> {{item.title}}</span>
+                <iframe :id="'iframe_'+item.name" class="J_iframe active"
+                        :name="'iframe_'+item.name"
+                        width="100%" :data-nopreload="!item.preload"
+                        :data-src="proxy.link(item.link)" frameborder="0" scrolling="no"></iframe>
+            </el-tab-pane>
+        </el-tabs>
+        <div class="zxx-controls">
+            <a href="javascript:void(0)" class="zxx-control-btn"
+               v-if="loadingControl">
+                <i class="el-icon-loading"></i>
+            </a>
+            <a id="zxx-set-alleye" href="javascript:void(0)" title="点击全部隐藏" class="zxx-control-btn"
+               v-show="!loadingControl"
+               @click="setAllHide" data-switch="1"><i class="ivu-icon ivu-icon-md-eye"></i></a>
+            <a id="zxx-set-allpause" href="javascript:void(0)" title="点击全部暂停" class="zxx-control-btn"
+               v-show="!loadingControl"
+               @click="setAllPause" data-switch="1"><i class="ivu-icon ivu-icon-md-pause"></i></a>
+            <a id="zxx-set-allmuted" href="javascript:void(0)" title="点击全部静音" class="zxx-control-btn"
+               v-show="!loadingControl"
+               @click="setAllMuted" data-switch="1"><i class="ivu-icon ivu-icon-md-volume-up"></i></a>
+        </div>
+    </el-container>
+
+    <div data-transfer="true" class="v-transfer-dom">
+        <div class="ivu-modal-mask" :style="'z-index: '+imodal.option.zIndex+';'"
+             v-if="imodal.option.mask && imodal.open"></div>
+        <div class="ivu-modal-wrap" :style="'z-index: '+imodal.option.zIndex+';display:block;'"
+             :class="imodal.option.className" v-if="imodal.open">
+            <div class="ivu-modal" :style="'width:'+imodal.option.width+';'+imodal.option.styles"
+                 :class="'animated '+(imodal.mshow?'fadeInDownBig':'fadeOutUpBig')" v-if="imodal.open">
+                <div class="ivu-modal-content">
+                    <div class="ivu-modal-body">
+                        <iframe id="Iframe-modal" class="J_iframe zxx-modal-iframe active" name="Iframe-modal"
+                                width="100%"
+                                :style="imodal.style"
+                                allowtransparency="true" allowfullscreen="true"
+                                webkitallowfullscreen="true" mozallowfullscreen="true"
+                                :src="imodal.src"
+                                frameborder="0" :scrolling="imodal.scroll"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../../core/Proxy.js"></script>
+<script src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/js/vue.min.js"></script>
+<script src="../../assets/lib/iview/js/iview.min.js"></script>
+<script src="../../assets/lib/element-ui/js/element.min.js"></script>
+<script src="../../controller/ControlController.js"></script>
+<script src="../../assets/js/zxx.min.js"></script>
+<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+<script>
+    function getPublicIpv4() {
+        try {
+            return returnCitySN.cip;
+        } catch (e) {
+            return null;
+        }
+    }
+</script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=66445930" charset="UTF-8" v-if="netstatus == 'online'"></script>
+</html>

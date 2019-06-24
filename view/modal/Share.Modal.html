@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+<head>
+    <title></title>
+    <link rel="stylesheet" href="../../assets/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../../assets/lib/iview/css/iview.css">
+    <link rel="stylesheet" href="../../assets/lib/element-ui/css/element.css">
+    <link rel="stylesheet" href="../../assets/css/animate.css">
+    <link rel="stylesheet" href="../../assets/css/imodal.css">
+</head>
+<body class="site-contabs-open site-menubar-unfold zxx-smartscroll" style="background: #fff;">
+<div id="app" v-cloak>
+    <div class="" style="margin: 0;background: #fff;">
+        <div style="width:100%;height:50px;background: rgb(250,250,250);">
+            <div style="position: absolute;top: 15px;width: 100%;height: 50px;text-align: center;font-weight: 700;font-size: 13px;color:#000;">
+                <span>...</span>
+            </div>
+        </div>
+        <div class="ivu-row" style="display:flex; width:100%;">
+            <div class="ivu-col zxx-modal-content"
+                 style="border:none;margin-left:0;height:355px;min-height:355px;z-index:1000 !important;">
+
+            </div>
+        </div>
+        <div style="width:100%;height:50px;background: rgb(250,250,250);padding:15px 10px;">
+            <div style="float:left;">
+            </div>
+            <div style="float:right;">
+                <button class="ivu-btn ivu-btn-default ivu-btn-small" @click="btnCancel"
+                        style="padding: 0 20px;margin-right:15px;">
+                    <span>取消</span>
+                </button>
+                <button class="ivu-btn ivu-btn-primary ivu-btn-small" style="padding: 0 20px;" @click="btnSubmit">
+                    <span>关闭</span>
+                </button>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../../core/Proxy.js"></script>
+<script src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/js/vue.min.js"></script>
+<script src="../../assets/lib/iview/js/iview.min.js"></script>
+<script src="../../assets/lib/element-ui/js/element.min.js"></script>
+<script src="../../controller/ModalShareController.js"></script>
+<script src="../../assets/js/zxx.min.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data() {
+            return {}
+        },
+        watch: {},
+        methods: {
+            //取消按钮动作
+            btnCancel: function () {
+                // ipc.send("disk-modal-callback-send", 'cancel', false, this.needReload);
+                top.vm.closeModal();
+            },
+            //确认按钮动作
+            btnSubmit: function () {
+
+            },
+        },
+        created: function () {
+        },
+        mounted() {
+        }
+    });
+</script>
+</html>

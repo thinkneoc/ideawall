@@ -1,0 +1,60 @@
+.zxx-about-container {
+    display: flex;
+    width: 100%;
+    height: 275px;
+    text-align: center;
+    background: rgb(255, 255, 255);
+    padding: 20px 0 40px;
+    position: relative;
+}
+
+.zxx-about-left {
+    width: 300px;
+}
+
+.zxx-about-left img {
+    width: 170px;
+}
+
+.zxx-about-right {
+    width: 100%;
+    text-align: left;
+    padding-left: 15px;
+}
+
+.zxx-about-right h1.topic {
+    color: #333;
+    margin-bottom: 5px;
+
+    /*线性颜色渐变*/
+    background-image: -webkit-linear-gradient(left, magenta, blue, red);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.zxx-about-right p {
+    font-size: 11px;
+    color: rgb(132, 132, 132);
+}
+
+.zxx-about-right p.version {
+    font-weight: 600;
+    font-size: 11px;
+    color: rgb(128, 128, 128);
+    margin-bottom: 15px;
+}
+
+.zxx-about-right p.coyright {
+    position: absolute;
+    bottom: 10px;
+}
+
+.zxx-about-bottom {
+    width: 100%;
+    height: 50px;
+    background: rgb(236, 236, 236);
+    text-align: right;
+    border-top: 1px solid rgb(170, 170, 170);
+    line-height: 40px;
+    padding: 0 20px;
+}

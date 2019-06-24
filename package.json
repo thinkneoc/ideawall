@@ -1,0 +1,127 @@
+{
+  "name": "ideawall",
+  "author": "周曦 <1747128171@qq.com>",
+  "version": "1.0.0",
+  "description": "ideawall - 创意者桌面",
+  "private": true,
+  "license": null,
+  "main": "App.js",
+  "scripts": {
+    "start": "electron .",
+    "debug": "electron . --debug",
+    "postinstall": "electron-builder install-app-deps",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "dist:all": "electron-builder --platform=all",
+    "dist:l": "electron-builder --linux --ia32 --x64",
+    "dist:l32": "electron-builder --linux --ia32",
+    "dist:l64": "electron-builder --linux --x64",
+    "dist:w": "electron-builder --win --ia32 --x64",
+    "dist:w32": "electron-builder --win --ia32",
+    "dist:w64": "electron-builder --win --x64",
+    "dist:mac": "export CSC_IDENTITY_AUTO_DISCOVERY=false && electron-builder --mac --x64",
+    "rebuild": "cnpm rebuild -f --runtime=electron --target=5.0.4 --disturl=https://npm.taobao.org/mirrors/atom-shell --abi=72",
+    "mail": "node resolver/MailResolver.js",
+    "archive": "node resolver/ArchiverResolver.js",
+    "uuid": "node resolver/UUIDResolver.js --serial --v1",
+    "test": "node test/test.js"
+  },
+  "keywords": [
+    "ideawall",
+    "electron",
+    "wall",
+    "desktop"
+  ],
+  "build": {
+    "electronDownload": {
+      "mirror": "https://npm.taobao.org/mirrors/electron/"
+    },
+    "appId": "com.inetech.leo.ideawall",
+    "productName": "ideawall",
+    "copyright": "16inet.com",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**"
+    ],
+    "asar": true,
+    "asarUnpack": [
+    ],
+    "nsis": {
+      "artifactName": "${name}_${version}_${os}${arch}.${ext}",
+      "shortcutName": "ideawall",
+      "allowElevation": true,
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": true,
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false,
+      "installerLanguages": "zh_CN",
+      "language": 2052,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "installerIcon": "static/icon/blue-pretty.ico",
+      "uninstallerIcon": "static/icon/blue-pretty.ico",
+      "installerHeaderIcon": "static/icon/blue-pretty.ico"
+    },
+    "linux": {
+      "target": [
+        "tar.gz",
+        "appImage",
+        "deb"
+      ],
+      "icon": "static/icon/blue-pretty.ico"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "static/icon/blue-pretty.ico"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 410,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 130,
+          "y": 150,
+          "type": "file"
+        }
+      ]
+    },
+    "mac": {
+      "icon": "static/icon/blue-pretty.icns"
+    },
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "http://update.iw.16inet.com/"
+      }
+    ]
+  },
+  "engines": {
+    "node": ">= 6.0.0"
+  },
+  "devDependencies": {
+    "electron": "^5.0.4",
+    "electron-rebuild": "^1.8.5",
+    "electron-packager": "^14.0.0",
+    "electron-builder": "^20.44.4"
+  },
+  "dependencies": {
+    "electron-updater": "^4.0.12",
+    "archiver": "^3.0.0",
+    "async": "^2.6.1",
+    "auto-launch": "^5.0.5",
+    "better-sqlite3": "^5.4.0",
+    "log4js": "^3.0.6",
+    "nodemailer": "^6.2.1",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "unirest": "^0.5.1",
+    "uuid": "^3.3.2"
+  },
+  "__npminstall_done": false
+}

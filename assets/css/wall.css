@@ -1,0 +1,75 @@
+html, body, #app, .iframe_wall, .player-container, #player, .player {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+
+.iframe_abs {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: none;
+}
+
+.wallpaper-loading, .wallpaper-empty {
+    position: absolute;
+    top: 27%;
+    left: 0;
+    z-index: 900;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    display: none;
+}
+
+.wallpaper-empty {
+    z-index: 1100;
+    display: block;
+}
+
+.wallpaper-loading-panel, .wallpaper-empty-panel {
+    width: 300px;
+    height: 82px;
+    line-height: 40px;
+    background: #000;
+    border-radius: 15px;
+    margin: 0 auto;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+.wallpaper-loading-panel i {
+    font-size: 27px;
+}
+
+.wallpaper-empty-panel img {
+    width: 30px;
+}
+
+.wallpaper-loading-panel div, .wallpaper-empty-panel div {
+    height: 50px;
+    line-height: 16px;
+}
+
+.zxx-random-animate-in {
+    display: none;
+}
+
+.plyr, .plyr__video-wrapper {
+    height: 100%;
+}
+
+.player-video {
+    width: 100%;
+    height: 100%;
+    object-fit: fill; /*自动拉伸视频, 但注意该属性兼容性不太强.*/
+    display: none;
+    position:absolute;
+    top:0;
+    left: 0;
+}

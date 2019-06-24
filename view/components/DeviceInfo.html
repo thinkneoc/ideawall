@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+<head>
+    <title>[设备信息] - ideawall</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../assets/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../../assets/lib/iview/css/iview.css">
+    <link rel="stylesheet" href="../../assets/lib/element-ui/css/element.css">
+    <link rel="stylesheet" href="../../assets/css/ideawall.css">
+    <link rel="stylesheet" href="../../assets/css/animate.css">
+    <link rel="stylesheet" href="../../assets/css/wall.css">
+    <link rel="stylesheet" href="../../assets/css/form.css">
+    <style>
+        .device-info-detail .el-form-item__content {
+            line-height: unset;
+        }
+
+        .device-info-detail .el-form-item__content .el-row .device-info-key {
+            font-size: 13px;
+            font-weight: 800;
+            color: #999;
+            width: 60px;
+            text-align: right;
+            float: left;
+            line-height: 21px;
+        }
+
+        .device-info-detail .el-form-item__content .el-row .device-info-val {
+            float: left;
+            padding-left: 12px;
+            color: #110;
+            font-weight: 400;
+        }
+
+        .device-info-detail .el-form-item__content .el-row {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body style="overflow:hidden;">
+<div id="app" v-cloak>
+    <div class="zxx-loading" style="display:block;" v-if="loadingData">
+        <div class="zxx-loading-panel">
+            <i class="el-icon-loading"></i>
+        </div>
+    </div>
+    <div class="iframe_wall iframe_abs" style="display:block;" v-if="!loadingData">
+        <el-form label-position="top" label-width="80px" :model="display" size="mini" style="margin-top:0;">
+            <el-form-item label="最近一次快照" size="mini">
+                <img :src="screen.stream" alt="" :style="'width:'+snapSize.width+'px;height:'+snapSize.height+'px;'">
+            </el-form-item>
+        </el-form>
+        <el-form label-position="top" label-width="80px" :model="display" size="mini">
+            <el-form-item label="详细信息" size="mini" class="device-info-detail">
+                <div class="el-row">
+                    <div class="device-info-key">描述</div>
+                    <div class="device-info-val">{{display.screen_title}} ({{display.screen_name}})</div>
+                </div>
+                <div class="el-row">
+                    <div class="device-info-key">桌面类型</div>
+                    <div class="device-info-val">{{deskTypeName?deskTypeName:'未启用'}}</div>
+                </div>
+                <div class="el-row">
+                    <div class="device-info-key">运行时 id</div>
+                    <div class="device-info-val">{{display.id}}</div>
+                </div>
+                <div class="el-row">
+                    <div class="device-info-key">物理 id</div>
+                    <div class="device-info-val">{{display.display_id}}</div>
+                </div>
+                <div class="el-row">
+                    <div class="device-info-key">分辨率</div>
+                    <div class="device-info-val">{{display.display_rp}}</div>
+                </div>
+                <div class="el-row">
+                    <div class="device-info-key">工作区</div>
+                    <div class="device-info-val">{{display.display_info.workArea.width + ' x ' +
+                        display.display_info.workArea.height + ' (x -> 0, y -> 23)'}}
+                    </div>
+                </div>
+                <div class="el-row">
+                    <div class="device-info-key">旋转</div>
+                    <div class="device-info-val">{{display.display_info.rotation}}<sup>°</sup></div>
+                </div>
+                <div class="el-row">
+                    <div class="device-info-key">偏移</div>
+                    <div class="device-info-val">
+                        {{(display.display_info.bounds.x === 0 && display.display_info.bounds.y ===
+                        0)?'无偏移':('['+display.display_info.bounds.x+', '+display.display_info.bounds.y+']')}}
+                    </div>
+                </div>
+                <div class="el-row">
+                    <div class="device-info-key">像素比因</div>
+                    <div class="device-info-val">{{display.display_info.scaleFactor}}</div>
+                </div>
+                <div class="el-row">
+                    <div class="device-info-key">触摸支持</div>
+                    <div class="device-info-val">{{display.display_info.touchSupport === 'available'?'支持':'不支持'}}</div>
+                </div>
+            </el-form-item>
+        </el-form>
+    </div>
+</div>
+</body>
+<script src="../../core/Proxy.js"></script>
+<script src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/js/vue.min.js"></script>
+<script src="../../assets/lib/iview/js/iview.min.js"></script>
+<script src="../../assets/lib/element-ui/js/element.min.js"></script>
+<script src="../../assets/js/zxx.min.js"></script>
+<script src="../../controller/DeviceInfoController.js"></script>
+</html>

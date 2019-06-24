@@ -1,0 +1,8 @@
+{
+    "appname": "ideawall",
+    "debug": false,
+    "database": {
+        "encrypt": false
+    },
+    "notifyTimeOut":60000
+}

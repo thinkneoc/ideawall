@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../../assets/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../../../assets/lib/iview/css/iview.css">
+    <link rel="stylesheet" href="../../../assets/lib/element-ui/css/element.css">
+    <link rel="stylesheet" href="../../../assets/css/ideawall.css">
+    <link rel="stylesheet" href="../../../assets/css/control.css">
+    <link rel="stylesheet" href="../../../assets/css/control-mydesk.css">
+    <link rel="stylesheet" href="../../../assets/css/feedback.css">
+</head>
+<body class="site-contabs-open site-menubar-unfold zxx-smartscroll" style="overflow:hidden !important;padding: 15px;">
+<div id="app" v-cloak v-loading="loading">
+    <div style="position:absolute;right:60px;top:50px;">
+        <img src="../../../static/logo/blue-min.png" alt="" style="width:100px;">
+    </div>
+    <form id="zxx-feedback-form" action="" onsubmit="return false;">
+        <div class="ivu-row" style="margin:10px;">您的体验如何?</div>
+        <div style="margin:10px;">
+            <a id="zxx-feedback-face-happy" href="javascript:void(0)" onclick="vm.topic=1" title="愉快地">
+                <i class="ivu-icon ivu-icon-ios-happy"
+                   :style="'color:rgb(254,195,9);font-size:35px;'+(topic===1?'border: 1px solid #2d8cf0;':'border: 1px solid #fff;')"></i>
+            </a>
+            <a id="zxx-feedback-face-sad" href="javascript:void(0)" onclick="vm.topic=2" title="沮丧地">
+                <i class="ivu-icon ivu-icon-ios-sad"
+                   :style="'color:rgb(254,195,9);font-size:35px;'+(topic===2?'border: 1px solid #2d8cf0;':'border: 1px solid #fff;')"></i>
+            </a>
+        </div>
+        <div style="clear:both;"></div>
+        <div class="ivu-row" style="margin:10px;margin-top:20px;">告诉我们原因?</div>
+        <div style="margin:10px;">
+            <div class="ivu-input-wrapper ivu-input-wrapper-default ivu-input-type" style="width: 500px;">
+                <i class="ivu-icon ivu-icon-ios-close-circle ivu-input-icon ivu-input-icon-clear ivu-input-icon-normal"
+                   style="cursor:pointer;line-height:32px;"
+                   onclick="$(this).next('textarea').val('');countTextarea($(this).next('textarea'));"
+                   title="点击清除输入"></i>
+                <textarea id="description" name="description" wrap="soft" autocomplete="off" spellcheck="false"
+                          placeholder="请输入您宝贵的反馈意见, 核实后, 我们将会在最近的版本更新中修复并优化它们。" rows="7"
+                          style="resize: none;font-size:12px;"
+                          class="zxx-real-input zxx-real-input-description ivu-input ivu-input-default zxx-input-prochange"
+                          :value="description"></textarea>
+                <span style="position:absolute;bottom:5px;right:3px;font-weight:bold;color:#515a6e;" limit="258">{{258-description.length}}</span>
+            </div>
+            <br/>
+            <div style="margin-top:5px;margin-left:75px;width:300px;font-size:12px;font-weight:normal;">
+                <span class="zxx-error-tip-real zxx-error-tip-real-description" style="float:left;color:red;"></span>
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+        <div class="ivu-row" style="margin:10px;margin-top:20px;">征询你的意见以收集部分敏感数据?</div>
+        <div style="margin:10px;">
+            <el-checkbox v-model="allowCollectLog" label="允许收集最近 3 小时内的运行日志" size="mini"></el-checkbox>
+        </div>
+        <div style="clear:both;"></div>
+        <div style="margin:10px;">
+            <el-checkbox v-model="allowCollectDeviceInfo" label="允许收集当前设备信息" size="mini"></el-checkbox>
+        </div>
+        <div style="clear:both;"></div>
+        <div style="margin:10px;">
+            <el-checkbox v-model="allowCollectDeviceSnapscreen" label="允许抓取监视器组快照" size="mini"></el-checkbox>
+        </div>
+        <div style="clear:both;"></div>
+        <div style="margin:10px;">
+            <el-checkbox v-model="allowCollectArea" label="允许获取定位信息" size="mini"></el-checkbox>
+        </div>
+        <div style="clear:both;"></div>
+        <!--        <div class="ivu-row" style="margin:10px;margin-top:20px;">更多反馈渠道:</div>-->
+        <!--        <div style="margin:10px;">-->
+        <!--            <a href="javascript:void(0)" style="margin:10px;color:#2d8cf0 !important;"-->
+        <!--               onclick="top.esLibrary.openExternal(appVar._fklink.tieba_bugcommit)">提交 bug</a>-->
+        <!--            <br/><br/>-->
+        <!--            <a href="javascript:void(0)" style="margin:10px;color:#2d8cf0 !important;"-->
+        <!--               onclick="top.esLibrary.openExternal(appVar._fklink.tieba_requestfun)">请求缺失功能</a>-->
+        <!--        </div>-->
+        <!--        <div style="clear:both;"></div>-->
+        <div class="ivu-row" style="text-align:left;margin-top: 20px;">
+            <button type="button" class="ivu-btn ivu-btn-primary zxx-btn-submit" style="margin:10px 10px;"
+                    onclick="vm.submitFB()">
+                <span>提交</span>
+            </button>
+            <button type="button" class="ivu-btn ivu-btn-default" style="margin:10px 5px;"
+                    onclick="resetFB()">
+                <span>重置</span>
+            </button>
+        </div>
+    </form>
+</div>
+<!--<div id="bshareF"-->
+<!--     style="position: fixed; bottom: 0px; right: 0px; z-index: 100000; margin: 0px; padding: 0px; background: none; border: none;">-->
+<!--    <a class="bshareDiv" style="display:block;height:76px;width:76px" onclick="top.vm.showModal('../modal/Share.Modal.html')">-->
+<!--        <div class="buzzButton"-->
+<!--             style="background:url(http://static.bshare.cn/frame/images//button_custom5-zh-4-Orange.gif) no-repeat;height:76px;width:76px"></div>-->
+<!--    </a>-->
+<!--</div>-->
+</body>
+<script src="../../../core/Proxy.js"></script>
+<script src="../../../assets/js/jquery.min.js"></script>
+<script src="../../../assets/js/vue.min.js"></script>
+<script src="../../../assets/lib/iview/js/iview.min.js"></script>
+<script src="../../../assets/lib/element-ui/js/element.min.js"></script>
+<script src="../../../controller/FeedbackController.js"></script>
+<script src="../../../assets/js/zxx.min.js"></script>
+</html>

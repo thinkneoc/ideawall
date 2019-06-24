@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../../../assets/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../../../../assets/lib/element-ui/css/element.css">
+    <link rel="stylesheet" href="../../../../assets/css/animate.css">
+    <link rel="stylesheet" href="../../../../assets/css/ideawall.css">
+    <link rel="stylesheet" href="../../../../assets/css/form.css">
+</head>
+<body>
+<div id="app" v-cloak v-loading="loading">
+    <div id="form-containter">
+        <el-carousel :height="carousel.height+'px'"
+                     :type="carousel.type"
+                     :autoplay="carousel.autoplay"
+                     :loop="carousel.loop"
+                     :trigger="carousel.trigger"
+                     :indicator-position="carousel.indicatorPosition"
+                     :initialIndex="carousel.initialIndex"
+                     :interval="carousel.interval"
+                     :arrow="carousel.arrow"
+                     class="animated fadeInUp">
+            <el-carousel-item v-for="(item, index) in carousel.data" :key="index" v-html="item">
+            </el-carousel-item>
+        </el-carousel>
+        <el-form label-position="top" label-width="80px" :model="ld" size="mini" class="animated fadeInDown">
+            <el-form-item label="媒体组" size="mini">
+                <el-button size="mini" class="ld-readme-btn" style="margin-bottom: 32px;margin-top:30px;"
+                           type="text" :disabled="true"
+                           v-if="ld.switch_media == 1">
+                    该{{localDeskModel.getDeskTypeName(ld.type).name}}暂不支持媒体组配置传入
+                </el-button>
+                <el-upload
+                        v-else
+                        class="upload-demo"
+                        drag
+                        multiple
+                        action=""
+                        :on-preview="handlePreview"
+                        :on-remove="handleRemove"
+                        :on-exceed="handleExceed"
+                        :on-change="handleChange"
+                        :file-list="mediaUpload.data"
+                        :accept="mediaUpload.accepts[ld.type]"
+                        :limit="mediaUpload.limit"
+                        :auto-upload="false"
+                        :list-type="mediaUpload.listType">
+                    <i :class="'zxx-form-file-select ' + ((ld.type==='picture')?'el-icon-picture':(ld.type==='video'?'el-icon-video-camera-solid':(ld.type==='page'?'el-icon-s-marketing':'el-icon-s-release')))"></i>
+                    <div class="el-upload__text">拖拽{{((ld.type==='picture')?'图片':(ld.type==='video'?'视频':'媒体'))}}文件到此处，或<em>点击选择</em>
+                    </div>
+                    <div class="el-upload__tip" slot="tip" v-if="mediaUpload.data && mediaUpload.data.length > 0">
+                        <span style="float:left;padding-left: 1px;">
+                            共 {{mediaUpload.data.length}} 项
+                        </span>
+                        <a href="javascript:void(0)" @click="clearMedias"
+                           style="color: #606266;font-style: normal;text-decoration: none;padding-right: 1px;">
+                            <span>
+                                <i class="el-icon-delete"></i>
+                                清空
+                            </span>
+                        </a>
+                    </div>
+                </el-upload>
+            </el-form-item>
+        </el-form>
+    </div>
+</div>
+</body>
+<script src="../../../../core/Proxy.js"></script>
+<script src="../../../../assets/js/jquery.min.js"></script>
+<script src="../../../../assets/js/vue.min.js"></script>
+<script src="../../../../assets/lib/element-ui/js/element.min.js"></script>
+<script src="../../../../util/AvatarUtil.js"></script>
+<script src="../../../../controller/MediaConfigController.js"></script>
+<script src="../../../../assets/js/zxx.min.js"></script>
+</html>

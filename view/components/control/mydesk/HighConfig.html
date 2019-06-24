@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../../../assets/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../../../../assets/lib/element-ui/css/element.css">
+    <link rel="stylesheet" href="../../../../assets/css/animate.css">
+    <link rel="stylesheet" href="../../../../assets/css/ideawall.css">
+    <link rel="stylesheet" href="../../../../assets/css/form.css">
+</head>
+<body>
+<div id="app" v-cloak v-loading="loading">
+    <div class="zxx-apply-panel animated fadeInUp" v-show="showApply">
+        <div class="zxx-apply-desc">
+            点击"应用"实时生效到设备桌面
+        </div>
+        <div class="zxx-apply-btns">
+            <el-button size="mini" type="primary" :loading="loadingApply" onclick="vm.apply()">
+                <i class="el-icon-s-promotion"></i>
+                应用
+            </el-button>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <div id="form-containter" class="animated fadeIn">
+        <el-form label-position="top" label-width="80px" :model="ld" size="mini">
+            <el-form-item label="README" size="mini">
+                <el-button size="mini" class="ld-readme-btn"
+                           :type="loadingReadme?'text':(readmePath?'':'text')"
+                           :icon="readmePath?'el-icon-s-promotion':''"
+                           :disabled="loadingReadme?false:(readmePath?false:true)"
+                           :loading="loadingReadme"
+                           onclick="vm.showReadme()">
+                    {{loadingReadme?'正在检测':(readmePath?'查看配置说明文件':'未检测到配置说明文件')}}
+                </el-button>
+            </el-form-item>
+        </el-form>
+        <el-form label-position="top" label-width="80px" :model="ld" size="mini">
+            <el-form-item :label="ld.switch_source != 2?'桌面源':''" size="mini">
+                <el-button size="mini" class="ld-readme-btn" style="margin-bottom: 10px;"
+                           type="text" :disabled="true"
+                           v-if="ld.switch_source != 2">
+                    该{{localDeskModel.getDeskTypeName(ld.type).name}}暂不支持桌面源配置更改
+                </el-button>
+            </el-form-item>
+            <el-form-item :label="ld.switch_source == 2?'桌面源':''" size="mini" v-if="ld.switch_source == 2">
+                <el-radio-group v-model="ld.source_type" size="mini" :disabled="ld.switch_source == 1"
+                                class="ld-source-radio-group">
+                    <el-radio-button label="remote">远程桌面源</el-radio-button>
+                    <el-radio-button label="local">本地桌面源</el-radio-button>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item label="" size="mini" style="margin-top:10px;" v-if="ld.switch_source == 2">
+                <el-input type="input" v-model="ld.source_val" clearable :disabled="ld.switch_source != 2">
+                    <template slot="prepend">{{ld.source_type === 'remote'?'http://':'file://'}}</template>
+                    <el-button slot="append" icon="el-icon-receiving" v-if="ld.source_type === 'local'"
+                               @click="selectSource"></el-button>
+                </el-input>
+            </el-form-item>
+            <pre class="zxx-pre" v-if="!isSourceEffect && ld.switch_source == 2"
+                 style="margin: 0;margin-top: 10px;">无效桌面源, 请重新指定</pre>
+        </el-form>
+        <el-form label-position="top" label-width="80px" size="mini">
+            <el-button size="mini" class="zxx-hignconfig-jsoneditor-btn el-form-tool" type="text"
+                       icon="el-icon-s-operation" title="召唤高级参数编辑器以配置"
+                       onclick="vm.gotoJSONEditor('params')">
+            </el-button>
+            <el-form-item label="约定域参数" size="mini">
+                <el-input id="ldParams" class="disable-style" type="textarea" :rows="ld.switch_source == 2?'13':'15'"
+                          value=""
+                          :disabled="true"></el-input>
+            </el-form-item>
+        </el-form>
+    </div>
+</div>
+</body>
+<script src="../../../../core/Proxy.js"></script>
+<script src="../../../../assets/js/jquery.min.js"></script>
+<script src="../../../../assets/js/vue.min.js"></script>
+<script src="../../../../assets/lib/element-ui/js/element.min.js"></script>
+<script src="../../../../controller/HighConfigController.js"></script>
+<script src="../../../../assets/js/zxx.min.js"></script>
+</html>

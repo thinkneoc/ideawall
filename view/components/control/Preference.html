@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../../assets/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../../../assets/lib/element-ui/css/element.css">
+    <link rel="stylesheet" href="../../../assets/css/animate.css">
+    <link rel="stylesheet" href="../../../assets/css/ideawall.css">
+    <link rel="stylesheet" href="../../../assets/css/control.css">
+    <link rel="stylesheet" href="../../../assets/css/control-mydesk.css">
+    <link rel="stylesheet" href="../../../assets/css/preference.css">
+</head>
+<body>
+<div id="app" v-cloak style="text-align: center;" v-loading="loading">
+    <div id="preference-containter" class="animated fadeIn">
+        <el-tabs v-model="menuInfoTab" tab-position="left" @tab-click="handleInfoTabClick">
+            <el-tab-pane label="常规" name="common">
+                <el-form ref="form" :model="preferences">
+                    <template v-for="(item, index) in preferences">
+                        <el-form-item v-if="item.formitem == 'switch'">
+                            <span slot="label">{{item.name}}<sup v-if="item.reboot == 2">*</sup></span>
+                            <el-switch v-model="item.value.enable"
+                                       @change="(nval)=>{vm.doSetPreference(index, item.key, nval)}"></el-switch>
+                            <div :class="'zxx-form-item-desc'+(item.value.descNewLine?'-newline':'')"
+                                 v-if="item.value.enable">
+                                {{item.description}}
+                            </div>
+                        </el-form-item>
+                        <el-form-item v-if="item.formitem == 'input_number'">
+                            <span slot="label">{{item.name}}<sup v-if="item.reboot == 2">*</sup></span>
+                            <el-input-number size="mini"
+                                             v-model="item.value.val"
+                                             :precision="item.value.precision"
+                                             :step="item.value.step"
+                                             :step-strictly="item.value.stepStrictly"
+                                             :min="item.value.min"
+                                             :max="item.value.max"
+                                             :controls-position="item.value.controlsPosition"
+                                             @change="(nval)=>{vm.doSetPreference(index, item.key, nval)}">
+                            </el-input-number>
+                            <div :class="'zxx-form-item-desc'+(item.value.descNewLine?'-newline':'')">
+                                {{item.description}}
+                            </div>
+                        </el-form-item>
+                        <el-form-item v-if="item.formitem == 'slider'" style="margin-right: 100px;">
+                            <span slot="label">{{item.name}}<sup v-if="item.reboot == 2">*</sup></span>
+                            <el-slider size="mini"
+                                       v-model="item.value.val"
+                                       :step="item.value.step"
+                                       :show-stops="item.value.showStops"
+                                       :show-input="item.value.showInput"
+                                       :show-input-controls="item.value.showInputControls"
+                                       :input-size="item.value.inputSize"
+                                       :show-tooltip="item.value.showTooltip"
+                                       :marks="item.value.marks"
+                                       :min="item.value.min"
+                                       :max="item.value.max"
+                                       @change="(nval)=>{vm.doSetPreference(index, item.key, nval)}">
+                            </el-slider>
+                            <div :class="'zxx-form-item-desc'+(item.value.descNewLine?'-newline':'')">
+                                {{item.description}}
+                            </div>
+                        </el-form-item>
+                    </template>
+                    <el-form-item>
+                        <span slot="label">系统修复<sup>*</sup></span>
+                        <el-button size="mini" type="danger" @click="repair" :loading="btnLoading.repair.bol" plain>
+                            {{btnLoading.repair.bol?btnLoading.repair.text:'执行修复'}}
+                        </el-button>
+                        <div class="zxx-form-item-desc-newline zxx-pre-repair-tip">
+                            此动作将清空你的所有本地持久化有生数据, 之后重建数据结构. 请谨慎操作!
+                        </div>
+                    </el-form-item>
+                    <el-form-item>
+                        <span slot="label">更新和重启</span>
+                        <el-button size="mini" @click="checkUpdate" :loading="btnLoading.checkUpdate.bol">
+                            <i class="el-icon-cloudy" v-if="!btnLoading.checkUpdate.bol"></i>
+                            {{btnLoading.checkUpdate.bol?btnLoading.checkUpdate.text:btnLoading.checkUpdate.htext}}
+                        </el-button>
+                        <el-button size="mini" @click="reboot" :loading="btnLoading.reboot.bol">
+                            <i class="el-icon-refresh-left" v-if="!btnLoading.reboot.bol"></i>
+                            {{btnLoading.reboot.bol?btnLoading.reboot.text:'重新启动'}}
+                        </el-button>
+                    </el-form-item>
+                    <el-form-item>
+                        <span slot="label">官方网站</span>
+                        <el-button size="mini" type="" @click="gotoOffical">
+                            前往官网
+                        </el-button>
+                    </el-form-item>
+                    <el-form-item>
+                        <span slot="label">关于</span>
+                        <el-button size="mini" type="" @click="openAbout">
+                            关于 ideawall
+                        </el-button>
+                    </el-form-item>
+                </el-form>
+            </el-tab-pane>
+            <el-tab-pane label="动画" name="animation">
+                <el-alert title="温馨提示" style="text-align:left;"
+                          type="warning" show-icon>
+                    <div slot>
+                        桌面源入场动画可以实时预览变更效果, 但出场动画仅在设备桌面发生 <strong>[关键性的同步动作]</strong> 时才会触发.
+                        举个栗子, 你可以尝试对已启用桌面的目标设备 <strong>[右键 => 取消启用]</strong> 桌面以查看离场变更效果~
+                        或者你还可以试试点击右上角全局工具栏的隐藏按钮(但它并不能查看入场效果)。
+                    </div>
+                </el-alert>
+                <div :class="'animated '+ animation.preview"
+                     style="width: 100%;text-align:center;z-index: 777;position: absolute;top: 100px;">
+                    <img src="../../../static/logo/blue-min-pretty.png" alt=""
+                         style="width: 150px;height:150px;">
+                </div>
+                <el-form ref="form" :model="preferences" style="margin-top:210px;">
+                    <el-form-item>
+                        <span slot="label">桌面源入场动画<sup>*</sup></span>
+                        <div class="zxx-show-animate-panel">
+                            <el-radio-group v-model="animation.in" size="mini"
+                                            @change="(nval)=>{vm.previewAnimate('in');vm.doSetPreference(false, 'deskAnimationOn', nval)}">
+                                <el-radio label="random" border style="margin-left:10px;">随机入场</el-radio>
+
+                                <br/>
+                                <el-radio label="bounceIn" border style="margin-left:10px;">弹跳入场</el-radio>
+                                <el-radio label="fadeIn" border style="margin-left:10px;">淡定入场</el-radio>
+                                <el-radio label="rotateIn" border style="margin-left:10px;">旋转入场</el-radio>
+                                <el-radio label="rollIn" border style="margin-left:10px;">滚动入场</el-radio>
+
+                                <br/>
+                                <el-radio label="bounceInDown" border style="margin-left:10px;">向下弹入</el-radio>
+                                <el-radio label="bounceInLeft" border>从左弹入</el-radio>
+                                <el-radio label="bounceInRight" border>从右弹入</el-radio>
+                                <el-radio label="bounceInUp" border>向上弹入</el-radio>
+
+                                <br/>
+                                <el-radio label="fadeInDown" border style="margin-left:10px;">向下淡入</el-radio>
+                                <el-radio label="fadeInLeft" border>从左淡入</el-radio>
+                                <el-radio label="fadeInRight" border>从右淡入</el-radio>
+                                <el-radio label="fadeInUp" border>向上淡入</el-radio>
+
+                                <br/>
+                                <el-radio label="rotateInDownLeft" border style="margin-left:10px;">左上旋入</el-radio>
+                                <el-radio label="rotateInDownRight" border>右上旋入</el-radio>
+                                <el-radio label="rotateInUpLeft" border>左下旋入</el-radio>
+                                <el-radio label="rotateInUpRight" border>右下旋入</el-radio>
+
+                                <br/>
+                                <el-radio label="slideInDown" border style="margin-left:10px;">向下滑入</el-radio>
+                                <el-radio label="slideInLeft" border>从左滑入</el-radio>
+                                <el-radio label="slideInRight" border>从右滑入</el-radio>
+                                <el-radio label="lightSpeedIn" border>光速入场</el-radio>
+
+                                <br/>
+                                <el-radio label="flipInX" border style="margin-left:10px;">水平翻入</el-radio>
+                                <el-radio label="flipInY" border>垂直翻入</el-radio>
+                            </el-radio-group>
+                        </div>
+                    </el-form-item>
+                    <el-form-item style="margin-top: 20px;">
+                        <span slot="label">桌面源离场动画<sup>*</sup></span>
+                        <div class="zxx-show-animate-panel">
+                            <el-radio-group v-model="animation.out" size="mini"
+                                            @change="(nval)=>{vm.previewAnimate('out');vm.doSetPreference(false, 'deskAnimationOut', nval)}">
+                                <el-radio label="random" border style="margin-left:10px;">随机离场</el-radio>
+
+                                <br/>
+                                <el-radio label="bounceOut" border style="margin-left:10px;">弹跳离场</el-radio>
+                                <el-radio label="fadeOut" border>淡定离场</el-radio>
+                                <el-radio label="rotateOut" border>旋转离场</el-radio>
+                                <el-radio label="rollOut" border>滚动离场</el-radio>
+
+                                <br/>
+                                <el-radio label="bounceOutDown" border style="margin-left:10px;">向下弹出</el-radio>
+                                <el-radio label="bounceOutLeft" border>从左弹出</el-radio>
+                                <el-radio label="bounceOutRight" border>从右弹出</el-radio>
+                                <el-radio label="bounceOutUp" border>向上弹出</el-radio>
+
+                                <br/>
+                                <el-radio label="fadeOutDown" border style="margin-left:10px;">向下淡出</el-radio>
+                                <el-radio label="fadeOutLeft" border>从左淡出</el-radio>
+                                <el-radio label="fadeOutRight" border>从右淡出</el-radio>
+                                <el-radio label="fadeOutUp" border>向上淡出</el-radio>
+
+                                <br/>
+                                <el-radio label="rotateOutDownLeft" border style="margin-left:10px;">左上旋出</el-radio>
+                                <el-radio label="rotateOutDownRight" border>右上旋出</el-radio>
+                                <el-radio label="rotateOutUpLeft" border>左下旋出</el-radio>
+                                <el-radio label="rotateOutUpRight" border>右下旋出</el-radio>
+
+                                <br/>
+                                <el-radio label="slideOutUp" border style="margin-left:10px;">向上滑出</el-radio>
+                                <el-radio label="slideOutLeft" border>从左滑出</el-radio>
+                                <el-radio label="slideOutRight" border>从右滑出</el-radio>
+                                <el-radio label="lightSpeedOut" border>光速出场</el-radio>
+
+                                <br/>
+                                <el-radio label="flipOutX" border style="margin-left:10px;">水平翻出</el-radio>
+                                <el-radio label="flipOutY" border>垂直翻出</el-radio>
+                                <el-radio label="hinge" border>垂死挣扎</el-radio>
+                            </el-radio-group>
+                        </div>
+                    </el-form-item>
+                </el-form>
+            </el-tab-pane>
+        </el-tabs>
+    </div>
+</div>
+</body>
+<script src="../../../core/Proxy.js"></script>
+<script src="../../../assets/js/jquery.min.js"></script>
+<script src="../../../assets/js/vue.min.js"></script>
+<script src="../../../assets/lib/element-ui/js/element.min.js"></script>
+<script src="../../../assets/js/zxx.min.js"></script>
+<script src="../../../controller/PreferenceController.js"></script>
+</html>

@@ -1,0 +1,61 @@
+#app {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#preference-containter {
+    padding: 30px;
+}
+
+.el-tabs__content {
+    width: auto;
+}
+
+.el-form {
+    padding: 0 50px;
+}
+
+.el-form-item {
+    margin-bottom: 7px;
+}
+
+.el-form .el-form-item .el-form-item__label {
+    width: 150px;
+    line-height: 40px;
+}
+
+.el-form .el-form-item .el-form-item__label span sup {
+    color: red;
+}
+
+.el-form .el-form-item .el-form-item__content {
+    margin-left: 165px;
+    text-align: left;
+}
+
+.zxx-form-item-desc {
+    margin-left: 10px;
+    color: #888;
+    font-size: 13px;
+    line-height: 20px;
+    height: 20px;
+    display: inline;
+}
+
+.zxx-form-item-desc-newline {
+    margin-left: 10px;
+    margin-top: 5px;
+    color: #888;
+    font-size: 12px;
+    line-height: 20px;
+    height: 20px;
+    display: block;
+}
+
+.zxx-show-animate-panel {
+    padding-top: 7px;
+}
+
+.zxx-show-animate-panel .el-radio {
+    margin: 2px 0;
+}

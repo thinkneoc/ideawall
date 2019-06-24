@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+<head>
+    <title>[参数编辑器] - ideawall</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../assets/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../../assets/lib/iview/css/iview.css">
+    <link rel="stylesheet" href="../../assets/lib/element-ui/css/element.css">
+    <link rel="stylesheet" href="../../assets/css/ideawall.css">
+    <link rel="stylesheet" href="../../assets/css/animate.css">
+    <link rel="stylesheet" href="../../assets/css/wall.css">
+    <link rel="stylesheet" href="../../assets/css/form.css">
+    <link href="../../assets/lib/json-editor/jsoneditor.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body style="overflow:hidden;">
+<div id="app" v-cloak>
+    <div class="zxx-loading" style="display:block;" v-if="loadingData">
+        <div class="zxx-loading-panel">
+            <i class="el-icon-loading"></i>
+        </div>
+    </div>
+    <div class="iframe_wall iframe_abs" style="display:block;" v-show="!loadingData">
+        <div id="json-editor" name="json-editor" title="JSON" style="padding:0;width:100%;height:100%;"></div>
+    </div>
+</div>
+</body>
+<script src="../../core/Proxy.js"></script>
+<script src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/js/vue.min.js"></script>
+<script src="../../assets/lib/iview/js/iview.min.js"></script>
+<script src="../../assets/lib/element-ui/js/element.min.js"></script>
+<script src="../../assets/lib/json-editor/jsoneditor.js"></script>
+<script src="../../assets/js/zxx.min.js"></script>
+<script src="../../controller/JsonEditorController.js"></script>
+</html>
