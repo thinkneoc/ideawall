@@ -15,9 +15,9 @@ const relative = '../../../';
 
 /**
  * 为 windows 创建壁纸层
- * @param {设备} display 
+ * @param {设备} display
  */
-function createOne_win(display){
+function createOne_win(display) {
     let xwindow = createOne_macos(display);
     const electronWallpaper = require('electron-wallpaper');
     electronWallpaper.attachWindow(xwindow);
@@ -26,12 +26,12 @@ function createOne_win(display){
 
 /**
  * 为 macos 创建壁纸层
- * @param {设备} display 
+ * @param {设备} display
  */
-function createOne_macos(display){
+function createOne_macos(display) {
     let {width, height} = display.size;//获得当前显示器最大高度. 注意这里不应该是workAreaSize(工作区范围尺寸), 而应该是整体尺寸
     let {x, y} = display.bounds;//偏移, 如果 x,y 均为 0, 则表示当前激活的主屏幕.
-     return new Electron.BrowserWindow({
+    return new Electron.BrowserWindow({
         frame: false, //隐藏原生窗口边框
         useContentSize: true,
         // titleBarStyle: 'hiddenInset',
@@ -61,6 +61,8 @@ function createOne_macos(display){
         transparent: true,//开启窗口透明
         hasShadow: true,//窗口是否有阴影。只在 OS X 上有效. 默认为 true。这个打开会造成部分盒子阴影, 体验较差.
         type: 'dedsktop',//桌面窗口模式, 窗口聚焦事件,鼠标事件和键盘事件无效.
+        // alwaysOnTop: true,//窗口置顶
+        thickFrame: false,//对 Windows 上的无框窗口使用WS_THICKFRAME 样式，会增加标准窗口框架。 设置为 false 时将移除窗口的阴影和动画. 默认值为 true。
         // fullscreen: true,
         // simpleFullscreen: true,// 在 macOS 上使用 pre-Lion 全屏. 默认为false, 具体效果就是高度覆盖dock栏. 必须开启fullscreen才有效.
         skipTaskbar: true, //是否跳过在任务栏中显示窗口. 默认值为false.
@@ -77,6 +79,7 @@ function createOne_macos(display){
             zoomFactor: 1.0, //页面的默认缩放系数, 3.0 表示 300%. 默认值为 1.0.
             textAreasAreResizable: true, //让 TextArea 元素可以调整大小. 默认值为 true.
             backgroundThrottling: false,//是否在页面成为背景时限制动画和计时器。 这也会影响到 Page Visibility API. 默认值为 true。
+            // offscreen: true,//是否绘制和渲染可视区域外的窗口. 默认值为 false
         }
     });
 }
@@ -84,9 +87,9 @@ function createOne_macos(display){
 function createOne(display, paramJson) {
     // 创建浏览器窗口。
     let xwindow;
-    if(appVar._platform === 'darwin'){
+    if (appVar._platform === 'darwin') {
         xwindow = createOne_macos(display);
-    }else{
+    } else {
         xwindow = createOne_win(display);
     }
 
@@ -113,7 +116,7 @@ function createOne(display, paramJson) {
 
     // 当窗口关闭时触发
     xwindow.on('closed', function () {
-        logger.info("[Process][MainProcessHelper][_WallWindow_.on._closed_]壁纸窗口"+display.id+"关闭");
+        logger.info("[Process][MainProcessHelper][_WallWindow_.on._closed_]壁纸窗口" + display.id + "关闭");
 
         //将全局xwindow置为null
         xwindow = null;

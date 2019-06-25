@@ -170,13 +170,13 @@ var _Screen = function () {
                 newzxx = _primarydisplay;
                 newzxx.name = 'Entire Screen';//Entire Screen | Screen 1
                 res[zxx.id] = newzxx;
-                break;
+                continue;
             }
             for (var y in _alldisplays) {
                 var zyy = _alldisplays[y];
                 if (compareDisplay(zxx, zyy) && zyy.id !== _primarydisplay.id) {
                     newzxx = zyy;
-                    newzxx.name = 'Screen' + sx;
+                    newzxx.name = 'Screen ' + sx;
                     sx++;
                     res[zxx.id] = newzxx;
                     break;
