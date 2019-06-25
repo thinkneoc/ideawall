@@ -117,6 +117,7 @@
     margin: 5px 0;
     font-weight: normal;
     padding-bottom: 3px;
+    font-size: 15px;
 }
 
 #my-device {
@@ -151,6 +152,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    font-size: 12px;
 }
 
 .zxx-desk-info-type {

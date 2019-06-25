@@ -18,6 +18,7 @@ html, body, #app, .el-container, .el-tabs, .el-tabs__content, .el-tab-pane, .el-
     /* background: -webkit-linear-gradient(#fff,#c1c1c1); */
     /* -webkit-filter: blur(4px); */
     filter: opacity(95%);
+    display: none;
 }
 
 .win-control-upbg{
