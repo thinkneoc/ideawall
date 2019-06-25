@@ -11,81 +11,83 @@
     <link rel="stylesheet" href="../../assets/css/control.css">
 </head>
 <body>
-<div class="win-control-bg" v-if="proxy.appVar._platform !== 'darwin'"></div>
-<div id="app" v-cloak :class="'animated  '+(proxy.appVar._platform !== 'darwin'?'win-control-upbg':'')">
-    <div v-if="!loadingControl && loadingMaster"
-         style="position: absolute;top: -20px;right: -20px;pointer-events: none;">
-        <img src="../../assets/images/loading.jpg" alt="" style="width: 70px;height: 60px;">
-    </div>
-
-    <el-container>
-        <el-header id="zxx-drag" height="30px" class="win-maximize-dblclick zxx-title">
-            控制面板 - ideawall{{netstatus == 'offline'?'[连接已断开]':''}}
-        </el-header>
-        <el-tabs v-model="activeTab" @tab-click="handleClick">
-            <el-tab-pane :name="item.name" v-for="(item, index) in tabs">
-                <span slot="label"><i :class="item.icon"></i> {{item.title}}</span>
-                <iframe :id="'iframe_'+item.name" class="J_iframe active"
-                        :name="'iframe_'+item.name"
-                        width="100%" :data-nopreload="!item.preload"
-                        :data-src="proxy.link(item.link)" frameborder="0" scrolling="no"></iframe>
-            </el-tab-pane>
-        </el-tabs>
-        <div class="zxx-controls">
-            <a href="javascript:void(0)" class="zxx-control-btn"
-               v-if="loadingControl">
-                <i class="el-icon-loading"></i>
-            </a>
-            <a id="zxx-set-alleye" href="javascript:void(0)" title="点击全部隐藏" class="zxx-control-btn"
-               v-show="!loadingControl"
-               @click="setAllHide" data-switch="1"><i class="ivu-icon ivu-icon-md-eye"></i></a>
-            <a id="zxx-set-allpause" href="javascript:void(0)" title="点击全部暂停" class="zxx-control-btn"
-               v-show="!loadingControl"
-               @click="setAllPause" data-switch="1"><i class="ivu-icon ivu-icon-md-pause"></i></a>
-            <a id="zxx-set-allmuted" href="javascript:void(0)" title="点击全部静音" class="zxx-control-btn"
-               v-show="!loadingControl" style="margin-right:7px;"
-               @click="setAllMuted" data-switch="1"><i class="ivu-icon ivu-icon-md-volume-up"></i></a>
-
-            <template v-if="proxy.appVar._platform !== 'darwin'">
-                |
-                <a href="javascript:void(0)" class="win-control-osbtn"
-                   onclick="proxy.appVar._controlwindow.minimize()">
-                    <i class="el-icon-minus"></i>
-                </a>
-                <a href="javascript:void(0)" class="win-control-osbtn"
-                   v-if="!winMaxsize"
-                   onclick="proxy.appVar._controlwindow.maximize();vm.winMaxsize=true;">
-                    <i class="el-icon-full-screen"></i>
-                </a>
-                <a href="javascript:void(0)" class="win-control-osbtn"
-                   v-if="winMaxsize"
-                   onclick="proxy.appVar._controlwindow.unmaximize();vm.winMaxsize=false;">
-                    <i class="el-icon-copy-document"></i>
-                </a>
-                <a href="javascript:void(0)" class="win-control-osbtn"
-                   onclick="proxy.appVar._controlwindow.close()">
-                    <i class="el-icon-close"></i>
-                </a>
-            </template>
+<div id="app" v-cloak class="animated fadeIn">
+    <div class="win-control-bg" v-if="proxy.appVar._platform !== 'darwin'"></div>
+    <div :class="''+(proxy.appVar._platform !== 'darwin'?'win-control-upbg':'')" style="width:100%;height:100%;">
+        <div v-if="!loadingControl && loadingMaster"
+             style="position: absolute;top: -20px;right: -20px;pointer-events: none;">
+            <img src="../../assets/images/loading.jpg" alt="" style="width: 70px;height: 60px;">
         </div>
-    </el-container>
 
-    <div data-transfer="true" class="v-transfer-dom">
-        <div class="ivu-modal-mask" :style="'z-index: '+imodal.option.zIndex+';'"
-             v-if="imodal.option.mask && imodal.open"></div>
-        <div class="ivu-modal-wrap" :style="'z-index: '+imodal.option.zIndex+';display:block;'"
-             :class="imodal.option.className" v-if="imodal.open">
-            <div class="ivu-modal" :style="'width:'+imodal.option.width+';'+imodal.option.styles"
-                 :class="'animated '+(imodal.mshow?'fadeInDownBig':'fadeOutUpBig')" v-if="imodal.open">
-                <div class="ivu-modal-content">
-                    <div class="ivu-modal-body">
-                        <iframe id="Iframe-modal" class="J_iframe zxx-modal-iframe active" name="Iframe-modal"
-                                width="100%"
-                                :style="imodal.style"
-                                allowtransparency="true" allowfullscreen="true"
-                                webkitallowfullscreen="true" mozallowfullscreen="true"
-                                :src="imodal.src"
-                                frameborder="0" :scrolling="imodal.scroll"></iframe>
+        <el-container>
+            <el-header id="zxx-drag" :height="proxy.appVar._platform === 'darwin'?'30px':'15px'" class="win-maximize-dblclick zxx-title">
+                <span v-if="proxy.appVar._platform === 'darwin'">控制面板 - ideawall{{netstatus == 'offline'?'[连接已断开]':''}}</span>
+            </el-header>
+            <el-tabs v-model="activeTab" @tab-click="handleClick" :style="proxy.appVar._platform === 'darwin'?'height:calc(100% - 30px)':'height:calc(100% - 15px)'">
+                <el-tab-pane :name="item.name" v-for="(item, index) in tabs">
+                    <span slot="label"><i :class="item.icon"></i> {{item.title}}</span>
+                    <iframe :id="'iframe_'+item.name" class="J_iframe active"
+                            :name="'iframe_'+item.name"
+                            width="100%" :data-nopreload="!item.preload"
+                            :data-src="proxy.link(item.link)" frameborder="0" scrolling="no"></iframe>
+                </el-tab-pane>
+            </el-tabs>
+            <div class="zxx-controls" :style="proxy.appVar._platform === 'darwin'?'':'top:17px;'">
+                <a href="javascript:void(0)" class="zxx-control-btn"
+                   v-if="loadingControl">
+                    <i class="el-icon-loading"></i>
+                </a>
+                <a id="zxx-set-alleye" href="javascript:void(0)" title="点击全部隐藏" class="zxx-control-btn"
+                   v-show="!loadingControl"
+                   @click="setAllHide" data-switch="1"><i class="ivu-icon ivu-icon-md-eye"></i></a>
+                <a id="zxx-set-allpause" href="javascript:void(0)" title="点击全部暂停" class="zxx-control-btn"
+                   v-show="!loadingControl"
+                   @click="setAllPause" data-switch="1"><i class="ivu-icon ivu-icon-md-pause"></i></a>
+                <a id="zxx-set-allmuted" href="javascript:void(0)" title="点击全部静音" class="zxx-control-btn"
+                   v-show="!loadingControl" style="margin-right:7px;"
+                   @click="setAllMuted" data-switch="1"><i class="ivu-icon ivu-icon-md-volume-up"></i></a>
+
+<!--                <template v-if="proxy.appVar._platform !== 'darwin'">-->
+<!--                    |-->
+<!--                    <a href="javascript:void(0)" class="win-control-osbtn"-->
+<!--                       onclick="proxy.appVar._controlwindow.minimize()">-->
+<!--                        <i class="el-icon-minus"></i>-->
+<!--                    </a>-->
+<!--                    <a href="javascript:void(0)" class="win-control-osbtn"-->
+<!--                       v-if="!winMaxsize"-->
+<!--                       onclick="proxy.appVar._controlwindow.maximize();vm.winMaxsize=true;">-->
+<!--                        <i class="el-icon-full-screen"></i>-->
+<!--                    </a>-->
+<!--                    <a href="javascript:void(0)" class="win-control-osbtn"-->
+<!--                       v-if="winMaxsize"-->
+<!--                       onclick="proxy.appVar._controlwindow.unmaximize();vm.winMaxsize=false;">-->
+<!--                        <i class="el-icon-copy-document"></i>-->
+<!--                    </a>-->
+<!--                    <a href="javascript:void(0)" class="win-control-osbtn"-->
+<!--                       onclick="proxy.appVar._controlwindow.close()">-->
+<!--                        <i class="el-icon-close"></i>-->
+<!--                    </a>-->
+<!--                </template>-->
+            </div>
+        </el-container>
+
+        <div data-transfer="true" class="v-transfer-dom">
+            <div class="ivu-modal-mask" :style="'z-index: '+imodal.option.zIndex+';'"
+                 v-if="imodal.option.mask && imodal.open"></div>
+            <div class="ivu-modal-wrap" :style="'z-index: '+imodal.option.zIndex+';display:block;'"
+                 :class="imodal.option.className" v-if="imodal.open">
+                <div class="ivu-modal" :style="'width:'+imodal.option.width+';'+imodal.option.styles"
+                     :class="'animated '+(imodal.mshow?'fadeInDownBig':'fadeOutUpBig')" v-if="imodal.open">
+                    <div class="ivu-modal-content">
+                        <div class="ivu-modal-body">
+                            <iframe id="Iframe-modal" class="J_iframe zxx-modal-iframe active" name="Iframe-modal"
+                                    width="100%"
+                                    :style="imodal.style"
+                                    allowtransparency="true" allowfullscreen="true"
+                                    webkitallowfullscreen="true" mozallowfullscreen="true"
+                                    :src="imodal.src"
+                                    frameborder="0" :scrolling="imodal.scroll"></iframe>
+                        </div>
                     </div>
                 </div>
             </div>

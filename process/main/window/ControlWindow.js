@@ -19,7 +19,7 @@ function creat(isshow, paramJson) {
 
     // 创建浏览器窗口。
     xwindow = new Electron.BrowserWindow({
-        frame: false, //隐藏原生窗口边框
+        // frame: false, //隐藏原生窗口边框
         useContentSize: true,
         titleBarStyle: 'hidden',
         vibrancy: 'appearance-based',//窗口是否使用 vibrancy 动态效果, 仅 macOS 中有效. 可以为 appearance-based, light, dark, titlebar, selection, menu, popover, sidebar, medium-light 或 ultra-dark. 请注意，结合一个 vibrancy 值使用 frame: false ，需要确保titleBarStyle为一个非默认值。
