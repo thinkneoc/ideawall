@@ -78,15 +78,15 @@ function Lang() {
      */
     this.readBlobAsDataURL = function (blob, callback) {
         var a = new FileReader();
-        a.onload = function(e) {callback(e.target.result);};
+        a.onload = function(e) {callback(e.target.result, blob);};
         a.readAsDataURL(blob);
     };
 
     /**
      * ArrayBuffer 转 DataURL
      */
-    this.readArrayBufferAsDataURL = function(arrayBuffer, callback){
-        this.readBlobAsDataURL(new Blob(arrayBuffer), callback);
+    this.readArrayBufferAsDataURL = function(arrayBuffer, options, callback){
+        this.readBlobAsDataURL(new Blob(arrayBuffer, options), callback);
     };
 
     this.init();//自动初始化.

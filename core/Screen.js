@@ -209,22 +209,19 @@ var _Screen = function () {
         console.debug(appVar._wallwindows);
         screenshot.listDisplays().then((displays) => {
             // displays: [{ id, name }, { id, name }]
-            var rdisplays = target.calcPackDisplay_win(displays);
+            let rdisplays = target.calcPackDisplay_win(displays);
             console.debug(displays);
             console.debug(rdisplays);
-            for (var x in displays) {
-                var zxx = displays[x];
-                var zyy = rdisplays[zxx.id];
+            for (let x in displays) {
+                let zxx = displays[x];
+                let zyy = rdisplays[zxx.id];
                 console.debug(zxx);
                 console.debug(zyy);
                 screenshot({
                     screen: zxx.id,
-                    format: 'png',
-                    filename: appVar._apath.dir.snapscreen + '/' + zyy.id + '.png',
-                }).then((imgPath) => {
-                    logger.info(imgPath);
-                    // imgs: an array of Buffers, one for each screen
-                    var display = target.getDisplay(zyy.id);
+                }).then((img) => {
+                    var dataurl = 'data:image/jpg;base64,' + img.toString('base64');
+                    let display = target.getDisplay(zyy.id);
                     result.push({
                         id: 'screen-' + zyy.id,
                         display_id: zyy.id,
@@ -233,7 +230,7 @@ var _Screen = function () {
                         title: target.calcScreenTitle(zyy.name),
                         display_rp: target.calcScreenRp(false, display),
                         thumbnail: null,
-                        stream: imgPath,
+                        stream: dataurl,
                     });
                     rIds.push('screen-' + zyy.id);
                 }).catch((err) => {
