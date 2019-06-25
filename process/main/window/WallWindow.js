@@ -13,11 +13,25 @@ let appVar = AppVar.getAppVar();
 
 const relative = '../../../';
 
-function createOne(display, paramJson) {
+/**
+ * 为 windows 创建壁纸层
+ * @param {设备} display 
+ */
+function createOne_win(display){
+    let xwindow = createOne_macos(display);
+    const electronWallpaper = require('electron-wallpaper');
+    electronWallpaper.attachWindow(xwindow);
+    return xwindow;
+}
+
+/**
+ * 为 macos 创建壁纸层
+ * @param {设备} display 
+ */
+function createOne_macos(display){
     let {width, height} = display.size;//获得当前显示器最大高度. 注意这里不应该是workAreaSize(工作区范围尺寸), 而应该是整体尺寸
     let {x, y} = display.bounds;//偏移, 如果 x,y 均为 0, 则表示当前激活的主屏幕.
-    // 创建浏览器窗口。
-    let xwindow = new Electron.BrowserWindow({
+     return new Electron.BrowserWindow({
         frame: false, //隐藏原生窗口边框
         useContentSize: true,
         // titleBarStyle: 'hiddenInset',
@@ -65,7 +79,16 @@ function createOne(display, paramJson) {
             backgroundThrottling: false,//是否在页面成为背景时限制动画和计时器。 这也会影响到 Page Visibility API. 默认值为 true。
         }
     });
+}
 
+function createOne(display, paramJson) {
+    // 创建浏览器窗口。
+    let xwindow;
+    if(appVar._platform === 'darwin'){
+        xwindow = createOne_macos(display);
+    }else{
+        xwindow = createOne_win(display);
+    }
 
     // 旁加载应用的 index.html。
     xwindow.loadURL(url.format({

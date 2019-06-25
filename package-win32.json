@@ -2,7 +2,7 @@
   "name": "ideawall",
   "author": "周曦 <1747128171@qq.com>",
   "version": "1.0.0",
-  "description": "ideawall - 创意者桌面 [MacOs 版]",
+  "description": "ideawall - 创意者桌面 [Window 版]",
   "private": true,
   "license": null,
   "main": "App.js",
@@ -113,6 +113,7 @@
   },
   "dependencies": {
     "electron-updater": "^4.0.12",
+    "electron-wallpaper": "^0.0.3",
     "archiver": "^3.0.0",
     "async": "^2.6.1",
     "auto-launch": "^5.0.5",

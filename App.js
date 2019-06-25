@@ -2,7 +2,7 @@
 const {
     app
 } = require('electron');
-// const electronWallpaper = require('electron-wallpaper');
+
 
 /**
  * 单例锁控制
