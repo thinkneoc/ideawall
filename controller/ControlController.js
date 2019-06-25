@@ -253,7 +253,6 @@ var vm = new Vue({
         }
     },
     created: function () {
-        
     },
     mounted() {
         var that = this;
@@ -316,11 +315,12 @@ $(function () {
             var dblAction = 'max';//max|min. //从设置中读取, 双击事件是最大化还是最小化.
             if (dblAction === 'max') {
                 if (win.isMaximized()) {//返回 boolean, 窗口是否最大化.
-                    if (proxy.appVar._platform !== 'darwin') {
-                        win.restore();//win平台下使用这个恢复. 待测试.
-                    } else {
-                        win.unmaximize();//将最小化的窗口恢复为之前的状态. [restore()方法是: 将最小化的窗口恢复为之前的状态.]
-                    }
+                    win.unmaximize();
+                    // if (proxy.appVar._platform !== 'darwin') {
+                    //     win.restore();//win平台下使用这个恢复. 待测试.
+                    // } else {
+                    //     win.unmaximize();//将最小化的窗口恢复为之前的状态. [restore()方法是: 将最小化的窗口恢复为之前的状态.]
+                    // }
                 } else {
                     win.maximize();//窗口最大化.
                 }

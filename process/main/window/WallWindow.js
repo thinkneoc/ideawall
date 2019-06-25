@@ -38,7 +38,7 @@ function createOne_macos(display) {
         // vibrancy: 'appearance-based',//窗口是否使用 vibrancy 动态效果, 仅 macOS 中有效. 可以为 appearance-based, light, dark, titlebar, selection, menu, popover, sidebar, medium-light 或 ultra-dark. 请注意，结合一个 vibrancy 值使用 frame: false ，需要确保titleBarStyle为一个非默认值。
         // backgroundColor: '#80FFFFFF',
         zoomToPageWidth: false,//单击工具栏上的绿色信号灯按钮或单击 窗口>缩放 菜单项时的行为, 仅macOS中有效. 如果为 true, 窗口将放大到网页的本身宽度, false 将使其缩放到屏幕的宽度。 这也会影响直接调用 maximize() 时的行为。 默认值为 false.
-        show: true,//创建时候是否显示
+        show: false,//创建时候是否显示
         center: true,
         x: x,
         y: y,

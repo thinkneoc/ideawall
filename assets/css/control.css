@@ -7,10 +7,26 @@ html, body, #app, .el-container, .el-tabs, .el-tabs__content, .el-tab-pane, .el-
 }
 
 /*windows的透明就是完全透明了~ 这里处理一下*/
-.win-control{
-    background: #000;
-    background: -webkit-linear-gradient(rgba(0,0,0,0),rgba(0,0,0,1));
-    -webkit-filter: blur(4px);
+.win-control-bg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: #c1c1c1;
+    /* background: -webkit-linear-gradient(#fff,#c1c1c1); */
+    /* -webkit-filter: blur(4px); */
+    filter: opacity(95%);
+}
+
+.win-control-upbg{
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index: 2;
 }
 
 html, body{
