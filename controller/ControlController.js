@@ -11,6 +11,7 @@ var vm = new Vue({
             loading: true,
             loadingMaster: false,
             loadingControl: true,
+            loadingHandler: undefined,
             winMaxsize: false,//windows的最大化最小化状态判定有问题, 直接记录一下.
             activeTab: T.p('tab') ? T.p('tab') : 'mydesk',
             tabs: {
@@ -69,13 +70,13 @@ var vm = new Vue({
             text = text ? text : '正在加载中...';
             if ($('#zxxLoadingSpanTip').length > 0) {
             } else {
-                this.loading = this.showMessage('<span id="zxxLoadingSpanTip" style="vertical-align:bottom;">' + text + '</span>', 'loading', dur, false, false);//默认不自动关闭.
+                this.loadingHandler = this.showMessage('<span id="zxxLoadingSpanTip" style="vertical-align:bottom;">' + text + '</span>', 'loading', dur, false, false);//默认不自动关闭.
             }
         },
         closeLoading(dur) {
             dur = dur ? dur : 1000;
-            if (this.loading) {
-                setTimeout(this.loading, dur);//延迟1s关闭, 给予充足的渲染时间.
+            if (this.loadingHandler) {
+                setTimeout(this.loadingHandler, dur);//延迟1s关闭, 给予充足的渲染时间.
             }
         },
         showMessage(content, type, duration, closable, nodestory) {
