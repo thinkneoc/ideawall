@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EBUSY: resource busy or locked, unlink 'C:\Users\ischi\workspace\ideawall\node_modules\electron\dist\chrome_100_percent.pak'
+  Error: EBUSY: resource busy or locked, unlink 'C:\Users\ischi\workspace\ideawall\node_modules\electron\dist\chrome_200_percent.pak'
 
 npm manifest: 
   {
@@ -23,7 +23,7 @@ npm manifest:
     "version": "1.0.0",
     "description": "ideawall - 创意者桌面 [Window 版]",
     "private": true,
-    "license": null,
+    "license": "",
     "main": "App.js",
     "scripts": {
       "init": "node init.js --f",
@@ -136,6 +136,7 @@ npm manifest:
       "auto-launch": "^5.0.5",
       "better-sqlite3": "^5.4.0",
       "electron-updater": "^4.0.12",
+      "electron-wallpaper": "^0.0.3",
       "log4js": "^3.0.6",
       "nodemailer": "^6.2.1",
       "nodemailer-smtp-transport": "^2.7.4",
