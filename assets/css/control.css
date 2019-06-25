@@ -6,6 +6,13 @@ html, body, #app, .el-container, .el-tabs, .el-tabs__content, .el-tab-pane, .el-
     background: transparent;
 }
 
+/*windows的透明就是完全透明了~ 这里处理一下*/
+.win-control{
+    background: #000;
+    background: -webkit-linear-gradient(rgba(0,0,0,0),rgba(0,0,0,1));
+    -webkit-filter: blur(4px);
+}
+
 html, body{
     overflow-x: hidden;
 }

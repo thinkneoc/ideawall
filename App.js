@@ -68,9 +68,9 @@ if (!gotTheLock) {
          */
         helper.getWallWindow();
 
-        if (pref_autoOpenControl) {
+        // if (pref_autoOpenControl) {
             helper.getControlWindow(true); //防止启动的时候资源占用超负荷, 暂时不启用.
-        }
+        // }
 
         /**
          * 初始化系统托盘
@@ -80,7 +80,11 @@ if (!gotTheLock) {
         /**
          * 启动自动更新任务
          */
-        autoUpdater.updateHandle(appVar);
+        try {
+            autoUpdater.updateHandle(appVar);
+        } catch (e) {
+            //...
+        }
     });
 
     // app.on('ready', ()=>{

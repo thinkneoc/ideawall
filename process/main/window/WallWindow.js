@@ -113,7 +113,7 @@ function createOne(display, paramJson) {
 
     // 当窗口关闭时触发
     xwindow.on('closed', function () {
-        logger.info("[Process][MainProcessHelper][_WallWindow_.on._closed_]壁纸窗口关闭");
+        logger.info("[Process][MainProcessHelper][_WallWindow_.on._closed_]壁纸窗口"+display.id+"关闭");
 
         //将全局xwindow置为null
         xwindow = null;

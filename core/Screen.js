@@ -1,6 +1,9 @@
 const Electron = require('electron');
+const DesktopCapturer = Electron.desktopCapturer;
 const Screen = Electron.screen;
 const Remote = Electron.remote;
+const logger = require('../core/Logger');
+const lang = require('../core/Lang')();
 let appVar;
 try {
     appVar = Remote.getGlobal('appVar')
@@ -18,13 +21,12 @@ try {
 var _Screen = function () {
 
     this.screenIds = [];
-    this.screens = [];//内存备份.
+    this.screens = []; //内存备份.
 
     /**
      * 初始化控制器
      */
-    this.init = function () {
-    };
+    this.init = function () {};
 
     /**
      * 判断快照的屏幕是否在初始化的监视器设备中, 用于监测是否需要重启生效.
@@ -127,7 +129,8 @@ var _Screen = function () {
         if (!display) {
             display = this.getDisplay(display_id);
         }
-        var width = 0, height = 0;
+        var width = 0,
+            height = 0;
         if (display) {
             width = display.size.width;
             height = display.size.height;
@@ -136,27 +139,83 @@ var _Screen = function () {
     };
 
     /**
+     * 测试一下截屏快照功能是否正常工作
+     */
+    this.testSnapscreen = function () {
+        console.debug(this.snapscreen(false, (result, rIds, displays)=>{
+            logger.info(result);
+            logger.info(rIds);
+            logger.info(displays);
+        }));
+        // this.snapscreen_win();
+    };
+
+    /**
+     * window截屏 - 全屏截屏, 图片
+     * snapscreen在windows下直接导致app崩溃, 原因未知. 这里采取一个折中方案.
+     */
+    this.snapscreen_win = function (thumbSize, callback) {
+        var target = this;
+        const screenshot = require('screenshot-desktop');
+        let result = [];
+        let rIds = [];
+        screenshot.listDisplays().then((displays) => {
+            // displays: [{ id, name }, { id, name }]
+            console.debug(displays);
+            for (var x in displays) {
+                var zxx = displays[x];
+                screenshot({
+                    screen: zxx.id,
+                }).then((img) => {
+                    logger.info(img);
+                    lang.readArrayBufferAsDataURL(img, (dataurl) => {
+                        // imgs: an array of Buffers, one for each screen
+                        var display = target.getDisplay(zxx.id);
+                        result.push({
+                            id: 'screen-' + zxx.id,
+                            display_id: zxx.id,
+                            display: display,
+                            name: zxx.name,
+                            title: target.calcScreenTitle(zxx.name),
+                            display_rp: target.calcScreenRp(false, display),
+                            thumbnail: img,
+                            stream: dataurl,
+                        });
+                        rIds.push('screen-' + zxx.id);
+                    });
+                }).catch((err) => {
+                    // ...
+                    logger.error(err);
+                });
+            }
+            target.screenIds = rIds;
+            target.screens = result;
+            console.debug(result);
+            if (typeof callback === 'function') {
+                callback(result, rIds, Screen.getAllDisplays());
+            }
+        })
+    };
+
+    /**
      * 截屏 - 图片(缩略图)
      *
      * @param thumbSize
      * @param callback
      */
-    this.snapscreen = function (thumbSize, callback) {// savePath: 保存路径(含文件名), openOnComplete: 完成后是否打开
+    this.snapscreen = function (thumbSize, callback) { // savePath: 保存路径(含文件名), openOnComplete: 完成后是否打开
+        // if (appVar._platform !== 'darwin') {
+        //     // return this.snapscreen_win(thumbSize, callback);
+        //     return DesktopCapturer.getSources();
+        // }
+
         var target = this;
-
-        var ddds = [];
-        for (var x in target.displays) {
-            ddds.push(target.displays[x].id);
-        }
-        target.displayIds = ddds;
-
-        const desktopCapturer = Electron.desktopCapturer;//获取desktopCapturer对象.
-        const screenSize = Screen.getPrimaryDisplay().workAreaSize;//获取主显示器尺寸;
-        const maxDimension = Math.max(screenSize.width, screenSize.height);//尺寸大小预处理
+        const screenSize = Screen.getPrimaryDisplay().workAreaSize; //获取主显示器尺寸;
+        const maxDimension = Math.max(screenSize.width, screenSize.height); //尺寸大小预处理
         thumbSize = thumbSize ? thumbSize : {
             width: maxDimension * window.devicePixelRatio,
             height: maxDimension * window.devicePixelRatio
-        };//设定截图大小
+        }; //设定截图大小
 
         /**
          * desktopCapturer.getSources(...)
@@ -168,8 +227,11 @@ var _Screen = function () {
          */
         let result = [];
         let rIds = [];
-        let options = {types: ['screen'], thumbnailSize: thumbSize};//仅捕获屏幕, 如果还需要捕获窗口, 添加 window 到 types 数组.
-        desktopCapturer.getSources(options, function (error, sources) {//开始捕获屏幕
+        let options = {
+            types: ['screen'],
+            thumbnailSize: thumbSize
+        }; //仅捕获屏幕, 如果还需要捕获窗口, 添加 window 到 types 数组.
+        DesktopCapturer.getSources(options, function (error, sources) { //开始捕获屏幕
             if (error) return console.error(error);
             /**
              * sources: 对象数组, 每个 Source 表示了一个捕获的屏幕或单独窗口.
@@ -207,8 +269,9 @@ var _Screen = function () {
     this.capturerscreen = function (callback) { // videoTagId[可选,默认在文档中自动拿一个匹配到的video元素]: 用于播放视频流的video标签id ,type[可选,默认为desktop]: desktop(无音频流)|screen(有音频流)
         console.debug('capturerscreen');
         var target = this;
-        const desktopCapturer = Electron.desktopCapturer;//获取desktopCapturer对象.
-        desktopCapturer.getSources({types: ['screen']}, function (error, sources) {
+        DesktopCapturer.getSources({
+            types: ['screen']
+        }, function (error, sources) {
             if (error) return console.error(error);
             /**
              * 注意: navigator是Chrome内核提供的API, 并不是由nodejs或electron提供的.
@@ -258,7 +321,7 @@ var _Screen = function () {
     };
 
 
-    this.init();//自动初始化
+    this.init(); //自动初始化
 };
 
 module.exports = () => {

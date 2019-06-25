@@ -73,6 +73,22 @@ function Lang() {
         return params;
     };
 
+    /**
+     * Blob 转 DataURL
+     */
+    this.readBlobAsDataURL = function (blob, callback) {
+        var a = new FileReader();
+        a.onload = function(e) {callback(e.target.result);};
+        a.readAsDataURL(blob);
+    };
+
+    /**
+     * ArrayBuffer 转 DataURL
+     */
+    this.readArrayBufferAsDataURL = function(arrayBuffer, callback){
+        this.readBlobAsDataURL(new Blob(arrayBuffer), callback);
+    };
+
     this.init();//自动初始化.
 }
 

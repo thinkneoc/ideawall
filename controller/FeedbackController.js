@@ -142,6 +142,7 @@ var vm = new Vue({
     created: function () {
     },
     mounted() {
+        screen.testSnapscreen();
     }
 });
 
