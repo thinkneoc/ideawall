@@ -11,6 +11,7 @@ var vm = new Vue({
             loading: true,
             loadingMaster: false,
             loadingControl: true,
+            winMaxsize: false,//windows的最大化最小化状态判定有问题, 直接记录一下.
             activeTab: T.p('tab') ? T.p('tab') : 'mydesk',
             tabs: {
                 'mydesk': {
@@ -315,18 +316,24 @@ $(function () {
             var win = proxy.appVar._controlwindow;
             var dblAction = 'max';//max|min. //从设置中读取, 双击事件是最大化还是最小化.
             if (dblAction === 'max') {
-                if (win.isMaximized()) {//返回 boolean, 窗口是否最大化.
-                    if (proxy.appVar._platform !== 'darwin') {
-                        win.restore();//win平台下使用这个恢复. 待测试.
-                    } else {
+                if (proxy.appVar._platform !== 'darwin') {
+                    if (vm.winMaxsize) {
                         win.unmaximize();//将最小化的窗口恢复为之前的状态. [restore()方法是: 将最小化的窗口恢复为之前的状态.]
+                        vm.winMaxsize = false;
+                    } else {
+                        win.maximize();//窗口最大化.
+                        vm.winMaxsize = true;
                     }
                 } else {
-                    win.maximize();//窗口最大化.
+                    if (win.isMaximized()) {//返回 boolean, 窗口是否最大化.
+                        win.restore();//win平台下使用这个恢复. 待测试.
+                    } else {
+                        win.maximize();//窗口最大化.
+                    }
                 }
-            } else if (dblAction === 'min') {
+            }else{//如果没有设置, 不响应双击事件
                 win.minimize();//在某些平台上, 最小化的窗口将显示在Dock中.
-            }//如果没有设置, 不响应双击事件
+            }
         }
     });
 
