@@ -1,6 +1,6 @@
 {
     "appname": "ideawall",
-    "debug": false,
+    "debug": true,
     "database": {
         "encrypt": false
     },
