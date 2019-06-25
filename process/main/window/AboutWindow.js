@@ -41,7 +41,7 @@ function creat(paramJson) {
         focusable: true,//是否可聚焦
         transparent: false,//开启窗口透明
         hasShadow: true,//窗口是否有阴影。只在 OS X 上有效. 默认为 true。这个打开会造成部分盒子阴影, 体验较差.
-        skipTaskbar: false, //是否跳过在任务栏中显示窗口. 默认值为false.
+        skipTaskbar: true, //是否跳过在任务栏中显示窗口. 默认值为false.
         enableLargerThanScreen: false,//是否允许改变窗口的大小时, 大于屏幕的尺寸. 默认值为false.
         autoHideMenuBar: true,//除非点击 Alt，否则隐藏菜单栏.默认为 false。
         webPreferences: { //用于解决not allowed to load local resource的问题

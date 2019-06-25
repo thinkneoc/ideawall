@@ -20,7 +20,7 @@ function creat(displayId, paramJson) {
     let xy = calcPosition();
     // 创建浏览器窗口。
     xwindow = new Electron.BrowserWindow({
-        parent: appVar._controlwindow,
+        // parent: appVar._controlwindow,
         frame: true, //隐藏原生窗口边框
         useContentSize: true,
         zoomToPageWidth: false,//单击工具栏上的绿色信号灯按钮或单击 窗口>缩放 菜单项时的行为, 仅macOS中有效. 如果为 true, 窗口将放大到网页的本身宽度, false 将使其缩放到屏幕的宽度。 这也会影响直接调用 maximize() 时的行为。 默认值为 false.

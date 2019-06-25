@@ -3,7 +3,8 @@ html, body, #app {
     padding: 0;
     width: 100%;
     height: 100%;
-    background: transparent;
+    /*background: transparent;*/
+    background: #eee;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -171,6 +172,7 @@ html, body, #app {
     float: left;
     text-align: left;
     color: #606266;
+    font-size: 12px;
 }
 
 .zxx-apply-btns{

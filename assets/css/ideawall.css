@@ -239,7 +239,8 @@ template {
     position: absolute !important;
     width: 5px !important; /*纵向*/
     height: 5px !important; /*横向*/
-    background: transparent !important;
+    /*background: transparent !important;*/
+    background-color: #fff !important;
 }
 
 ::-webkit-scrollbar-button { /*指滚动条两边的按钮。当不需要时可以用display:none将其隐藏*/
@@ -248,7 +249,8 @@ template {
 
 ::-webkit-scrollbar-track { /*指外层轨道部分，当不需要时可以用display:none将其隐藏，也可以添加你想要的颜色*/
     border: none !important;
-    background-color: transparent !important;
+    /*background-color: transparent !important;*/
+    background-color: #eee !important;
     position: absolute !important;
 }
 
