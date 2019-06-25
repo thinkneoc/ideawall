@@ -31,6 +31,8 @@ function creat(isshow, paramJson) {
         height: 600,
         minWidth: 998,
         minHeight: 600,
+        maxWidth: 998,
+        maxHeight: 600,
         resizable: true,
         movable: true,
         minimizable: true,
