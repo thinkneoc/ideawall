@@ -222,7 +222,7 @@ var _Screen = function () {
                 }).then((img) => {
                     var dataurl = 'data:image/jpg;base64,' + img.toString('base64');
                     let display = target.getDisplay(zyy.id);
-                    result.push({
+                    var obj = {
                         id: 'screen-' + zyy.id,
                         display_id: zyy.id,
                         display: display,
@@ -231,7 +231,12 @@ var _Screen = function () {
                         display_rp: target.calcScreenRp(false, display),
                         thumbnail: null,
                         stream: dataurl,
-                    });
+                    };
+                    if (zyy.id == appVar._primarydisplay.id) {
+                        result.unshift(obj);//主屏幕放在前面
+                    } else {
+                        result.push(obj);
+                    }
                     rIds.push('screen-' + zyy.id);
                 }).catch((err) => {
                     // ...
