@@ -9,6 +9,7 @@ var vm = new Vue({
     data: function () {
         return {
             wallpaperEmpty: false,
+            wallaperEmptyTip: '媒体组为空',
             deskId: T.p("deskId"),//桌面id
             link: T.p("link"),//link 地址
             desk: {},//配置的桌面信息
