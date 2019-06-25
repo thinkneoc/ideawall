@@ -249,8 +249,7 @@ template {
 
 ::-webkit-scrollbar-track { /*指外层轨道部分，当不需要时可以用display:none将其隐藏，也可以添加你想要的颜色*/
     border: none !important;
-    /*background-color: transparent !important;*/
-    background-color: #eee !important;
+    background-color: transparent !important;
     position: absolute !important;
 }
 
@@ -259,7 +258,8 @@ template {
 }
 
 ::-webkit-scrollbar-thumb { /*指滚动条里面可以拖动的部分，也就是滑块*/
-    background: rgb(195, 195, 195, .5);
+    /*background: rgb(195, 195, 195, .5);*/
+    background-color: #eee !important;
     border-radius: 10px !important;
 }
 
