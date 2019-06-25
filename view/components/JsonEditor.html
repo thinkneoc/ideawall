@@ -14,7 +14,7 @@
 </head>
 
 <body style="overflow:hidden;">
-<div id="app" v-cloak>
+<div id="app" v-cloak v-if="proxy.appVar._platform === 'darwin'?'background:#fff;':''>
     <div class="zxx-loading" style="display:block;" v-if="loadingData">
         <div class="zxx-loading-panel">
             <i class="el-icon-loading"></i>

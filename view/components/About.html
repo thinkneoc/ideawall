@@ -12,7 +12,7 @@
 </head>
 
 <body style="overflow:hidden;">
-<div id="app" v-cloak>
+<div id="app" v-cloak v-if="proxy.appVar._platform === 'darwin'?'background:#fff;':''>
     <div class="zxx-about-container">
         <div class="zxx-about-left">
             <img src="../../static/logo/blue-min-pretty.png" alt="">
