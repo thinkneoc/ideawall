@@ -1,5 +1,7 @@
 /*主进程*/
-const {app} = require('electron');
+const {
+    app
+} = require('electron');
 // const electronWallpaper = require('electron-wallpaper');
 
 /**
@@ -11,14 +13,16 @@ const {app} = require('electron');
 const gotTheLock = app.requestSingleInstanceLock();
 
 if (!gotTheLock) {
-    app.exit(0);//比 app.quit 更快.
+    app.exit(0); //比 app.quit 更快.
 } else {
     const logger = require('./core/Logger');
     const helper = require('./process/main/MainProcessHelper');
     const dialog = require('./process/main/Dialog');
     const tray = require('./process/main/Tray');
     const AppVar = require('./process/main/AppVar');
-    let appVar = AppVar.getAppVar(), appTray, windows;//全局变量, 防止自动垃圾回收.
+    AppVar.checkAppWorkSpace(); //工作命名空间构建
+    let appVar = AppVar.getAppVar(),
+        appTray, windows; //全局变量, 防止自动垃圾回收.
     const preferenceModel = require('./model/PreferenceModel')(appVar);
     preferenceModel.initial();
 
@@ -35,14 +39,14 @@ if (!gotTheLock) {
         }
         //如果当前没有窗口被激活，则创建窗口
         var res = helper.getWallWindow();
-        if (res.result || pref_autoOpenControl) {//如果壁纸窗口已经存在, 就打开控制面板窗口.
+        if (res.result || pref_autoOpenControl) { //如果壁纸窗口已经存在, 就打开控制面板窗口.
             helper.getControlWindow(true);
         }
     });
 
 
-// 这个方法将会在electron初始化完成后被调用
-// 某些API只能在初始化之后(此状态之后)被调用
+    // 这个方法将会在electron初始化完成后被调用
+    // 某些API只能在初始化之后(此状态之后)被调用
     app.on('ready', () => {
         const autolaunch = require('./process/main/AutoLaunch');
         const autoUpdater = require('./process/main/AutoUpdater');
@@ -53,75 +57,71 @@ if (!gotTheLock) {
          */
         app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
 
+
         /**
-         * 工作命名空间构建
+         * 开机自启动鉴定[首次启动自动加入开机自启动]
          */
-        AppVar.checkAppWorkSpace(() => {
-            /**
-             * 开机自启动鉴定[首次启动自动加入开机自启动]
-             */
-            autolaunch.init(appVar, preferenceModel);
+        autolaunch.init(appVar, preferenceModel);
 
-            /**
-             * 初始化壁纸层窗口
-             */
-            helper.getWallWindow();
+        /**
+         * 初始化壁纸层窗口
+         */
+        helper.getWallWindow();
 
-            if (pref_autoOpenControl) {
-                helper.getControlWindow(true);//防止启动的时候资源占用超负荷, 暂时不启用.
-            }
+        if (pref_autoOpenControl) {
+            helper.getControlWindow(true); //防止启动的时候资源占用超负荷, 暂时不启用.
+        }
 
-            /**
-             * 初始化系统托盘
-             */
-            appTray = tray.init(appVar);
+        /**
+         * 初始化系统托盘
+         */
+        appTray = tray.init(appVar);
 
-            /**
-             * 启动自动更新任务
-             */
-            autoUpdater.updateHandle(appVar);
-        });
+        /**
+         * 启动自动更新任务
+         */
+        autoUpdater.updateHandle(appVar);
     });
 
-// app.on('ready', ()=>{
-//     const wallpaper = require('wallpaper');
-//
-//     (async () => {
-//         var dd = helper.getStaticResourcePath("Tasermiut-格陵兰之角.mp4");
-//         await wallpaper.set(dd);
-//
-//         await wallpaper.get();
-//         //=> '/Users/sindresorhus/unicorn.jpg'
-//     })();
-// })
+    // app.on('ready', ()=>{
+    //     const wallpaper = require('wallpaper');
+    //
+    //     (async () => {
+    //         var dd = helper.getStaticResourcePath("Tasermiut-格陵兰之角.mp4");
+    //         await wallpaper.set(dd);
+    //
+    //         await wallpaper.get();
+    //         //=> '/Users/sindresorhus/unicorn.jpg'
+    //     })();
+    // })
 
 
-// 当所有窗口关闭时关闭应用程序
+    // 当所有窗口关闭时关闭应用程序
     app.on('window-all-closed', function () {
-        if (process.platform !== 'darwin') {//如果是非 mac 系统, 直接退出
+        if (process.platform !== 'darwin') { //如果是非 mac 系统, 直接退出
             logger.info("系统即将关闭");
             app.quit();
-        } else {//如果是 mac 系统, 关闭所有窗口就好, 等待重新唤醒.
+        } else { //如果是 mac 系统, 关闭所有窗口就好, 等待重新唤醒.
 
         }
 
-        appTray.destroy();//干掉托盘
+        appTray.destroy(); //干掉托盘
         appTray = null;
     });
 
-//当应用程序准备退出时执行动作
+    //当应用程序准备退出时执行动作
     app.on('will-quit', () => {
         logger.info("程序即将退出");
     });
 
-//当应用程序激活时，通常在macOS下
+    //当应用程序激活时，通常在macOS下
     app.on('activate', function () {
         if (!appTray) {
             appTray = tray.init(appVar);
         }
         //如果当前没有窗口被激活，则创建窗口
         var res = helper.getWallWindow();
-        if (res.result || pref_autoOpenControl) {//如果壁纸窗口已经存在, 就打开控制面板窗口.
+        if (res.result || pref_autoOpenControl) { //如果壁纸窗口已经存在, 就打开控制面板窗口.
             helper.getControlWindow(true);
         }
     });
