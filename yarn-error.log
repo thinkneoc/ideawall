@@ -1,20 +1,20 @@
 Arguments: 
-  D:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js
+  /usr/local/Cellar/node/12.4.0/bin/node /usr/local/bin/yarn
 
 PATH: 
-  C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Java\jdk1.8.0_131\bin;F:\Maven\apache-maven-3.3.9\bin;F:\Maven\nexus-2.8.1-01-bundle\nexus-2.8.1-01\bin;D:\Program Files\nodejs\;C:\Program Files\Git LFS;C:\Program Files\Redis\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\Git\cmd;C:\Users\ischi\AppData\Local\Microsoft\WindowsApps;C:\Users\ischi\AppData\Local\atom\bin;C:\Users\ischi\AppData\Local\Microsoft\WindowsApps;;C:\Program Files\Microsoft VS Code\bin;C:\Users\ischi\AppData\Roaming\npm;C:\Program Files\JetBrains\IntelliJ IDEA 2019.1\bin;;C:\Users\ischi\AppData\Local\Yarn\bin
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public
 
 Yarn version: 
   1.16.0
 
 Node version: 
-  10.3.0
+  12.4.0
 
 Platform: 
-  win32 x64
+  darwin x64
 
 Trace: 
-  Error: ENOENT: no such file or directory, copyfile 'C:\Users\ischi\AppData\Local\Yarn\Cache\v4\npm-aws-sign2-0.6.0-14342dd38dbcc94d0e5b87d763cd63612c0e794f\node_modules\aws-sign2\package.json' -> 'C:\Users\ischi\workspace\ideawall\node_modules\unirest\node_modules\aws-sign2\package.json'
+  Error: ENOENT: no such file or directory, copyfile '/Users/caohui/Library/Caches/Yarn/v4/npm-ms-2.0.0-5608aeadfc00be6c2901df5f9861788de0d597c8/node_modules/ms/license.md' -> '/Users/caohui/_git_repository/git-product2/ideawall/node_modules/electron-osx-sign/node_modules/ms/license.md'
 
 npm manifest: 
   {

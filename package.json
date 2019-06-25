@@ -46,8 +46,7 @@
       "**"
     ],
     "asar": true,
-    "asarUnpack": [
-    ],
+    "asarUnpack": [],
     "nsis": {
       "artifactName": "${name}_${version}_${os}${arch}.${ext}",
       "shortcutName": "ideawall",
