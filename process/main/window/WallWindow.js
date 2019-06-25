@@ -60,7 +60,7 @@ function createOne_macos(display){
         focusable: true,//是否可聚焦
         transparent: true,//开启窗口透明
         hasShadow: true,//窗口是否有阴影。只在 OS X 上有效. 默认为 true。这个打开会造成部分盒子阴影, 体验较差.
-        type: 'desktop',//桌面窗口模式, 窗口聚焦事件,鼠标事件和键盘事件无效.
+        type: 'dedsktop',//桌面窗口模式, 窗口聚焦事件,鼠标事件和键盘事件无效.
         // fullscreen: true,
         // simpleFullscreen: true,// 在 macOS 上使用 pre-Lion 全屏. 默认为false, 具体效果就是高度覆盖dock栏. 必须开启fullscreen才有效.
         skipTaskbar: true, //是否跳过在任务栏中显示窗口. 默认值为false.

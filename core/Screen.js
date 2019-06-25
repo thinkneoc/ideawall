@@ -26,7 +26,8 @@ var _Screen = function () {
     /**
      * 初始化控制器
      */
-    this.init = function () {};
+    this.init = function () {
+    };
 
     /**
      * 判断快照的屏幕是否在初始化的监视器设备中, 用于监测是否需要重启生效.
@@ -142,7 +143,7 @@ var _Screen = function () {
      * 测试一下截屏快照功能是否正常工作
      */
     this.testSnapscreen = function () {
-        console.debug(this.snapscreen(false, (result, rIds, displays)=>{
+        console.debug(this.snapscreen(false, (result, rIds, displays) => {
             logger.info(result);
             logger.info(rIds);
             logger.info(displays);
@@ -151,38 +152,90 @@ var _Screen = function () {
     };
 
     /**
+     * 包装映射一下display数据结构, 对win下的截屏策略
+     * 具体思路: 利用bound和rp值来比对. 比较低效, 索性绝大部分用户没有那么多监视器设备.
+     *
+     * @param display
+     */
+    this.calcPackDisplay_win = function (displays) {
+        var _primarydisplay = appVar._primarydisplay;
+        var _alldisplays = appVar._displays;
+        var res = {};//为方便获取和加强并发, 采用id:obj键值对的解构.
+        var sx = 2;
+        for (var x in displays) {
+            var zxx = displays[x];
+            var newzxx = {};
+            //主屏幕鉴定
+            if (compareDisplay(zxx, _primarydisplay)) {
+                newzxx = _primarydisplay;
+                newzxx.name = 'Entire Screen';//Entire Screen | Screen 1
+                res[zxx.id] = newzxx;
+                break;
+            }
+            for (var y in _alldisplays) {
+                var zyy = _alldisplays[y];
+                if (compareDisplay(zxx, zyy) && zyy.id !== _primarydisplay.id) {
+                    newzxx = zyy;
+                    newzxx.name = 'Screen' + sx;
+                    sx++;
+                    res[zxx.id] = newzxx;
+                    break;
+                }
+            }
+        }
+        return res;
+
+        /**
+         * 比较两个监视器对象是否符合
+         * @param dp1   snapscreen-desktop的Display对象
+         * @param dp2   Electron的Display对象
+         * @returns {boolean}
+         */
+        function compareDisplay(dp1, dp2) {
+            return (dp1.width === dp2.bounds.width && dp1.height === dp2.bounds.height && dp1.top === dp2.bounds.y && dp1.left === dp2.bounds.x);
+        }
+    };
+
+    /**
      * window截屏 - 全屏截屏, 图片
-     * snapscreen在windows下直接导致app崩溃, 原因未知. 这里采取一个折中方案.
+     * snapscreen在windows下直接导致app崩溃, 原因未知[猜测是electron-wallpaper影响了它]. 这里采取一个折中方案.
      */
     this.snapscreen_win = function (thumbSize, callback) {
         var target = this;
         const screenshot = require('screenshot-desktop');
         let result = [];
         let rIds = [];
+        console.debug(appVar._primarydisplay);
+        console.debug(appVar._wallwindows);
         screenshot.listDisplays().then((displays) => {
             // displays: [{ id, name }, { id, name }]
+            var rdisplays = target.calcPackDisplay_win(displays);
             console.debug(displays);
+            console.debug(rdisplays);
             for (var x in displays) {
                 var zxx = displays[x];
+                var zyy = rdisplays[zxx.id];
+                console.debug(zxx);
+                console.debug(zyy);
                 screenshot({
                     screen: zxx.id,
-                }).then((img) => {
-                    logger.info(img);
-                    lang.readArrayBufferAsDataURL(img, (dataurl) => {
-                        // imgs: an array of Buffers, one for each screen
-                        var display = target.getDisplay(zxx.id);
-                        result.push({
-                            id: 'screen-' + zxx.id,
-                            display_id: zxx.id,
-                            display: display,
-                            name: zxx.name,
-                            title: target.calcScreenTitle(zxx.name),
-                            display_rp: target.calcScreenRp(false, display),
-                            thumbnail: img,
-                            stream: dataurl,
-                        });
-                        rIds.push('screen-' + zxx.id);
+                    format: 'png',
+                    filename: appVar._apath.dir.snapscreen + '/' + zyy.id + '.png',
+                }).then((imgPath) => {
+                    logger.info(imgPath);
+                    // imgs: an array of Buffers, one for each screen
+                    var display = target.getDisplay(zyy.id);
+                    result.push({
+                        id: 'screen-' + zyy.id,
+                        display_id: zyy.id,
+                        display: display,
+                        name: zyy.name,
+                        title: target.calcScreenTitle(zyy.name),
+                        display_rp: target.calcScreenRp(false, display),
+                        thumbnail: null,
+                        stream: imgPath,
                     });
+                    rIds.push('screen-' + zyy.id);
                 }).catch((err) => {
                     // ...
                     logger.error(err);
@@ -204,10 +257,10 @@ var _Screen = function () {
      * @param callback
      */
     this.snapscreen = function (thumbSize, callback) { // savePath: 保存路径(含文件名), openOnComplete: 完成后是否打开
-        // if (appVar._platform !== 'darwin') {
-        //     // return this.snapscreen_win(thumbSize, callback);
-        //     return DesktopCapturer.getSources();
-        // }
+        if (appVar._platform !== 'darwin') {
+            return this.snapscreen_win(thumbSize, callback);
+            // return DesktopCapturer.getSources();
+        }
 
         var target = this;
         const screenSize = Screen.getPrimaryDisplay().workAreaSize; //获取主显示器尺寸;
@@ -228,7 +281,7 @@ var _Screen = function () {
         let result = [];
         let rIds = [];
         let options = {
-            types: ['screen'],
+            types: ['window', 'screen'],
             thumbnailSize: thumbSize
         }; //仅捕获屏幕, 如果还需要捕获窗口, 添加 window 到 types 数组.
         DesktopCapturer.getSources(options, function (error, sources) { //开始捕获屏幕

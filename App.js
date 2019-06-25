@@ -68,9 +68,9 @@ if (!gotTheLock) {
          */
         helper.getWallWindow();
 
-        // if (pref_autoOpenControl) {
+        if (pref_autoOpenControl) {
             helper.getControlWindow(true); //防止启动的时候资源占用超负荷, 暂时不启用.
-        // }
+        }
 
         /**
          * 初始化系统托盘

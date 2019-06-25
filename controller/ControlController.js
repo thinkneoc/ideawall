@@ -13,13 +13,13 @@ var vm = new Vue({
             loadingControl: true,
             activeTab: T.p('tab') ? T.p('tab') : 'mydesk',
             tabs: {
-                // 'mydesk': {
-                //     name: 'mydesk',
-                //     title: '我的桌面',
-                //     icon: 'el-icon-monitor',
-                //     link: './control/MyDesk.html',
-                //     preload: true,
-                // },
+                'mydesk': {
+                    name: 'mydesk',
+                    title: '我的桌面',
+                    icon: 'el-icon-monitor',
+                    link: './control/MyDesk.html',
+                    preload: true,
+                },
                 'deskstore': {
                     name: 'deskstore',
                     title: '桌面商店',

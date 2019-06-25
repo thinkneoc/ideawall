@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="../../assets/css/ideawall.css">
     <link rel="stylesheet" href="../../assets/css/control.css">
 </head>
-<body>
-<div id="app" v-cloak :class="'animated fadeIn ' + (proxy.appVar._platform !== 'darwin': 'win-control': '')">
+<body :class="(proxy.appVar._platform !== 'darwin'? 'win-control': '')">
+<div id="app" v-cloak class="animated fadeIn">
     <div v-if="!loadingControl && loadingMaster"
          style="position: absolute;top: -20px;right: -20px;pointer-events: none;">
         <img src="../../assets/images/loading.jpg" alt="" style="width: 70px;height: 60px;">

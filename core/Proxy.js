@@ -306,30 +306,32 @@ var zxxinclude = function (path) {
 T.i = zxxinclude;
 
 //重写 console
-window.console = (function (origConsole) {
-    if (!window.console)
-        console = {};
-    return {
-        log: function () {
-            proxy.appVar._debug ? (origConsole && origConsole.log && origConsole.log(arguments[0])) : '';
-        },
-        info: function () {
-            proxy.appVar._debug ? origConsole.info(arguments[0]) : '';
-        },
-        debug: function () {
-            proxy.appVar._debug ? origConsole.debug(arguments[0]) : '';
-        },
-        warn: function () {
-            proxy.appVar._debug ? origConsole.warn(arguments[0]) : '';
-        },
-        error: function () {
-            proxy.appVar._debug ? origConsole.error(arguments[0]) : '';
-        },
-        time: function () {
-            proxy.appVar._debug ? origConsole.time(arguments[0]) : '';
-        },
-        timeEnd: function () {
-            proxy.appVar._debug ? origConsole.timeEnd(arguments[0]) : '';
-        }
-    };
-}(window.console));
+if(!proxy.appVar._debug){
+    window.console = (function (origConsole) {
+        if (!window.console)
+            console = {};
+        return {
+            log: function () {
+                origConsole && origConsole.log && origConsole.log(arguments[0]);
+            },
+            info: function () {
+                origConsole.info(arguments[0]);
+            },
+            debug: function () {
+                origConsole.debug(arguments[0]);
+            },
+            warn: function () {
+                origConsole.warn(arguments[0]);
+            },
+            error: function () {
+                origConsole.error(arguments[0]);
+            },
+            time: function () {
+                origConsole.time(arguments[0]);
+            },
+            timeEnd: function () {
+                origConsole.timeEnd(arguments[0]);
+            }
+        };
+    }(window.console));
+}
