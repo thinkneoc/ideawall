@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "ideawall - 创意者桌面 [MacOs 版]",
   "private": true,
-  "license": null,
+  "license": "",
   "main": "App.js",
   "scripts": {
     "init": "node init.js --f",
