@@ -60,7 +60,7 @@ function createOne_macos(display) {
         focusable: true,//是否可聚焦
         transparent: true,//开启窗口透明
         hasShadow: true,//窗口是否有阴影。只在 OS X 上有效. 默认为 true。这个打开会造成部分盒子阴影, 体验较差.
-        type: 'dedsktop',//桌面窗口模式, 窗口聚焦事件,鼠标事件和键盘事件无效.
+        type: 'desktop',//桌面窗口模式, 窗口聚焦事件,鼠标事件和键盘事件无效.
         // alwaysOnTop: true,//窗口置顶
         thickFrame: false,//对 Windows 上的无框窗口使用WS_THICKFRAME 样式，会增加标准窗口框架。 设置为 false 时将移除窗口的阴影和动画. 默认值为 true。
         // fullscreen: true,

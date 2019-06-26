@@ -283,7 +283,7 @@ var _Screen = function () {
         let result = [];
         let rIds = [];
         let options = {
-            types: ['window', 'screen'],
+            types: ['screen'],
             thumbnailSize: thumbSize
         }; //仅捕获屏幕, 如果还需要捕获窗口, 添加 window 到 types 数组.
         DesktopCapturer.getSources(options, function (error, sources) { //开始捕获屏幕

@@ -33,11 +33,11 @@ function init(appVar) {
         image: 'http://m.cdn.ideanote.16inet.com/blue-min-pretty.png', // 图片, 默认取网页中第一个img标签
     };
 
-    appTray = new Tray(path.join(appVar._staticpath, 'logo/blue-min-300_2.png'));
+    appTray = new Tray(path.join(appVar._staticpath, 'logo/black-min@3x.png'));
     appTray.setToolTip('ideawall - 创意者桌面');//设置鼠标指针在托盘图标上悬停时显示的文本
     // appTray.setContextMenu(buildTrayMenu(appVar, shareConfig));//设置内容菜单, 这个的菜单一旦生成, 无法更改. 所以, 改用点击弹出上下文菜单的方式.
     // appTray.setTitle('创意者桌面');//在 macOS 中，设置显示在状态栏中托盘图标旁边的标题 (支持ANSI色彩), 一般用于制作状态栏歌词
-    appTray.setPressedImage(path.join(appVar._staticpath, 'logo/blue-min-300_2.png'));//在 macOS 中，设置image作为托盘图标被按下时显示的图标
+    appTray.setPressedImage(path.join(appVar._staticpath, 'logo/white-min@3x.png'));//在 macOS 中，设置image作为托盘图标被按下时显示的图标
     appTray.on('click', () => {//mac/win/linux
         if (appVar._platform === 'darwin') {
             appTray.popUpContextMenu(buildTrayMenu(appVar, shareConfig));
@@ -260,9 +260,6 @@ function buildTrayMenu(appVar, shareConfig) {
         click: function () {
             //关闭所有的窗口就行, 等待事件处理...
             helper.closeAllWindows();
-            appTray.destroy(); //干掉托盘
-            appTray = null;
-            App.quit();
         },
     });
     return Menu.buildFromTemplate(template);
