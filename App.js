@@ -38,7 +38,7 @@ if (!gotTheLock) {
             appTray = tray.init(appVar);
         }
         helper.getWallWindow();
-        helper.getControlWindow(pref_autoOpenControl);
+        helper.getControlWindow(pref_autoOpenControl || appVar._guide);//如果是首次启动, 自动打开
         // //如果当前没有窗口被激活，则创建窗口
         // var res = helper.getWallWindow();
         // if (res.result || pref_autoOpenControl) { //如果壁纸窗口已经存在, 就打开控制面板窗口.
@@ -71,7 +71,7 @@ if (!gotTheLock) {
          * 初始化壁纸层窗口
          */
         helper.getWallWindow();
-        helper.getControlWindow(pref_autoOpenControl); //防止启动的时候资源占用超负荷, 暂时不启用.
+        helper.getControlWindow(pref_autoOpenControl || appVar._guide); //防止启动的时候资源占用超负荷, 暂时不启用.
 
         /**
          * 初始化系统托盘
@@ -115,7 +115,7 @@ if (!gotTheLock) {
             appTray = tray.init(appVar);
         }
         helper.getWallWindow();
-        helper.getControlWindow(pref_autoOpenControl);
+        helper.getControlWindow(pref_autoOpenControl || appVar._guide);
         // //如果当前没有窗口被激活，则创建窗口
         // var res = helper.getWallWindow();
         // if (res.result || pref_autoOpenControl) { //如果壁纸窗口已经存在, 就打开控制面板窗口.
