@@ -23,8 +23,18 @@
         <div style="clear:both;"></div>
     </div>
     <div id="form-containter" class="animated fadeIn">
+
         <el-form label-position="top" label-width="80px" :model="ld" size="mini">
-            <el-form-item label="README" size="mini">
+            <el-form-item label="" size="mini">
+                <span slot="label">
+                    README
+                    <el-tooltip placement="top">
+                        <div slot="content">
+                            README 即说明文档, 它通常由开发者提供, <br/>用以表述桌面配置参数说明和注意事项.
+                        </div>
+                        <el-button type="text" icon="el-icon-question"></el-button>
+                    </el-tooltip>
+                </span>
                 <el-button size="mini" class="ld-readme-btn"
                            :type="loadingReadme?'text':(readmePath?'':'text')"
                            :icon="readmePath?'el-icon-s-promotion':''"
@@ -35,15 +45,38 @@
                 </el-button>
             </el-form-item>
         </el-form>
+
         <el-form label-position="top" label-width="80px" :model="ld" size="mini">
-            <el-form-item :label="ld.switch_source != 2?'桌面源':''" size="mini">
+            <el-form-item label="" size="mini">
+                <span slot="label">
+                    {{ld.switch_source != 2?'桌面源':''}}
+                    <el-tooltip placement="top">
+                        <div slot="content">
+                            桌面源是指通过绑定到壁纸层的窗口的上层容器, <br/>它为桌面的定制化提供了非常灵活的设计和想象.<br/>
+                            通常情况下, 桌面源由开发者指定, 用户无法进行<br/>修改. 但我们为您提供了一个超桌示例, 它的桌面<br/>源
+                            可以进行修改, 我们支持了远程桌面源(填写网<br/>址即可)和本地桌面源(本地 HTML 文件).
+                        </div>
+                        <el-button type="text" icon="el-icon-question"></el-button>
+                    </el-tooltip>
+                </span>
                 <el-button size="mini" class="ld-readme-btn" style="margin-bottom: 10px;"
                            type="text" :disabled="true"
                            v-if="ld.switch_source != 2">
                     该{{localDeskModel.getDeskTypeName(ld.type).name}}暂不支持桌面源配置更改
                 </el-button>
             </el-form-item>
-            <el-form-item :label="ld.switch_source == 2?'桌面源':''" size="mini" v-if="ld.switch_source == 2">
+            <el-form-item label="" size="mini" v-if="ld.switch_source == 2">
+                <span slot="label">
+                    {{ld.switch_source != 2?'桌面源':''}}
+                    <el-tooltip placement="top">
+                        <div slot="content">
+                            桌面源是指通过绑定到壁纸层的窗口的上层容器, <br/>它为桌面的定制化提供了非常灵活的设计和想象.<br/>
+                            通常情况下, 桌面源由开发者指定, 用户无法进行<br/>修改. 但我们为您提供了一个超桌示例, 它的桌面<br/>源
+                            可以进行修改, 我们支持了远程桌面源(填写网<br/>址即可)和本地桌面源(本地 HTML 文件).
+                        </div>
+                        <el-button type="text" icon="el-icon-question"></el-button>
+                    </el-tooltip>
+                </span>
                 <el-radio-group v-model="ld.source_type" size="mini" :disabled="ld.switch_source == 1"
                                 class="ld-source-radio-group">
                     <el-radio-button label="remote">远程桌面源</el-radio-button>
@@ -60,12 +93,23 @@
             <pre class="zxx-pre" v-if="!isSourceEffect && ld.switch_source == 2"
                  style="margin: 0;margin-top: 10px;">无效桌面源, 请重新指定</pre>
         </el-form>
+
         <el-form label-position="top" label-width="80px" size="mini">
             <el-button size="mini" class="zxx-hignconfig-jsoneditor-btn el-form-tool" type="text"
                        icon="el-icon-s-operation" title="召唤高级参数编辑器以配置"
                        onclick="vm.gotoJSONEditor('params')">
             </el-button>
-            <el-form-item label="约定域参数" size="mini">
+            <el-form-item label="" size="mini">
+                <span slot="label">
+                    约定域参数
+                    <el-tooltip placement="top">
+                        <div slot="content">
+                            所谓约定参数, 是指开发者与使用者约定的配置<br/>参数, 通常你需要先阅读开发者提供的 README<br/>文件, 根据说明来进行它们所支持的参数的配置<br/>
+                            大部分情况下, 这部分数据是复杂且凌乱无规律的,<br/> 我们为你提供了一个高级编辑器(右侧按钮打开),<br/> 希望尽可能降低配置门槛.
+                        </div>
+                        <el-button type="text" icon="el-icon-question"></el-button>
+                    </el-tooltip>
+                </span>
                 <el-input id="ldParams" class="disable-style" type="textarea" :rows="ld.switch_source == 2?'13':'15'"
                           value=""
                           :disabled="true"></el-input>

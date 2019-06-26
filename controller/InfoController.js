@@ -89,7 +89,7 @@ var vm = new Vue({
                     explain: '状态',
                     value: '无法识别',
                     format: function (that) {
-                        return that.init_sign == 1 ? '等待初始化' : '正常';
+                        return that.init_sign == 1 ? '等待初始化<br/><span style="font-size:12px;">你可以通过桌面项左上角的蒲公英图标知晓当前桌面的配置初始化状态.</span>' : '正常';
                     }
                 },
             },

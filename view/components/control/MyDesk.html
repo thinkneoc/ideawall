@@ -17,6 +17,14 @@
             <div id="my-device">
                 <h3 class="zxx-desk-m-title">
                     我的设备
+                    <el-tooltip placement="top">
+                        <div slot="content">
+                            1. 我们将定时抓取你的设备监视器快照(在尽可能低能耗的情况下), <br/>以便能实时反馈桌面配置预览情况.<br/>
+                            2. 你可以在偏好设置中修改快照时间或关闭快照功能.<br/>
+                            3. 如果你为某设备启用了桌面, 你可以在这里通过面板按钮或右键<br/>选项对设备桌面进行管理(播放/暂停, 静音等)
+                        </div>
+                        <el-button type="text" icon="el-icon-question"></el-button>
+                    </el-tooltip>
                 </h3>
                 <div v-loading="loadingDevices"
                      element-loading-text="正在抓取监视器组快照..."
@@ -97,6 +105,14 @@
             <div id="my-desktop">
                 <h3 class="zxx-desk-m-title">
                     我的桌面
+                    <el-tooltip placement="top">
+                        <div slot="content">
+                            这些是你本地的桌面项资源, 你可以: <br/>
+                            1. 点击桌面项以配置它们, 桌面预览图下方会实时显示你正在配置中的桌面, <br/>并且, 如果有设备启用了它, 设备也将显示"正在配置"信息;<br/>
+                            2. 右键桌面项, 你可以预览/设置启用/删除 它们;
+                        </div>
+                        <el-button type="text" icon="el-icon-question"></el-button>
+                    </el-tooltip>
                     <div style="float:right;">
                         <el-dropdown size="mini" trigger="click" @command="handleDesktopCommand">
                           <span class="el-dropdown-link">

@@ -16,7 +16,15 @@
         <img src="../../../static/logo/blue-min-300_2@2x.png" alt="" style="width:100px;">
     </div>
     <form id="zxx-feedback-form" action="" onsubmit="return false;">
-        <div class="ivu-row" style="margin:10px;">您的体验如何?</div>
+        <div class="ivu-row" style="margin:10px;">
+            您的体验如何?
+            <el-tooltip placement="right">
+                <div slot="content">
+                    满意, 很棒的体验 / 不满意,糟糕的体验
+                </div>
+                <el-button type="text" icon="el-icon-question"></el-button>
+            </el-tooltip>
+        </div>
         <div style="margin:10px;">
             <a id="zxx-feedback-face-happy" href="javascript:void(0)" onclick="vm.topic=1" title="愉快地">
                 <i class="ivu-icon ivu-icon-ios-happy"
@@ -48,7 +56,15 @@
             </div>
         </div>
         <div style="clear:both;"></div>
-        <div class="ivu-row" style="margin:10px;margin-top:20px;">征询你的意见以收集部分敏感数据?</div>
+        <div class="ivu-row" style="margin:10px;margin-top:20px;">
+            征询你的意见以收集部分敏感数据?
+            <el-tooltip placement="top">
+                <div slot="content">
+                    通常情况下, 我们建议你允许我们收集这些数据, <br/>这将有助于我们对 ideawall 的体验优化.
+                </div>
+                <el-button type="text" icon="el-icon-question"></el-button>
+            </el-tooltip>
+        </div>
         <div style="margin:10px;">
             <el-checkbox v-model="allowCollectLog" label="允许收集最近 3 小时内的运行日志" size="mini"></el-checkbox>
         </div>

@@ -25,7 +25,21 @@
             </el-carousel-item>
         </el-carousel>
         <el-form label-position="top" label-width="80px" :model="ld" size="mini" class="animated fadeInDown">
-            <el-form-item label="媒体组" size="mini">
+            <el-form-item label="" size="mini">
+                <span slot="label">
+                    媒体组
+                    <el-tooltip placement="top">
+                        <div slot="content">
+                            媒体组是将要被桌面项使用的多媒体文件源, 为<br/>不影响加载速度, 我们暂时只支持了本地资源.<br/>
+                            通常情况下, 没有配置媒体组的桌面在为设备启<br/>用后是不会有任何效果的.<br/><br/>
+                            你需要注意以下几点: <br/>
+                            1. 幻桌仅支持图片媒体传入; <br/>
+                            2. 视桌仅支持视频媒体传入; <br/>
+                            3. 超桌可以接受任何类型的媒体, 所以, 它不支持<br/>在上面的 banner 中预览, 但通常情况下, 超桌不<br/>会支持媒体组传入. <br/>
+                        </div>
+                        <el-button type="text" icon="el-icon-question"></el-button>
+                    </el-tooltip>
+                </span>
                 <el-button size="mini" class="ld-readme-btn" style="margin-bottom: 32px;margin-top:30px;"
                            type="text" :disabled="true"
                            v-if="ld.switch_media == 1">
