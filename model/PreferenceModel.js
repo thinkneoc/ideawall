@@ -3,6 +3,7 @@ const uuid = require('../core/UUID')();
 const datetime = require('../core/Datetime')();
 const Model = require('../core/Model')();
 const fs = require("fs");
+const os = require("os");
 
 let model = new (function () {
     //数据表信息
@@ -49,11 +50,11 @@ let defaults = [
         sort: 20,
         reboot: 2,
         value: {
-            val: 3000,//当前数值
+            val: os.platform() === 'darwin' ? 3000 : 6000,//当前数值
             precision: 0,//小数位
             step: 3000,//步长
             stepStrictly: true,//严格模式, 是否只能输入 step 的倍数
-            max: 15000,//最大值
+            max: os.platform() === 'darwin' ? 15000 : 21000,//最大值
             min: 0,//最小值
             controlsPosition: '',//按钮位置
             descNewLine: true,//描述信息新起一行

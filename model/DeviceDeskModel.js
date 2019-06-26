@@ -3,6 +3,7 @@ const uuid = require('../core/UUID')();
 const datetime = require('../core/Datetime')();
 const Model = require('../core/Model')();
 const screen = require('../core/Screen')();
+const os = require("os");
 
 const deviceMessage = require('../message/DeviceMessage')();
 const localDeskModel = require('../model/LocalDeskModel')();
@@ -161,8 +162,8 @@ function DeviceDeskModel(appVar) {
     this.snapscreens = [];
     this.snapscreenIds = [];
     this.snapscreenNum = 0;
-    this.snapscreenTTL = 3000;//默认定时
-    this.snapscreenTTL_first = 2000;//首次延时
+    this.snapscreenTTL = os.platform() === 'darwin' ? 3000 : 6000;//默认定时
+    this.snapscreenTTL_first = os.platform() === 'darwin' ? 2000 : 4000;//首次延时
     this.snapscreen = function (rp, callback, first, onlyone) {
         var that = this;
         this.snapscreenNum += 1;
