@@ -56,6 +56,8 @@ if (!gotTheLock) {
          * Chrome 内核 66+ 版本的新策略: 仅在静音且可视情况下, 才允许音视频自动播放, 否则, 需等待一个交互交互.
          */
         app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
+        //关闭video画中画
+        app.commandLine.appendSwitch('enable-picture-in-picture', 'disabled');
 
 
         /**
