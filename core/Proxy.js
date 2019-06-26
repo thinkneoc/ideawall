@@ -295,18 +295,19 @@ T.windowId = top.T.p('windowId');//windowId 肯定在最上层.  ==> windowId �
 T.windowKey = top.T.p('windowKey');
 
 //动态引入js文件.
-var zxxinclude = function (path) {
+var zxxinclude = function (path, where, charset) {
     var a = document.createElement("script");
     a.type = "text/javascript";
+    a.charset = charset ? charset : 'UTF-8';
     a.src = path;
-    var head = document.getElementsByTagName("head")[0];
-    head.appendChild(a);
+    where = where ? where : 'head';
+    var signTag = document.getElementsByTagName(where)[0];
+    signTag.appendChild(a);
 };
-
 T.i = zxxinclude;
 
 //重写 console
-if(!proxy.appVar._debug){
+if (!proxy.appVar._debug) {
     window.console = (function (origConsole) {
         if (!window.console)
             console = {};

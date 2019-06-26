@@ -230,7 +230,6 @@ var vm = new Vue({
             that.displayIds = rIds;
             // console.debug(that.displays);
             if (first) {//首次快照到达
-                that.loading = false;
                 for (var x in that.displays) {
                     var display_id = that.displays[x].display_id;
                     var db_display = deviceDeskModel.getDisplayById(display_id);
@@ -250,7 +249,6 @@ var vm = new Vue({
     },
     mounted() {
         var that = this;
-        this.loading = false;
         proxy.ipc.on('ipc_device_wall_hide_all', function (event, bol) {
             deviceDeskModel.setApi(false, 'hide', bol);
         });
