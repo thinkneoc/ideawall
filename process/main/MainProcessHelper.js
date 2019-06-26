@@ -186,6 +186,19 @@ function closeAllWindows() {
 
 const ipcMain = require('electron').ipcMain;//ipcMain进程对象
 
+global.buffer = Buffer;
+//修改主进程中appVar的值: 只能把改好的appVar传回来, 不能传键值对, 因为ipc通信会将对象自动转为json字符串, 所以无法分清对象和单一变量值.
+ipc.on('change-appVar', function (event, newAppVar) {
+    try {
+        appVar = newAppVar;
+        global.appVar = newAppVar;
+        event.sender.send('change-appVar-response', true);
+    } catch (e) {
+        console.error(e);
+        event.sender.send('change-appVar-response', false);
+    }
+});
+
 //window 之内 转发指令, 限定最多 带 3 个参数
 ipcMain.on('ipc_repeat', function (event, rIpcCmd, data, data2, data3) {
     event.sender.send(rIpcCmd, data, data2, data3);

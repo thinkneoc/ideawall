@@ -64,6 +64,38 @@ function NodeJsProxy() {
         return top[mod] ? top[mod] : top.nodeRequire(mod);
     };
 
+    //获取主进程中的全局变量
+    this.getAppVar = function (varname) {
+        appVar = Remote.getGlobal('appVar');//每次都重新去拿一下. 有些情况下, 这个值没有跟主进程保持同步, 原因未知.
+        if (varname) {
+            return appVar[varname];
+        } else {
+            return appVar;
+        }
+    };
+
+    this.setAppVar = function (newAppVar) {
+        ipc.send('change-appVar', newAppVar);
+        ipc.once('change-appVar-response', function (event, issuccess) {
+            if (!issuccess) {
+                console.error('设定appVar异常');
+                console.debug(newAppVar);
+            }
+        });
+    };
+
+    this.refreshAppVar = function (key, val) {
+        if (key) {
+            appVar[key] = val;
+        }
+        this.setAppVar(appVar);
+    };
+
+    this.reloadAppVar = function () {
+        appVar = Remote.getGlobal('appVar');
+        return appVar;
+    };
+
     /**
      * 将 json 对象转换为 URL 参数串 [仅限一级]
      * @param json
