@@ -68,7 +68,7 @@ let defaults = [
         description: '',
         sort: 30,
         reboot: 1,
-        sync: 1,
+        sync: 2,
         value: {
             val: 1.0,//当前数值
             step: 0.1,//步长
@@ -95,7 +95,7 @@ let defaults = [
         description: '',
         sort: 210,
         reboot: 2,
-        sync: 1,
+        sync: 2,
         value: {
             val: 'random',//当前数值
             descNewLine: true,//描述信息新起一行
@@ -109,7 +109,7 @@ let defaults = [
         description: '',
         sort: 220,
         reboot: 2,
-        sync: 1,
+        sync: 2,
         value: {
             val: 'random',//当前数值
             descNewLine: true,//描述信息新起一行

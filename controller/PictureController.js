@@ -125,7 +125,9 @@ var vm = new Vue({
             that.dealWithPrefs(prefs);
             if (dp && dp.api_pause == 2) {
                 that.carousel.autoplay = false;
+                console.debug('幻桌面接收到 ipc 暂停指令');
             } else {
+                console.debug('幻桌面接收到 ipc 启动指令');
                 if (that.desk.medias.length <= 1) {//如果只有一张图片, 就不自动切换
                     that.carousel.autoplay = false;
                 } else {

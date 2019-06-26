@@ -169,8 +169,10 @@ var vm = new Vue({
             }
             that.calcParams();
             if (dp && dp.api_pause == 2) {
+                console.debug('视桌面接收到 ipc 暂停指令');
                 that.pause();
             } else {
+                console.debug('视桌面接收到 ipc 启动指令');
                 that.play();
             }
         });
