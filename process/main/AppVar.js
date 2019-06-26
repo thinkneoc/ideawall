@@ -24,6 +24,7 @@ let appVar = {
     _viewpath: path.join(__dirname, relative + 'view'),//视图目录
     _staticpath: path.join(__dirname, relative + 'static'),//静态资源目录
     _lock: false,
+    _guide: false,
     _dbath: workspace + "/data/iw.db",//本地数据库
     _apath: {
         dir: {
@@ -37,6 +38,7 @@ let appVar = {
         },
         file: {
             cnf: workspace + "/ideawall." + (process.platform !== 'darwin' ? 'ini' : 'cnf'),
+            shellrc: workspace + ".ideawall_shellrc",
         }
     },
     _path: {
@@ -175,6 +177,9 @@ function checkAppWorkSpace(callback) {
         } else {
             if (!fs.existsSync(zyy)) {
                 fs.writeFileSync(zyy, '');
+                if (zyy.indexOf('ideawall_shellrc') > -1) {
+                    appVar._guide = true;
+                }
             }
         }
     }
@@ -196,6 +201,13 @@ function clearAppWorkSpace() {
     Fs.delDir(appVar._apath.dir.log);
 }
 
+/**
+ * 清除标识文件以开始引导动画
+ */
+function removeSheelRc() {
+    fs.unlinkSync(appVar._apath.file.shellrc);
+}
+
 /* ↑全局变量配置区结束↑ */
 
 module.exports = {
@@ -203,5 +215,6 @@ module.exports = {
     clearAppWorkSpace,
     getAppVar,
     setAppVar,
-    getStaticResourcePath
+    getStaticResourcePath,
+    removeSheelRc,
 };
