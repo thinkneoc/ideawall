@@ -484,6 +484,7 @@ template {
     z-index: 10002;
     display: none;
     background-color: transparent;
+    overflow: hidden !important;
 }
 
 /*字体超出变省略号*/

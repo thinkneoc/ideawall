@@ -237,6 +237,7 @@ var vm = new Vue({
                         (db_display.api_hide === 2) ? top.vm.setAllHide('#zxx-set-alleye', 1, true) : '';//只要有一个隐藏了, 就显示隐藏状态.
                         that.displays[x].is_set_desk = deviceDeskModel.isDesk(db_display.display_id, db_display.ld_id);
                         that.displays[x].displays_has_screen = deviceDeskModel.getScreen().displaysHasScreen(db_display.display_id);
+                        that.$set(that.displays, x, that.displays[x]);
                         //这些数据只能在下一次监视器快照数据进来的时候刷新, 所以这里要进行手动强制刷新
                     }
                     setTimeout(() => {
