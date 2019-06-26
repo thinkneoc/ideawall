@@ -91,7 +91,7 @@ function createDir(dirpath) {
 /**
  * 判断文件或者文件夹是否存在
  * @param {string} checkpath
- * @return {boolean} 
+ * @return {boolean}
  */
 function checkFileOrDirExist(checkpath) {
     return fs.existsSync(checkpath);
@@ -105,6 +105,26 @@ function deleteFileOrDir(deletepath) {
     child_process.execSync('rd /s /q ' + deletepath);
 }
 
+/**
+ * 清空文件夹下所有文件和文件夹
+ * @param path
+ */
+function delDir(path) {
+    let files = [];
+    if (fs.existsSync(path)) {
+        files = fs.readdirSync(path);
+        files.forEach((file, index) => {
+            let curPath = path + "/" + file;
+            if (fs.statSync(curPath).isDirectory()) {
+                delDir(curPath); //递归删除文件夹
+            } else {
+                fs.unlinkSync(curPath); //删除文件
+            }
+        });
+        fs.rmdirSync(path);
+    }
+}
+
 module.exports = {
     readFileAndRunCallback,
     readFileSync,
@@ -114,5 +134,6 @@ module.exports = {
     createEmptyFile,
     createDir,
     checkFileOrDirExist,
-    deleteFileOrDir
+    deleteFileOrDir,
+    delDir,
 };

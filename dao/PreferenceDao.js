@@ -1,6 +1,8 @@
 const Model = require('../core/Model')();
 const datetime = require('../core/Datetime')();
 
+const tbs = ['iw_devicedesk', 'iw_media', 'iw_localdesk', 'iw_preference'];
+
 const initscript = '' +
     'CREATE TABLE IF NOT EXISTS "iw_preference" (\n' +
     '  "p_id" integer NOT NULL ON CONFLICT IGNORE PRIMARY KEY AUTOINCREMENT,\n' +
@@ -30,6 +32,16 @@ function PreferenceDao(model) {
     this.init = function () {
         model.initscript = initscript;
         this._self = require('../core/Database')(model);
+    };
+
+    /**
+     * 清空所有的数据库
+     * @param tablename
+     */
+    this.clearDatabase = function () {
+        for (var x in tbs) {
+            this._self.dropTable(tbs[x]);
+        }
     };
 
     /**

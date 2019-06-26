@@ -65,7 +65,7 @@
                     <el-form-item>
                         <span slot="label">系统修复<sup>*</sup></span>
                         <el-button size="mini" type="danger" @click="repair" :loading="btnLoading.repair.bol" plain>
-                            {{btnLoading.repair.bol?btnLoading.repair.text:'执行修复'}}
+                            {{btnLoading.repair.bol?btnLoading.repair.text:btnLoading.repair.htext}}
                         </el-button>
                         <div class="zxx-form-item-desc-newline zxx-pre-repair-tip">
                             此动作将清空你的所有本地持久化有生数据, 之后重建数据结构. 请谨慎操作!
@@ -79,7 +79,7 @@
                         </el-button>
                         <el-button size="mini" @click="reboot" :loading="btnLoading.reboot.bol">
                             <i class="el-icon-refresh-left" v-if="!btnLoading.reboot.bol"></i>
-                            {{btnLoading.reboot.bol?btnLoading.reboot.text:'重新启动'}}
+                            {{btnLoading.reboot.bol?btnLoading.reboot.text:btnLoading.reboot.htext}}
                         </el-button>
                     </el-form-item>
                     <el-form-item>

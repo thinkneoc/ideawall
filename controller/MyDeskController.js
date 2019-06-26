@@ -263,6 +263,9 @@ var vm = new Vue({
             that.loadingDevices = true;
             deviceDeskModel.closeSnapscreen();
         });
+        proxy.ipc.on('ipc_render_snapscreen_stop', function (event) {
+            deviceDeskModel.closeSnapscreen();
+        });
     },
     mounted() {
         var that = this;

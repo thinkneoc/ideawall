@@ -8,6 +8,7 @@ const fs = require("fs");
 
 const logger = require('../../core/Logger');//引入全局日志组件
 const config = require('../../core/Config');//引入全局配置组件
+const Fs = require('../../core/Fs');
 const relative = '../../';
 
 /* ↓全局变量配置区开始↓ */
@@ -161,10 +162,23 @@ function checkAppWorkSpace(callback) {
     }
 }
 
+/**
+ * 清空可以删除的文件.
+ */
+function clearAppWorkSpace(){
+    //1.清除快照
+    Fs.delDir(appVar._apath.dir.snapscreen);
+    //2.清除缓存
+    Fs.delDir(appVar._apath.dir.cache);
+    //3.清除日志文件
+    Fs.delDir(appVar._apath.dir.log);
+}
+
 /* ↑全局变量配置区结束↑ */
 
 module.exports = {
     checkAppWorkSpace,
+    clearAppWorkSpace,
     getAppVar,
     setAppVar,
     getStaticResourcePath

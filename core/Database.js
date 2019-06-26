@@ -40,6 +40,15 @@ function Database(model) {
     };
 
     /**
+     * 删表
+     * @param tbname
+     */
+    this.dropTable = function (tbname) {
+        var stmt = db.prepare("DROP TABLE IF EXISTS " + tbname);
+        return stmt.run()
+    };
+
+    /**
      * 执行初始化脚本, 初始化数据库. 如果已经有就不会再处理.
      * 建议在程序启动之后检测执行一次. 不需要传入 model.
      */

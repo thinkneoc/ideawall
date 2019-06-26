@@ -143,6 +143,10 @@ function PreferenceModel(appVar) {
         }
     };
 
+    this.clearDatabase = function () {
+        return this.dao.clearDatabase();
+    };
+
     this.getAll = function () {
         return this.dao.getAll();
     };

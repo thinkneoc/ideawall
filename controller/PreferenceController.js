@@ -1,6 +1,7 @@
 const baseController = proxy.require('../controller/BaseController');
 const http = proxy.require('../core/Http');
 const logger = proxy.require('../core/Logger');
+const AppVar = proxy.require('../core/AppVar');
 const preferenceModel = proxy.require('../model/PreferenceModel')(proxy.appVar);
 const deviceMessage = proxy.require('../message/DeviceMessage')();
 
@@ -17,11 +18,13 @@ var vm = new Vue({
                 },
                 reboot: {
                     bol: false,
-                    text: '正在重启...'
+                    text: '正在重启...',
+                    htext: '重新启动',
                 },
                 repair: {
                     bol: false,
-                    text: '正在修复...'
+                    text: '正在修复, 请不要退出程序...',
+                    htext: '执行修复',
                 },
             },
             menuInfoTab: 'common',
@@ -73,12 +76,14 @@ var vm = new Vue({
         //重启
         reboot() {
             var that = this;
-            this.btnLoading.reboot.bol = true;
-            setTimeout(() => {
-                proxy.remote.app.relaunch();
-                proxy.remote.app.quit();
-                that.btnLoading.reboot.bol = false;
-            }, 2000);
+            if (!this.btnLoading.reboot.bol) {
+                this.btnLoading.reboot.bol = true;
+                setTimeout(() => {
+                    proxy.remote.app.relaunch();
+                    proxy.remote.app.quit();
+                    that.btnLoading.reboot.bol = false;
+                }, 2000);
+            }
         },
         //检查更新
         checkUpdate() {
@@ -124,25 +129,43 @@ var vm = new Vue({
         //修复
         repair() {
             var that = this;
-            var message = "警告: 你正在执行系统修复任务";
-            var detail = "此动作将清空本地持久化数据库, 且无法回滚. 请确认是否继续执行？";
-            proxy.confirm(message, detail, (response) => {
-                if (response === 0) {
-                    that.btnLoading.repair.bol = true;
-                    $('.zxx-pre-repair-tip').text('正在执行系统修复, 修复完成后 ideawall 将自动重启...');
-                    setTimeout(() => {
-                        proxy.fs.unlink(proxy.appVar._dbath, function (err) {
-                            if (err) {
-                                return console.error(err);
+            if (!this.btnLoading.reboot.bol) {
+                var message = "警告: 你正在执行系统修复任务";
+                var detail = "此动作将清空本地持久化数据库, 且无法回滚. 请确认是否继续执行？ (此过程将在一分钟内完成, 期间你不能进行任何操作, 修复完毕后将自动重启应用。)";
+                proxy.confirm(message, detail, (response) => {
+                    if (response === 0) {
+                        that.btnLoading.repair.bol = true;
+                        $('.zxx-pre-repair-tip').text('正在停止所有同步策略和设备快照...');
+                        //1.关闭快照
+                        proxy.ipc.send('ipc_repeat', 'ipc_render_snapscreen_stop');
+                        setTimeout(() => {
+                            //2.关闭壁纸窗口
+                            $('.zxx-pre-repair-tip').text('正在銷毀桌面壁纸层...');
+                            for (var x in proxy.appVar._wallwindows) {
+                                var win = proxy.appVar._wallwindows[x].window;
+                                win.close();
                             }
-                            that.btnLoading.repair.bol = false;
-                            $('.zxx-pre-repair-tip').text('已完成, 等待 ideawall 重启...');
-                            that.reboot();
-                            return true;
-                        });
-                    }, 4000);
-                }
-            });
+                            setTimeout(() => {
+                                $('.zxx-pre-repair-tip').text('正在清空本地持久化数据和缓存...');
+                                setTimeout(() => {
+                                    //3.清空工作空间数据和缓存. [windows下被占用的话无法删除.]
+                                    preferenceModel.clearDatabase();//清空数据库
+                                    AppVar.clearAppWorkSpace();//清空缓存数据[日志等]
+                                    $('.zxx-pre-repair-tip').text('修复完毕, 最后还有几件小事, 请稍后...');
+                                    setTimeout(() => {
+                                        that.btnLoading.repair.bol = false;
+                                        $('.zxx-pre-repair-tip').text('正在请求重新启动 ideawall...');
+                                        that.reboot();
+                                        return true;
+                                    }, 4000);
+                                }, 4000);
+                            }, 3000);
+                        }, 2000);
+                    } else {
+                        that.btnLoading.repair.bol = false;
+                    }
+                });
+            }
         },
         //前往官网
         gotoOffical() {
