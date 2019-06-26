@@ -472,9 +472,9 @@ template {
     height: 100%;
     z-index: 10001;
     display: none;
-    filter: alpha(opacity=60);
     background-color: #000;
-    opacity: 0.4;
+    opacity: 0.5;
+    filter: opacity(50%);
 }
 
 .zxx-overlay-nofilter {
@@ -500,4 +500,8 @@ template {
 .zxx-word-no-space {
     white-space: nowrap;
     overflow-x: auto;
+}
+
+.el-backtop{
+    z-index: 999999;
 }

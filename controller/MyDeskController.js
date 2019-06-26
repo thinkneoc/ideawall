@@ -13,6 +13,8 @@ var vm = new Vue({
         return {
             loading: true,
             loadingControl: true,
+            loadingDevices: true,
+            loadingDesks: true,
             loadingDesk: {
                 config: true,
                 highconfig: true,
@@ -218,37 +220,52 @@ var vm = new Vue({
                 }
             }
         },
+        snapscreen(onlyone) {
+            var that = this;
+            var pref_deviceSnapscreenTTL = preferenceModel.getByKey("deviceSnapscreenTTL");
+            deviceDeskModel.initial(this.cardStyle, (result, rIds, first) => {
+                that.displays = result;
+                that.displayIds = rIds;
+                // console.debug(that.displays);
+                if (first) {//首次快照到达
+                    for (var x in that.displays) {
+                        var display_id = that.displays[x].display_id;
+                        var db_display = deviceDeskModel.getDisplayById(display_id);
+                        // console.debug(db_display);
+                        that.setMuted('.zxx-device[data-id="' + display_id + '"] .zxx-device-wall-setmuted', display_id, (db_display.api_muted === 2 ? 1 : 2), true);
+                        that.setPause('.zxx-device[data-id="' + display_id + '"] .zxx-device-wall-setpause', display_id, (db_display.api_pause === 2 ? 1 : 2), true);
+                        (db_display.api_hide === 2) ? top.vm.setAllHide('#zxx-set-alleye', 1, true) : '';//只要有一个隐藏了, 就显示隐藏状态.
+                        that.displays[x].is_set_desk = deviceDeskModel.isDesk(db_display.display_id, db_display.ld_id);
+                        that.displays[x].displays_has_screen = deviceDeskModel.getScreen().displaysHasScreen(db_display.display_id);
+                        //这些数据只能在下一次监视器快照数据进来的时候刷新, 所以这里要进行手动强制刷新
+                    }
+                    setTimeout(() => {
+                        that.loadingDevices = false;
+                        that.loadingControl = false;
+                        top.vm.loadingControl = false;
+                    }, 3000);
+                }
+            }, pref_deviceSnapscreenTTL, true, onlyone);
+        }
     },
     created: function () {
         var that = this;
         this.tag = this.tags[0];
         this.dealWithLdsData(localDeskModel.initial().selectAll());
-        var pref_deviceSnapscreenTTL = preferenceModel.getByKey("deviceSnapscreenTTL");
-
-        deviceDeskModel.initial(this.cardStyle, (result, rIds, first) => {
-            that.displays = result;
-            that.displayIds = rIds;
-            // console.debug(that.displays);
-            if (first) {//首次快照到达
-                for (var x in that.displays) {
-                    var display_id = that.displays[x].display_id;
-                    var db_display = deviceDeskModel.getDisplayById(display_id);
-                    // console.debug(db_display);
-                    that.setMuted('.zxx-device[data-id="' + display_id + '"] .zxx-device-wall-setmuted', display_id, (db_display.api_muted === 2 ? 1 : 2), true);
-                    that.setPause('.zxx-device[data-id="' + display_id + '"] .zxx-device-wall-setpause', display_id, (db_display.api_pause === 2 ? 1 : 2), true);
-                    (db_display.api_hide === 2) ? top.vm.setAllHide('#zxx-set-alleye', 1, true) : '';//只要有一个隐藏了, 就显示隐藏状态.
-                    that.displays[x].is_set_desk = deviceDeskModel.isDesk(db_display.display_id, db_display.ld_id);
-                    that.displays[x].displays_has_screen = deviceDeskModel.getScreen().displaysHasScreen(db_display.display_id);
-                }
-                setTimeout(() => {
-                    that.loadingControl = false;
-                    top.vm.loadingControl = false;
-                }, 3500);
-            }
-        }, pref_deviceSnapscreenTTL, true);
+        this.snapscreen(true);
+        proxy.appVar._controlwindow.on('show', (e) => {
+            that.loadingDevices = true;
+            that.snapscreen();
+        });
+        proxy.appVar._controlwindow.on('hide', (e) => {
+            $('.zxx-device').remove();
+            that.loadingDevices = true;
+            deviceDeskModel.closeSnapscreen();
+        });
     },
     mounted() {
         var that = this;
+        that.loadingDesks = false;
         proxy.ipc.on('ipc_device_wall_hide_all', function (event, bol) {
             deviceDeskModel.setApi(false, 'hide', bol);
         });

@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="../../../assets/lib/font-awesome/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="../../../assets/lib/iview/css/iview.css">
     <link rel="stylesheet" href="../../../assets/lib/element-ui/css/element.css">
+    <link rel="stylesheet" href="../../../assets/css/animate.css">
     <link rel="stylesheet" href="../../../assets/css/ideawall.css">
     <link rel="stylesheet" href="../../../assets/css/control.css">
     <link rel="stylesheet" href="../../../assets/css/control-mydesk.css">
@@ -17,73 +18,80 @@
                 <h3 class="zxx-desk-m-title">
                     我的设备
                 </h3>
-                <div class="zxx-desk-con zxx-device" v-for="(item, index) in displays" :data-id="item.display_id">
-                    <el-card shadow="hover">
-                        <div class="zxx-desk-panel zxx-desk-bg"
-                             :onclick="'vm.configDesk(\''+item.is_set_desk+'\')'">
-                            <div class="zxx-desk-overlay zxx-desk-bg zxx-overlay zxx-desk-overlay-top zxx-menu-listener animated fadeIn"
-                                 :data-id="item.display_id"
-                                 zxx-menu="buildDisplayContextMenu"
-                                 v-show="item.is_set_desk">
-                            </div>
-                            <div class="zxx-desk-overlay zxx-desk-bg zxx-overlay animated fadeIn"
-                                 v-if="item.is_set_desk"></div>
-                            <div class="zxx-desk-overlay zxx-desk-bg zxx-overlay-nofilter animated fadeIn"
-                                 v-if="item.is_set_desk">
+                <div v-loading="loadingDevices"
+                     element-loading-text="正在抓取监视器组快照..."
+                     element-loading-spinner="el-icon-loading" style="min-height: 170px;">
+                    <div class="zxx-desk-con zxx-device animated fadeInLeftBig" v-for="(item, index) in displays"
+                         :data-id="item.display_id">
+                        <el-card shadow="hover">
+                            <div class="zxx-desk-panel zxx-desk-bg"
+                                 :onclick="'vm.configDesk(\''+item.is_set_desk+'\')'">
+                                <div class="zxx-desk-overlay zxx-desk-bg zxx-overlay zxx-desk-overlay-top zxx-menu-listener"
+                                     :data-id="item.display_id"
+                                     zxx-menu="buildDisplayContextMenu"
+                                     v-show="item.is_set_desk">
+                                </div>
+                                <div class="zxx-desk-overlay zxx-desk-bg zxx-overlay animated fadeIn"
+                                     v-if="item.is_set_desk"></div>
+                                <div class="zxx-desk-overlay zxx-desk-bg zxx-overlay-nofilter animated fadeIn"
+                                     v-if="item.is_set_desk">
                                 <span class="zxx-desk-overlay-control animated fadeIn">
                                     <i class="fa fa-cogs"></i>
                                 </span>
-                            </div>
-                            <div class="zxx-desk-tooltip zxx-desk-bg zxx-overlay-nofilter animated fadeIn"
-                                 style="z-index:999;display:block;">
-                                <span class="zxx-desk-tooltip-edit animated fadeInDown"
+                                </div>
+                                <div class="zxx-desk-tooltip zxx-desk-bg zxx-overlay-nofilter animated fadeIn"
+                                     style="z-index:999;display:block;">
+                                <span class="zxx-desk-tooltip-edit animated fadeInUp"
                                       v-if="item.is_set_desk === ld.id">
                                 </span>
-                                <span class="zxx-desk-tooltip-edit animated fadeInDown"
-                                      v-if="item.is_set_desk === ld.id"
-                                      style="background: transparent;z-index:521;">
+                                    <span class="zxx-desk-tooltip-edit animated fadeInUp"
+                                          v-if="item.is_set_desk === ld.id"
+                                          style="background: transparent;z-index:521;">
                                     <i class="el-icon-edit"></i> 正在配置...
                                 </span>
-                                <span class="zxx-desk-tooltip-control animated fadeIn"
-                                      v-if="item.is_set_desk">
+                                    <span class="zxx-desk-tooltip-control animated fadeIn"
+                                          v-if="item.is_set_desk">
                                     <i class="el-icon-s-claim"></i>
                                 </span>
-                                <span class="zxx-desk-tooltip-init animated fadeInDown"
-                                      v-if="!item.displays_has_screen">
+                                    <span class="zxx-desk-tooltip-init animated fadeInLeft"
+                                          v-if="!item.displays_has_screen">
                                     <i class="el-icon-loading"></i>
                                 </span>
+                                </div>
+                                <img :id="'zxx-desk-device-'+item.display_id" :src="item.stream" alt=""
+                                     class="iframe_wall"/>
                             </div>
-                            <img :id="'zxx-desk-device-'+item.display_id" :src="item.stream" alt=""
-                                 class="iframe_wall"/>
-                        </div>
-                        <div style="padding: 5px;">
-                            <div class="zxx-desk-info-name">
-                                <span>{{item.title}}</span>
-                                <span>{{item.display_rp}}</span>
-                            </div>
-                            <span class="zxx-desk-info-type" style="margin-right:0;">
+                            <div style="padding: 5px;">
+                                <div class="zxx-desk-info-name">
+                                    <span>{{item.title}}</span>
+                                    <span>{{item.display_rp}}</span>
+                                </div>
+                                <span class="zxx-desk-info-type" style="margin-right:0;">
                                 <a href="javascript:void(0)"
                                    style="color: #666;cursor: pointer;font-size: 14px;margin: 0 1px;"
                                    v-if="loadingControl && !item.is_set_desk">
                                     <i class="el-icon-loading"></i>
                                 </a>
-                                <a :id="'zxx-set-pause-'+item.display_id" href="javascript:void(0)" title="点击暂停" class="zxx-device-wall-setpause"
+                                <a :id="'zxx-set-pause-'+item.display_id" href="javascript:void(0)" title="点击暂停"
+                                   class="zxx-device-wall-setpause"
                                    v-show="!loadingControl && item.is_set_desk"
                                    style="color: #666;cursor: pointer;font-size: 14px;margin: 0 1px;"
                                    :onclick="'vm.setPause(this, \''+item.display_id+'\')'" data-switch="1">
                                     <i class="ivu-icon ivu-icon-md-pause"></i>
                                 </a>
-                                <a :id="'zxx-set-muted-'+item.display_id" href="javascript:void(0)" title="点击静音" class="zxx-device-wall-setmuted"
+                                <a :id="'zxx-set-muted-'+item.display_id" href="javascript:void(0)" title="点击静音"
+                                   class="zxx-device-wall-setmuted"
                                    v-show="!loadingControl && item.is_set_desk"
                                    style="color: #666;cursor: pointer;font-size: 14px;margin: 0 1px;"
                                    :onclick="'vm.setMuted(this, \''+item.display_id+'\')'" data-switch="1">
                                     <i class="ivu-icon ivu-icon-md-volume-up"></i>
                                 </a>
                             </span>
-                        </div>
-                    </el-card>
+                            </div>
+                        </el-card>
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="clearfix"></div>
             </div>
 
             <div id="my-desktop">
@@ -103,60 +111,64 @@
                         </el-dropdown>
                     </div>
                 </h3>
-                <div class="zxx-desk-con zxx-desktop" v-for="(item, index) in lds"
-                     v-show="item.type === tag.id || tag.id === 'all'">
-                    <el-card shadow="hover">
-                        <div class="zxx-desk-panel zxx-desk-bg"
-                             :data-link-type="item.source_type"
-                             :data-link="item.source_val"
-                             :onclick="'vm.configDesk(\''+item.id+'\', \''+index+'\')'">
-                            <div class="zxx-desk-overlay zxx-desk-bg zxx-overlay zxx-desk-overlay-top zxx-menu-listener animated fadeIn"
-                                 :data-id="item.id"
-                                 zxx-menu="buildDeskContextMenu">
-                            </div>
-                            <div class="zxx-desk-overlay zxx-desk-bg zxx-overlay animated fadeIn"></div>
-                            <div class="zxx-desk-overlay zxx-desk-bg zxx-overlay-nofilter animated fadeIn">
+                <div v-loading="loadingDesks"
+                     element-loading-text="正在获取本地桌面组数据..."
+                     element-loading-spinner="el-icon-loading" style="min-height: 170px;">
+                    <div class="zxx-desk-con zxx-desktop animated fadeInLeftBig" v-for="(item, index) in lds"
+                         v-show="item.type === tag.id || tag.id === 'all'">
+                        <el-card shadow="hover">
+                            <div class="zxx-desk-panel zxx-desk-bg"
+                                 :data-link-type="item.source_type"
+                                 :data-link="item.source_val"
+                                 :onclick="'vm.configDesk(\''+item.id+'\', \''+index+'\')'">
+                                <div class="zxx-desk-overlay zxx-desk-bg zxx-overlay zxx-desk-overlay-top zxx-menu-listener"
+                                     :data-id="item.id"
+                                     zxx-menu="buildDeskContextMenu">
+                                </div>
+                                <div class="zxx-desk-overlay zxx-desk-bg zxx-overlay animated fadeIn"></div>
+                                <div class="zxx-desk-overlay zxx-desk-bg zxx-overlay-nofilter animated fadeIn">
                                 <span class="zxx-desk-overlay-control animated fadeIn">
                                     <i class="fa fa-cogs"></i>
                                 </span>
-                            </div>
-                            <div class="zxx-desk-tooltip zxx-desk-bg zxx-overlay-nofilter animated fadeIn"
-                                 style="z-index:999;display:block;overflow-y: auto;">
-                                <span class="zxx-desk-tooltip-edit animated fadeInDown" v-if="item.id === ld.id">
+                                </div>
+                                <div class="zxx-desk-tooltip zxx-desk-bg zxx-overlay-nofilter animated fadeIn"
+                                     style="z-index:999;display:block;overflow-y: auto;">
+                                <span class="zxx-desk-tooltip-edit animated fadeInUp" v-if="item.id === ld.id">
                                 </span>
-                                <span class="zxx-desk-tooltip-edit animated fadeInDown" v-if="item.id === ld.id"
-                                      style="background: transparent;z-index:521;">
+                                    <span class="zxx-desk-tooltip-edit animated fadeInUp" v-if="item.id === ld.id"
+                                          style="background: transparent;z-index:521;">
                                     <i class="el-icon-edit"></i> 正在配置...
                                 </span>
-                                <span class="zxx-desk-tooltip-control2 animated fadeIn"
-                                      v-for="(disp, inde) in item.setsdisplays"
-                                      v-if="item.setsdisplays && item.setsdisplays.length > 0"
-                                      :style="'top:'+(inde*25)+'px;'">
+                                    <span class="zxx-desk-tooltip-control2 animated fadeIn"
+                                          v-for="(disp, inde) in item.setsdisplays"
+                                          v-if="item.setsdisplays && item.setsdisplays.length > 0"
+                                          :style="'top:'+(inde*25)+'px;'">
                                     {{disp.screen_title}}
                                 </span>
-                                <span class="zxx-desk-tooltip-init animated fadeInDown"
-                                      v-if="item.init_sign == 1 || ((item.type !== 'page' && item.medias.length <= 0) || (item.type === 'page' && item.source_val === ''))">
+                                    <span class="zxx-desk-tooltip-init animated fadeInLeft"
+                                          v-if="item.init_sign == 1 || ((item.type !== 'page' && item.medias.length <= 0) || (item.type === 'page' && item.source_val === ''))">
                                     <i class="el-icon-magic-stick"></i>
                                 </span>
+                                </div>
+                                <img :src="item.preview" alt=""
+                                     class="iframe_wall zxx-desk-showpanel"/>
                             </div>
-                            <img :src="item.preview" alt=""
-                                 class="iframe_wall zxx-desk-showpanel"/>
-                        </div>
-                        <div style="padding: 5px;">
-                            <div class="zxx-desk-info-name">{{item.name}}</div>
-                            <span class="zxx-desk-info-type">
+                            <div style="padding: 5px;">
+                                <div class="zxx-desk-info-name">{{item.name}}</div>
+                                <span class="zxx-desk-info-type">
                                 <el-tag size="mini" :type="item.typeExplain.style">
                                     {{ item.typeExplain.name }}
                                 </el-tag>
                             </span>
-                        </div>
-                    </el-card>
+                            </div>
+                        </el-card>
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="clearfix"></div>
             </div>
             <el-backtop target=".zxx-desk-list-container" visibility-height="20" right="330" bottom="30"></el-backtop>
         </div>
-        <div class="zxx-desk-info-container" v-loading="loading">
+        <div class="zxx-desk-info-container animated fadeInRightBig" v-loading="loading">
             <el-tabs v-model="deskInfoTab" stretch="true" @tab-click="handleInfoTabClick">
                 <el-tab-pane label="媒体配置" name="config" style="background: rgb(245,246,250);"
                              v-loading="loadingDesk.config">

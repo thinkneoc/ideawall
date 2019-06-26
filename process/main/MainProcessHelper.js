@@ -56,10 +56,15 @@ function getControlWindow(isshow, paramJson) {
     try {
         controlWin.webContents.send('ipc_window_control_cgi', isshow, paramJson);
         setTimeout(() => {
-            controlWin.show();
+            if (controlWin.isVisible()) {
+                controlWin.moveTop();
+            } else {
+                controlWin.show();
+            }
         }, 300);
     } catch (e) {
         controlWin = controlWindow.creat(isshow, paramJson);
+        getWallWindow();//如果是手动停止了, 那么这里需要判定一下桌面壁纸层是否启动.
         res = false;
     }
     return {result: res, win: controlWin};
@@ -70,7 +75,11 @@ function getPreviewWindow(deskId, paramJson) {
     try {
         previewWin.webContents.send('ipc_window_preview_cgi', deskId, paramJson);
         setTimeout(() => {
-            previewWin.show();
+            if (previewWin.isVisible()) {
+                previewWin.moveTop();
+            } else {
+                previewWin.show();
+            }
         }, 300);
     } catch (e) {
         previewWin = previewWindow.creat(deskId, paramJson);
@@ -86,7 +95,11 @@ function getDeviceInfoWindow(displayId, paramJson) {
         setTimeout(() => {
             let xy = deviceInfoWindow.calcPosition();
             deviceInfoWin.setPosition(xy.x, xy.y);
-            deviceInfoWin.show();
+            if (deviceInfoWin.isVisible()) {
+                deviceInfoWin.moveTop();
+            } else {
+                deviceInfoWin.show();
+            }
         }, 300);
     } catch (e) {
         deviceInfoWin = deviceInfoWindow.creat(displayId, paramJson);
@@ -102,7 +115,11 @@ function getReadmeWindow(deskId, paramJson) {
         setTimeout(() => {
             let xy = ReadmeWindow.calcPosition();
             ReadmeWin.setPosition(xy.x, xy.y);
-            ReadmeWin.show();
+            if (ReadmeWin.isVisible()) {
+                ReadmeWin.moveTop();
+            } else {
+                ReadmeWin.show();
+            }
         }, 300);
     } catch (e) {
         ReadmeWin = ReadmeWindow.creat(deskId, paramJson);
@@ -116,7 +133,11 @@ function getAboutWindow(paramJson) {
     try {
         AboutWin.webContents.send('ipc_window_about_cgi', paramJson);
         setTimeout(() => {
-            AboutWin.show();
+            if (AboutWin.isVisible()) {
+                AboutWin.moveTop();
+            } else {
+                AboutWin.show();
+            }
         }, 300);
     } catch (e) {
         AboutWin = AboutWindow.creat(paramJson);
@@ -132,7 +153,11 @@ function getJsonEditorWindow(json) {
         setTimeout(() => {
             let xy = JsonEditorWindow.calcPosition();
             JsonEditorWin.setPosition(xy.x, xy.y);
-            JsonEditorWin.show();
+            if (JsonEditorWin.isVisible()) {
+                JsonEditorWin.moveTop();
+            } else {
+                JsonEditorWin.show();
+            }
         }, 300);
     } catch (e) {
         JsonEditorWin = JsonEditorWindow.creat(json);
@@ -195,7 +220,7 @@ ipcMain.on('ipc_resolver', function (event, resolverKey, data) {
 });
 
 //更新包检测
-ipcMain.on('ipc_update_check', function(event){
+ipcMain.on('ipc_update_check', function (event) {
     const autoUpdater = require('./AutoUpdater');
     autoUpdater.updateHandle(appVar);
 });

@@ -54,7 +54,7 @@ let defaults = [
             precision: 0,//小数位
             step: 3000,//步长
             stepStrictly: true,//严格模式, 是否只能输入 step 的倍数
-            max: os.platform() === 'darwin' ? 15000 : 21000,//最大值
+            max: os.platform() === 'darwin' ? 30000 : 30000,//最大值
             min: 0,//最小值
             controlsPosition: '',//按钮位置
             descNewLine: true,//描述信息新起一行

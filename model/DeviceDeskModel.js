@@ -159,6 +159,8 @@ function DeviceDeskModel(appVar) {
      * @param first 是否首次快照, 传入则加速生成快照.
      * @param onlyone 是否仅执行一次快照
      */
+    this.snapscreenIndexF = undefined;
+    this.snapscreenIndex = undefined;
     this.snapscreens = [];
     this.snapscreenIds = [];
     this.snapscreenNum = 0;
@@ -170,13 +172,13 @@ function DeviceDeskModel(appVar) {
         console.warn('[控制面板] 正在执行第 ' + this.snapscreenNum + ' 次快照  TTL: ' + this.snapscreenTTL + 'ms');
         var oIds = that.snapscreenIds.join(",");
         screen.snapscreen(rp, (result, rIds, screens) => {
-            if (first) {//如果
+            if (first) {//如果...
                 that.snapscreens = result;
                 that.snapscreenIds = rIds;
                 if (typeof callback === 'function') {
                     callback(that.snapscreens, that.snapscreenIds, first);
                 }
-                setTimeout(() => {
+                that.snapscreenIndexF = setTimeout(() => {
                     // console.debug(result);
                     var nIds = rIds.join(",");
                     //策略: 在没有发生设备变更的时候, 直接换图片, 反之, 闪屏刷一下, 这个可以忍.
@@ -202,7 +204,7 @@ function DeviceDeskModel(appVar) {
                     }
                 }, that.snapscreenTTL_first);
             } else {
-                setTimeout(() => {
+                that.snapscreenIndex = setTimeout(() => {
                     // console.debug(result);
                     var nIds = rIds.join(",");
                     //策略: 在没有发生设备变更的时候, 直接换图片, 反之, 闪屏刷一下, 这个可以忍.
@@ -230,6 +232,16 @@ function DeviceDeskModel(appVar) {
             }
 
         });
+    };
+
+    /**
+     * 停止快照
+     */
+    this.closeSnapscreen = function () {
+        console.warn('[控制面板] 设备快照动作销毁');
+        this.snapscreenNum = 0;
+        clearTimeout(this.snapscreenIndexF);
+        clearTimeout(this.snapscreenIndex);
     };
 
     this.init();

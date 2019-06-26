@@ -86,12 +86,26 @@ function creat(isshow, paramJson) {
         });
     }
 
+    // 当窗口将要关闭时触发
+    xwindow.on('close', function (event) {
+        xwindow.hide();
+        event.preventDefault();//阻止关闭
+    });
+
     // 当窗口关闭时触发
-    xwindow.on('closed', function () {
+    xwindow.on('closed', function (event) {
         logger.info("[Process][MainProcessHelper][_ControlWindow_.on._closed_]控制中心窗口关闭");
 
         //将全局xwindow置为null
         xwindow = null;
+        //如果确定关闭控制面板, 那么其他的信息窗口也应该关闭
+        try{
+            appVar._deviceinfowindow.close();
+            appVar._readmewindow.close();
+            appVar._jsoneditorwindow.close();
+        }catch(e){
+            //...
+        }
     });
 
     xwindow.once('ready-to-show', () => {

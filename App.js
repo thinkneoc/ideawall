@@ -37,11 +37,13 @@ if (!gotTheLock) {
         if (!appTray) {
             appTray = tray.init(appVar);
         }
-        //如果当前没有窗口被激活，则创建窗口
-        var res = helper.getWallWindow();
-        if (res.result || pref_autoOpenControl) { //如果壁纸窗口已经存在, 就打开控制面板窗口.
-            helper.getControlWindow(true);
-        }
+        helper.getWallWindow();
+        helper.getControlWindow(pref_autoOpenControl);
+        // //如果当前没有窗口被激活，则创建窗口
+        // var res = helper.getWallWindow();
+        // if (res.result || pref_autoOpenControl) { //如果壁纸窗口已经存在, 就打开控制面板窗口.
+        //     helper.getControlWindow(true);
+        // }
     });
 
 
@@ -69,10 +71,7 @@ if (!gotTheLock) {
          * 初始化壁纸层窗口
          */
         helper.getWallWindow();
-
-        if (pref_autoOpenControl) {
-            helper.getControlWindow(true); //防止启动的时候资源占用超负荷, 暂时不启用.
-        }
+        helper.getControlWindow(pref_autoOpenControl); //防止启动的时候资源占用超负荷, 暂时不启用.
 
         /**
          * 初始化系统托盘
@@ -89,47 +88,39 @@ if (!gotTheLock) {
         }
     });
 
-    // app.on('ready', ()=>{
-    //     const wallpaper = require('wallpaper');
-    //
-    //     (async () => {
-    //         var dd = helper.getStaticResourcePath("Tasermiut-格陵兰之角.mp4");
-    //         await wallpaper.set(dd);
-    //
-    //         await wallpaper.get();
-    //         //=> '/Users/sindresorhus/unicorn.jpg'
-    //     })();
-    // })
-
-
     // 当所有窗口关闭时关闭应用程序
     app.on('window-all-closed', function () {
         if (process.platform !== 'darwin') { //如果是非 mac 系统, 直接退出
             logger.info("系统即将关闭");
             app.quit();
-        } else { //如果是 mac 系统, 关闭所有窗口就好, 等待重新唤醒.
+        } //如果是 mac 系统, 关闭所有窗口就好, 等待重新唤醒.
+    });
 
-        }
-
+    //当应用程序准备退出时执行动作
+    app.on('will-quit', () => {gpu-process-crashed
+        logger.info("程序即将退出");
+        appTray.destroy(); //干掉托盘
+        appTray = null;
+    });
+    //当 gpu 进程崩溃或被杀时触发。
+    app.on('gpu-process-crashed', () => {
+        logger.info("程序即将退出");
         appTray.destroy(); //干掉托盘
         appTray = null;
     });
 
-    //当应用程序准备退出时执行动作
-    app.on('will-quit', () => {
-        logger.info("程序即将退出");
-    });
-
-    //当应用程序激活时，通常在macOS下
+    //当应用程序激活时，通常在macOS下, win下基本见不到.
     app.on('activate', function () {
         if (!appTray) {
             appTray = tray.init(appVar);
         }
-        //如果当前没有窗口被激活，则创建窗口
-        var res = helper.getWallWindow();
-        if (res.result || pref_autoOpenControl) { //如果壁纸窗口已经存在, 就打开控制面板窗口.
-            helper.getControlWindow(true);
-        }
+        helper.getWallWindow();
+        helper.getControlWindow(pref_autoOpenControl);
+        // //如果当前没有窗口被激活，则创建窗口
+        // var res = helper.getWallWindow();
+        // if (res.result || pref_autoOpenControl) { //如果壁纸窗口已经存在, 就打开控制面板窗口.
+        //     helper.getControlWindow(true);
+        // }
     });
 }
 
