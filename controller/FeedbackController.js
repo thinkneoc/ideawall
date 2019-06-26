@@ -10,6 +10,7 @@ var vm = new Vue({
     el: '#app',
     data() {
         return {
+            lock: proxy.lock,
             submitSign: false,
             topic: 1,//1-happy, 2-sad.
             description: '',
@@ -142,7 +143,14 @@ var vm = new Vue({
     created: function () {
     },
     mounted() {
+        var that = this;
         screen.testSnapscreen();
+        proxy.ipc.on('ipc_lock_req', function (event, swicth) {
+            proxy.lock = swicth;
+            proxy.appVar._lock = swicth;
+            proxy.refreshAppVar();
+            that.lock = swicth;
+        });
     }
 });
 

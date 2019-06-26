@@ -8,6 +8,7 @@ var vm = new Vue({
     el: '#app',
     data: function () {
         return {
+            lock: proxy.lock,
             wallpaperEmpty: false,
             wallaperEmptyTip: '媒体组为空',
             deskId: T.p("deskId"),//桌面id
@@ -85,6 +86,12 @@ var vm = new Vue({
             if (deskId + '' != that.deskId + '') {
                 that.setWallpaper(deskId, paramJson);
             }
+        });
+        proxy.ipc.on('ipc_lock_req', function (event, swicth) {
+            proxy.lock = swicth;
+            proxy.appVar._lock = swicth;
+            proxy.refreshAppVar();
+            that.lock = swicth;
         });
     }
 });

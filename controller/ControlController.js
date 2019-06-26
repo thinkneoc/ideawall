@@ -9,6 +9,7 @@ var vm = new Vue({
     data: function () {
         return {
             loading: true,
+            lock: proxy.lock,
             loadingMaster: false,
             loadingControl: true,
             loadingHandler: undefined,
@@ -268,6 +269,12 @@ var vm = new Vue({
             }
         });
         $('.win-control-bg').show();
+        proxy.ipc.on('ipc_lock_req', function (event, swicth) {
+            proxy.lock = swicth;
+            proxy.appVar._lock = swicth;
+            proxy.refreshAppVar();
+            that.lock = swicth;
+        });
     }
 });
 

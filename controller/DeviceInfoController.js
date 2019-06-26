@@ -7,6 +7,7 @@ var vm = new Vue({
     el: '#app',
     data: function () {
         return {
+            lock: proxy.lock,
             loadingData: true,
             displayId: T.p("displayId"),//设备id
             deskTypeName: T.p('deskTypeName'),//设备配置桌面的类型名称.
@@ -75,5 +76,11 @@ var vm = new Vue({
     },
     mounted() {
         var that = this;
+        proxy.ipc.on('ipc_lock_req', function (event, swicth) {
+            proxy.lock = swicth;
+            proxy.appVar._lock = swicth;
+            proxy.refreshAppVar();
+            that.lock = swicth;
+        });
     }
 });

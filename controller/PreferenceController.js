@@ -1,7 +1,6 @@
 const baseController = proxy.require('../controller/BaseController');
 const http = proxy.require('../core/Http');
 const logger = proxy.require('../core/Logger');
-const AppVar = proxy.require('../core/AppVar');
 const preferenceModel = proxy.require('../model/PreferenceModel')(proxy.appVar);
 const deviceMessage = proxy.require('../message/DeviceMessage')();
 
@@ -10,6 +9,7 @@ var vm = new Vue({
     data: function () {
         return {
             loading: true,
+            lock: proxy.lock,
             btnLoading: {
                 checkUpdate: {
                     bol: false,
@@ -23,7 +23,7 @@ var vm = new Vue({
                 },
                 repair: {
                     bol: false,
-                    text: '正在修复, 请不要退出程序...',
+                    text: '正在修复...',
                     htext: '执行修复',
                 },
             },
@@ -80,7 +80,7 @@ var vm = new Vue({
                 this.btnLoading.reboot.bol = true;
                 setTimeout(() => {
                     proxy.remote.app.relaunch();
-                    proxy.remote.app.quit();
+                    proxy.remote.app.exit(0);
                     that.btnLoading.reboot.bol = false;
                 }, 2000);
             }
@@ -135,27 +135,31 @@ var vm = new Vue({
                 proxy.confirm(message, detail, (response) => {
                     if (response === 0) {
                         that.btnLoading.repair.bol = true;
-                        $('.zxx-pre-repair-tip').text('正在锁定控制面板并停止所有同步策略和设备快照...');
+                        $('.zxx-pre-repair-tip').css('color', '#F56C6C').text('正在锁定控制面板并停止所有同步策略和设备快照...');
+                        //锁定控制面板
+                        proxy.ipc.send('ipc_lock', true);
                         //1.关闭快照
                         proxy.ipc.send('ipc_repeat', 'ipc_render_snapscreen_stop');
                         setTimeout(() => {
                             //2.关闭壁纸窗口
-                            $('.zxx-pre-repair-tip').text('正在銷毀桌面壁纸层...');
+                            $('.zxx-pre-repair-tip').css('color', '#F56C6C').text('正在銷毀桌面壁纸层...');
                             for (var x in proxy.appVar._wallwindows) {
                                 var win = proxy.appVar._wallwindows[x].window;
                                 win.close();
                             }
                             setTimeout(() => {
-                                $('.zxx-pre-repair-tip').text('正在清空本地持久化数据和缓存...');
+                                $('.zxx-pre-repair-tip').css('color', '#F56C6C').text('正在清空本地持久化数据和缓存...');
                                 setTimeout(() => {
                                     //3.清空工作空间数据和缓存. [windows下被占用的话无法删除.]
                                     preferenceModel.clearDatabase();//清空数据库
-                                    AppVar.clearAppWorkSpace();//清空缓存数据[日志等]
-                                    $('.zxx-pre-repair-tip').text('修复完毕, 最后还有几件小事, 请稍后...');
+                                    proxy.ipc.send('ipc_clean');//清空缓存数据[日志等]
+                                    $('.zxx-pre-repair-tip').css('color', '#F56C6C').text('修复完毕, 最后还有几件小事, 请稍后...');
                                     setTimeout(() => {
                                         that.btnLoading.repair.bol = false;
-                                        $('.zxx-pre-repair-tip').text('正在请求重新启动 ideawall...');
+                                        proxy.ipc.send('ipc_lock', false);
+                                        $('.zxx-pre-repair-tip').css('color', '#F56C6C').text('正在请求重新启动 ideawall...');
                                         that.reboot();
+                                        //重启之后, 控制面板就是解锁的, 不需要再进行处理.
                                         return true;
                                     }, 4000);
                                 }, 4000);
@@ -202,7 +206,13 @@ var vm = new Vue({
         });
     },
     mounted() {
-
+        var that = this;
+        proxy.ipc.on('ipc_lock_req', function (event, swicth) {
+            proxy.lock = swicth;
+            proxy.appVar._lock = swicth;
+            proxy.refreshAppVar();
+            that.lock = swicth;
+        });
     }
 });
 

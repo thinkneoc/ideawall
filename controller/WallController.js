@@ -11,6 +11,7 @@ var vm = new Vue({
     el: '#app',
     data: function () {
         return {
+            lock: proxy.lock,
             wallpaperLoading: false,
             wallpaperEmpty: false,
             wallaperEmptyTip: '媒体组为空',
@@ -185,6 +186,12 @@ var vm = new Vue({
         proxy.ipc.on('ipc_wall_update_forward', function (event) {
             console.debug('ipc_wall_update_forward');
             that.setWallpaper(false);
+        });
+        proxy.ipc.on('ipc_lock_req', function (event, swicth) {
+            proxy.lock = swicth;
+            proxy.appVar._lock = swicth;
+            proxy.refreshAppVar();
+            that.lock = swicth;
         });
     }
 });

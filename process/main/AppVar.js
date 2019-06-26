@@ -92,6 +92,14 @@ ipcMain.on('change-appVar', function (event, newAppVar) {
     }
 });
 
+ipcMain.on('ipc_clean', function (event) {
+    try {
+        clearAppWorkSpace();
+    } catch (e) {
+        console.error(e);
+    }
+});
+
 /**
  * 返回全局内部配置变量
  * @returns {{_system: *, _name: any, _staticpath: string, _login: boolean, _path: {temp: *, userData: *, exe: *, desktop: *, music: *, documents: *, downloads: *, module: *, videos: *, appData: *, pictures: *, home: *}, _config: ({getConfigVal}|*), _platform: never, _desk: {width: string, height: string}, _ready: {_main: boolean, _render: boolean}, _debug: (boolean|*), _dirname: *, _version: *, _locale: *}}

@@ -12,6 +12,7 @@ var vm = new Vue({
     data: function () {
         return {
             loading: true,
+            lock: proxy.lock,
             loadingControl: true,
             loadingDevices: true,
             loadingDesks: true,
@@ -292,7 +293,12 @@ var vm = new Vue({
             } else if (apiCmd === 'hide') {
                 top.vm.setAllHide('zxx-set-alleye', (bol ? 1 : 2), dontset);
             }
-
+        });
+        proxy.ipc.on('ipc_lock_req', function (event, swicth) {
+            proxy.lock = swicth;
+            proxy.appVar._lock = swicth;
+            proxy.refreshAppVar();
+            that.lock = swicth;
         });
     }
 });

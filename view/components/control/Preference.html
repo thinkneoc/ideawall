@@ -14,7 +14,7 @@
 <div id="app" v-cloak style="text-align: center;" v-loading="loading">
     <div id="preference-containter" class="animated fadeIn">
         <el-tabs v-model="menuInfoTab" tab-position="left" @tab-click="handleInfoTabClick">
-            <el-tab-pane label="常规" name="common">
+            <el-tab-pane :disabled="lock" label="常规" name="common">
                 <el-form ref="form" :model="preferences">
                     <template v-for="(item, index) in preferences">
                         <el-form-item v-if="item.formitem == 'switch'">
@@ -96,7 +96,7 @@
                     </el-form-item>
                 </el-form>
             </el-tab-pane>
-            <el-tab-pane label="动画" name="animation">
+            <el-tab-pane :disabled="lock" label="动画" name="animation">
                 <el-alert title="温馨提示" style="text-align:left;"
                           type="warning" show-icon>
                     <div slot>
@@ -200,7 +200,7 @@
                     </el-form-item>
                 </el-form>
             </el-tab-pane>
-        </el-tabs>
+            </el-tabsdisabled>
     </div>
 </div>
 </body>

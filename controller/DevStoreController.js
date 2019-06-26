@@ -7,13 +7,20 @@ var vm = new Vue({
     data: function () {
         return {
             loading: true,
+            lock: proxy.lock,
         }
     },
     methods: {},
     created: function () {
     },
     mounted() {
-
+        var that = this;
+        proxy.ipc.on('ipc_lock_req', function (event, swicth) {
+            proxy.lock = swicth;
+            proxy.appVar._lock = swicth;
+            proxy.refreshAppVar();
+            that.lock = swicth;
+        });
     }
 });
 

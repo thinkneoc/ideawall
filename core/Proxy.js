@@ -39,6 +39,8 @@ function NodeJsProxy() {
     this.uuid = undefined;
     this.debug = undefined;
 
+    this.lock = undefined;
+
     this.init = function () {
         this.electron = this.require('electron');
         this.ipc = this.electron.ipcRenderer;
@@ -54,6 +56,7 @@ function NodeJsProxy() {
         this.child_process = this.require('child_process');
         this.clipboard = this.electron.clipboard;
         this.appVar = this.remote.getGlobal('appVar');
+        this.lock = this.appVar._lock;
         this.uuid = this.require('./UUID')();
 
         this.debug = this.appVar._debug;
@@ -75,8 +78,9 @@ function NodeJsProxy() {
     };
 
     this.setAppVar = function (newAppVar) {
-        ipc.send('change-appVar', newAppVar);
-        ipc.once('change-appVar-response', function (event, issuccess) {
+        newAppVar = newAppVar ? newAppVar : this.appVar;
+        this.ipc.send('change-appVar', newAppVar);
+        this.ipc.once('change-appVar-response', function (event, issuccess) {
             if (!issuccess) {
                 console.error('设定appVar异常');
                 console.debug(newAppVar);

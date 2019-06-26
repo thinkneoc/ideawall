@@ -88,7 +88,9 @@ function creat(isshow, paramJson) {
 
     // 当窗口将要关闭时触发
     xwindow.on('close', function (event) {
-        xwindow.hide();
+        if(!appVar._lock){
+            xwindow.hide();
+        }
         event.preventDefault();//阻止关闭
     });
 

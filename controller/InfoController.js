@@ -10,6 +10,7 @@ var vm = new Vue({
     data: function () {
         return {
             loading: true,
+            lock: proxy.lock,
             formKey: T.p('fk'),//用于标识表单的索引键, 这里是localwall的 id
             animationLevel: 3,
             ld_id: 0,//id
@@ -120,7 +121,13 @@ var vm = new Vue({
         this.dealWithLdData(localDeskModel.getDesk(this.formKey));
     },
     mounted() {
-
+        var that = this;
+        proxy.ipc.on('ipc_lock_req', function (event, swicth) {
+            proxy.lock = swicth;
+            proxy.appVar._lock = swicth;
+            proxy.refreshAppVar();
+            that.lock = swicth;
+        });
     }
 });
 

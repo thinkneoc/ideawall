@@ -7,6 +7,7 @@ var vm = new Vue({
     el: '#app',
     data: function () {
         return {
+            lock: proxy.lock,
             loadingData: true,
             json: undefined,//将要处理的 json 数据.
         };
@@ -105,6 +106,13 @@ var vm = new Vue({
         });
     },
     mounted() {
+        var that = this;
+        proxy.ipc.on('ipc_lock_req', function (event, swicth) {
+            proxy.lock = swicth;
+            proxy.appVar._lock = swicth;
+            proxy.refreshAppVar();
+            that.lock = swicth;
+        });
     }
 });
 

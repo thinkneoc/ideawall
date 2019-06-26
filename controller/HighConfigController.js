@@ -9,6 +9,7 @@ var vm = new Vue({
     data: function () {
         return {
             loading: true,
+            lock: proxy.lock,
             loadingReadme: true,
             loadingApply: false,
             showApply: false,
@@ -148,7 +149,14 @@ var vm = new Vue({
         this.checkSourceEffect();
     },
     mounted() {
+        var that = this;
         $('#ldParams').val(this.ld.params);
+        proxy.ipc.on('ipc_lock_req', function (event, swicth) {
+            proxy.lock = swicth;
+            proxy.appVar._lock = swicth;
+            proxy.refreshAppVar();
+            that.lock = swicth;
+        });
     }
 });
 

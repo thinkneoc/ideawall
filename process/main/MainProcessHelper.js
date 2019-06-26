@@ -170,6 +170,7 @@ function getJsonEditorWindow(json) {
  * 关闭所有的窗口
  */
 function closeAllWindows() {
+    controlWin.setClosable(true);
     var allWindows = BrowserWindow.getAllWindows();
     allWindows.forEach((win) => {
         win.close();
@@ -183,8 +184,24 @@ function closeAllWindows() {
     wallWins = [];
 }
 
-
 const ipcMain = require('electron').ipcMain;//ipcMain进程对象
+
+function sendCommandToAllWindows(cmd, data) {
+    try {
+        var allWindows = BrowserWindow.getAllWindows();
+        allWindows.forEach((win) => {
+            win.webContents.send(cmd, data);
+        });
+    } catch (e) {
+        //...
+    }
+}
+
+//锁定控制面板/解除锁定
+ipcMain.on('ipc_lock', function (event, swicth) {
+    controlWin.setClosable(swicth);
+    sendCommandToAllWindows('ipc_lock_req', swicth);
+});
 
 //window 之内 转发指令, 限定最多 带 3 个参数
 ipcMain.on('ipc_repeat', function (event, rIpcCmd, data, data2, data3) {
