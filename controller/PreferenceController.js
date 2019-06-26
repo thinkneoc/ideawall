@@ -135,7 +135,7 @@ var vm = new Vue({
                 proxy.confirm(message, detail, (response) => {
                     if (response === 0) {
                         that.btnLoading.repair.bol = true;
-                        $('.zxx-pre-repair-tip').text('正在停止所有同步策略和设备快照...');
+                        $('.zxx-pre-repair-tip').text('正在锁定控制面板并停止所有同步策略和设备快照...');
                         //1.关闭快照
                         proxy.ipc.send('ipc_repeat', 'ipc_render_snapscreen_stop');
                         setTimeout(() => {
