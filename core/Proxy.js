@@ -66,11 +66,11 @@ function NodeJsProxy() {
 
     //获取主进程中的全局变量
     this.getAppVar = function (varname) {
-        appVar = Remote.getGlobal('appVar');//每次都重新去拿一下. 有些情况下, 这个值没有跟主进程保持同步, 原因未知.
+        this.appVar = this.remote.getGlobal('appVar');//每次都重新去拿一下. 有些情况下, 这个值没有跟主进程保持同步, 原因未知.
         if (varname) {
-            return appVar[varname];
+            return this.appVar[varname];
         } else {
-            return appVar;
+            return this.appVar;
         }
     };
 
@@ -86,9 +86,9 @@ function NodeJsProxy() {
 
     this.refreshAppVar = function (key, val) {
         if (key) {
-            appVar[key] = val;
+            this.appVar[key] = val;
         }
-        this.setAppVar(appVar);
+        this.setAppVar(this.appVar);
     };
 
     this.reloadAppVar = function () {

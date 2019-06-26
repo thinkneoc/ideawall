@@ -1,6 +1,6 @@
 const Electron = require('electron');
 const App = Electron.app; // 核心应用承载模块
-
+const ipcMain = Electron.ipcMain;
 const path = require('path');//原生库模块
 const url = require('url');
 const os = require("os");
@@ -78,6 +78,19 @@ let appVar = {
     _autoLauncher: {},
 };
 global.appVar = appVar;
+global.buffer = Buffer;
+
+//修改主进程中appVar的值: 只能把改好的appVar传回来, 不能传键值对, 因为ipc通信会将对象自动转为json字符串, 所以无法分清对象和单一变量值.
+ipcMain.on('change-appVar', function (event, newAppVar) {
+    try {
+        appVar = newAppVar;
+        global.appVar = newAppVar;
+        event.sender.send('change-appVar-response', true);
+    } catch (e) {
+        console.error(e);
+        event.sender.send('change-appVar-response', false);
+    }
+});
 
 /**
  * 返回全局内部配置变量
@@ -166,7 +179,7 @@ function checkAppWorkSpace(callback) {
 /**
  * 清空可以删除的文件.
  */
-function clearAppWorkSpace(){
+function clearAppWorkSpace() {
     //1.清除快照
     Fs.delDir(appVar._apath.dir.snapscreen);
     //2.清除缓存
