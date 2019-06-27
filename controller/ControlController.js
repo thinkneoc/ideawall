@@ -12,7 +12,9 @@ var vm = new Vue({
             lock: proxy.lock,
             loadingMaster: false,
             loadingControl: true,
+            loadingTab: false,
             loadingHandler: undefined,
+            broswerControl: false,
             winMaxsize: false,//windows的最大化最小化状态判定有问题, 直接记录一下.
             activeTab: T.p('tab') ? T.p('tab') : 'mydesk',
             tabs: {
@@ -22,6 +24,7 @@ var vm = new Vue({
                     icon: 'el-icon-monitor',
                     link: './control/MyDesk.html',
                     preload: true,
+                    supportBC: false,
                 },
                 'deskstore': {
                     name: 'deskstore',
@@ -29,6 +32,7 @@ var vm = new Vue({
                     icon: 'el-icon-goods',
                     link: './control/DeskStore.html',
                     preload: false,
+                    supportBC: false,
                 },
                 'resbbs': {
                     name: 'resbbs',
@@ -36,6 +40,8 @@ var vm = new Vue({
                     icon: 'el-icon-chat-line-square',
                     link: './control/ResBBS.html',
                     preload: true,
+                    supportBC: true,
+                    style: 'background:rgb(244,244,244);',
                 },
                 'preference': {
                     name: 'preference',
@@ -43,6 +49,7 @@ var vm = new Vue({
                     icon: 'el-icon-setting',
                     link: './control/Preference.html',
                     preload: true,
+                    supportBC: false,
                 },
                 'feedback': {
                     name: 'feedback',
@@ -50,6 +57,7 @@ var vm = new Vue({
                     icon: 'el-icon-chat-dot-square',
                     link: './control/Feedback.html',
                     preload: true,
+                    supportBC: false,
                 },
             },
             imodal: {//全局模态框, 用于呈现不适合新开窗体的内联页面层.
@@ -73,6 +81,27 @@ var vm = new Vue({
         }
     },
     methods: {
+        iframeAction(cmd) {
+            var aTab = this.tabs[this.activeTab];
+            if ((aTab && aTab.supportBC) || proxy.debug) {
+                var xwin = document.getElementById('iframe_' + aTab.name).contentWindow;
+                var xhistory = xwin ? xwin.history : undefined;
+                var hashis = xhistory && xhistory.length > 1;
+                if (typeof aTab.bcAction === 'function') {
+                    return aTab.bcAction(cmd, hashis);
+                }
+                if (cmd === 'goback' && hashis) {
+                    xhistory.go(-1);
+                } else if (cmd === 'goforward' && hashis) {
+                    xhistory.go(1);
+                } else if (cmd === 'refresh') {
+                    this.loadingTab = true;
+                    xhistory.go(0);
+                }
+            } else {
+                proxy.alert('警告', '当前标签页尚未支持 History 动作!', false, 'warning');
+            }
+        },
         showLoading(text, dur) {
             dur = dur ? dur : 0;
             text = text ? text : '正在加载中...';
@@ -199,6 +228,12 @@ var vm = new Vue({
                     vm.ua['地理坐标'] = coords;
                     console.debug(vm.ua);
                 });
+            }
+            var aTab = this.tabs[tab.name];
+            if (aTab && aTab.supportBC) {
+                this.broswerControl = true;
+            } else {
+                this.broswerControl = false;
             }
         },
         showLoadingMaster() {

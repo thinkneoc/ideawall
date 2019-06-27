@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../../../assets/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../../../assets/lib/iview/css/iview.css">
     <link rel="stylesheet" href="../../../assets/lib/element-ui/css/element.css">
     <link rel="stylesheet" href="../../../assets/css/ideawall.css">
     <link rel="stylesheet" href="../../../assets/css/control.css">
@@ -11,13 +12,14 @@
 </head>
 <body>
 <div id="app" v-cloak style="text-align: center;overflow: hidden;background: rgb(244,244,244);" v-loading="loading">
-    <iframe id="iframe_game_dragon" class="iframe_wall J_iframe active" name="iframe_game_dragon"
+    <iframe id="iframe_bbs" class="iframe_wall J_iframe active" name="iframe_bbs"
             :data-src="proxy.link('http://bbs.iw.16inet.com/')" frameborder="0" allowtransparency="true"></iframe>
 </div>
 </body>
 <script src="../../../core/Proxy.js"></script>
 <script src="../../../assets/js/jquery.min.js"></script>
 <script src="../../../assets/js/vue.min.js"></script>
+<script src="../../../assets/lib/iview/js/iview.min.js"></script>
 <script src="../../../assets/lib/element-ui/js/element.min.js"></script>
 <script src="../../../controller/ResBBSController.js"></script>
 <script src="../../../assets/js/zxx.min.js"></script>

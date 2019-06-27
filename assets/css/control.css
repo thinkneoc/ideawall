@@ -28,6 +28,13 @@ html, body, #app, .el-container, .el-tabs, .el-tabs__content, .el-tab-pane, .el-
     font-size: 19px;
 }
 
+.broswer-btn{
+    margin-right: 7px;
+    margin-left: 5px;
+    color: #666 !important;
+    font-size: 19px;
+}
+
 .win-control-osbtn{
     color:#000;
     margin: 0 3px;

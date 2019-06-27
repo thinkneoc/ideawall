@@ -18,15 +18,15 @@
              style="position: absolute;top: -20px;right: -20px;pointer-events: none;">
             <img src="../../assets/images/loading.jpg" alt="" style="width: 70px;height: 60px;">
         </div>
-
         <el-container>
             <el-header id="zxx-drag" :height="proxy.appVar._platform === 'darwin'?'30px':'15px'"
                        class="win-maximize-dblclick zxx-title">
-                <span v-if="proxy.appVar._platform === 'darwin'">控制面板 - ideawall{{netstatus == 'offline'?'[连接已断开]':''}}</span>
+                <span v-if="proxy.appVar._platform === 'darwin'">控制面板 - ideawall{{netstatus == 'offline'?' [连接已断开]':''}}</span>
             </el-header>
             <el-tabs v-model="activeTab" @tab-click="handleClick"
                      :style="proxy.appVar._platform === 'darwin'?'height:calc(100% - 30px)':'height:calc(100% - 15px)'">
-                <el-tab-pane :disabled="lock" :name="item.name" v-for="(item, index) in tabs">
+                <el-tab-pane :disabled="lock" :name="item.name" v-for="(item, index) in tabs"
+                             :style="item.style?item.style:''" v-loading="loadingTab">
                     <span slot="label"><i :class="item.icon"></i> {{item.title}}</span>
                     <iframe :id="'iframe_'+item.name" class="J_iframe active"
                             :name="'iframe_'+item.name"
@@ -35,6 +35,21 @@
                 </el-tab-pane>
             </el-tabs>
             <div class="zxx-controls animated fadeInRight" :style="proxy.appVar._platform === 'darwin'?'':'top:17px;'">
+                <template v-if="broswerControl || proxy.debug">
+                    <a href="javascript:void(0)" title="后退" class="animated fadeInRight broswer-btn"
+                       onclick="vm.iframeAction('goback')">
+                        <i class="ivu-icon ivu-icon-md-arrow-back"></i>
+                    </a>
+                    <a href="javascript:void(0)" title="前进" class="animated fadeInRight broswer-btn"
+                       onclick="vm.iframeAction('goforward')">
+                        <i class="ivu-icon ivu-icon-md-arrow-forward"></i>
+                    </a>
+                    <a href="javascript:void(0)" title="刷新" class="animated fadeInRight broswer-btn"
+                       onclick="vm.iframeAction('refresh')">
+                        <i class="ivu-icon ivu-icon-md-refresh"></i>
+                    </a>
+                    |
+                </template>
                 <a href="javascript:void(0)" class="zxx-control-btn"
                    v-if="loadingControl">
                     <i class="el-icon-loading"></i>

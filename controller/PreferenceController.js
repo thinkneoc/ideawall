@@ -218,4 +218,5 @@ var vm = new Vue({
 
 window.onload = function () {
     vm.loading = false;
+    top.vm.loadingTab = false;
 };
