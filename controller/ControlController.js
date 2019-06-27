@@ -24,7 +24,6 @@ var vm = new Vue({
                     icon: 'el-icon-monitor',
                     link: './control/MyDesk.html',
                     preload: true,
-                    supportBC: false,
                 },
                 'deskstore': {
                     name: 'deskstore',
@@ -32,7 +31,8 @@ var vm = new Vue({
                     icon: 'el-icon-goods',
                     link: './control/DeskStore.html',
                     preload: false,
-                    supportBC: false,
+                    preloadTip: '桌面商店开发中, 敬请期待!',
+                    historyInit: 2,
                 },
                 'resbbs': {
                     name: 'resbbs',
@@ -41,6 +41,8 @@ var vm = new Vue({
                     link: './control/ResBBS.html',
                     preload: true,
                     supportBC: true,
+                    needNet: true,
+                    historyInit: 2,
                     style: 'background:rgb(244,244,244);',
                 },
                 'preference': {
@@ -49,7 +51,6 @@ var vm = new Vue({
                     icon: 'el-icon-setting',
                     link: './control/Preference.html',
                     preload: true,
-                    supportBC: false,
                 },
                 'feedback': {
                     name: 'feedback',
@@ -57,7 +58,7 @@ var vm = new Vue({
                     icon: 'el-icon-chat-dot-square',
                     link: './control/Feedback.html',
                     preload: true,
-                    supportBC: false,
+                    needCoords: true,
                 },
             },
             imodal: {//全局模态框, 用于呈现不适合新开窗体的内联页面层.
@@ -82,11 +83,15 @@ var vm = new Vue({
     },
     methods: {
         iframeAction(cmd) {
+            if (this.netstatus === 'offline') {
+                proxy.alert('系统提示', '你当前处于未联网状态, 此动作需要连接到互联网以提供服务...');
+                return;
+            }
             var aTab = this.tabs[this.activeTab];
             if ((aTab && aTab.supportBC) || proxy.debug) {
                 var xwin = document.getElementById('iframe_' + aTab.name).contentWindow;
                 var xhistory = xwin ? xwin.history : undefined;
-                var hashis = xhistory && xhistory.length > 1;
+                var hashis = (xhistory && (xhistory.length > (aTab.historyInit ? aTab.historyInit : 1)));
                 if (typeof aTab.bcAction === 'function') {
                     return aTab.bcAction(cmd, hashis);
                 }
@@ -101,6 +106,21 @@ var vm = new Vue({
             } else {
                 proxy.alert('警告', '当前标签页尚未支持 History 动作!', false, 'warning');
             }
+        },
+        netLoading(tabname, startFun, StopFun) {
+            proxy.appVar._controlwindow.webContents.on('did-start-loading', () => {
+                if (this.activeTab === tabname) {
+                    this.loadingMaster = true;
+                    startFun();
+                }
+            });
+            proxy.appVar._controlwindow.webContents.on('did-stop-loading', () => {
+                if (this.activeTab === tabname) {
+                    this.loadingMaster = false;
+                    this.loading = false;
+                    StopFun();
+                }
+            });
         },
         showLoading(text, dur) {
             dur = dur ? dur : 0;
@@ -213,27 +233,44 @@ var vm = new Vue({
             var ihtml = '<div id="dragWin-div" class="dragwin-dblclick window-drag" style="z-index:20990909;position:absolute;width:100%;top:0;left:0;pointer-events: none;height:' + height + ';"></div>';//
             $(panelId).prepend(ihtml);
         },
-        handleClick(tab, event) {
+        handleClick(tab, event, force) {
             console.log(tab);
+            var aTab = this.tabs[tab.name];
+            if (!aTab) {
+                return;
+            }
             this.activeTab = tab.name;
-            if (tab.name === this.tabs.deskstore.name) {
-                var ifa = $('#iframe_' + this.tabs.deskstore.name);
-                if (ifa.attr('data-mutual') !== 'true') {
-                    ifa.attr('src', ifa.attr('data-src'));//这个需要重新加载一次, 原因是, 用预加载的话, 存在某些异常问题.
-                    ifa.attr('data-mutual', 'true');
-                    proxy.alert('系统提示', '桌面商店开发中, 敬请期待...');
-                }
-            } else if (tab.name === this.tabs.feedback.name) {
+            var ifa = $('#iframe_' + aTab.name);
+            var netbrokenUrl = '../errors/netbroken.html';
+            //网络支持判定
+            if (aTab.needNet && this.netstatus === 'offline') {
+                ifa.attr('src', netbrokenUrl);
+                return;
+            }
+            //浏览器控制栏支持判定
+            if (aTab.supportBC) {
+                this.broswerControl = true;
+            } else {
+                this.broswerControl = false;
+            }
+            //需要定位更新支持判定
+            if (aTab.needCoords) {
                 agent.Agent.getCoords((coords) => {
                     vm.ua['地理坐标'] = coords;
                     console.debug(vm.ua);
                 });
             }
-            var aTab = this.tabs[tab.name];
-            if (aTab && aTab.supportBC) {
-                this.broswerControl = true;
-            } else {
-                this.broswerControl = false;
+            //未首次加载判定
+            if (!aTab.preload && !ifa.attr('src')) {
+                ifa.attr('src', aTab.link);
+                if (aTab.preloadTip) {
+                    proxy.alert('系统提示', aTab.preloadTip);
+                }
+            }
+
+            //强制刷新判定, 条件是: 当前 url 不为 netbroken.
+            if (force && (ifa.attr('src') + '').indexOf(netbrokenUrl) > -1) {
+                ifa.attr('src', aTab.link);
             }
         },
         showLoadingMaster() {
@@ -418,6 +455,11 @@ window.addEventListener('online', function () {
     vm.netstatus = 'online';
     var title = $('.zxx-title').text();
     $('title,.zxx-title').text(title.replace(' [连接已断开]', ''));
+
+    var tab = vm.tabs[vm.activeTab];
+    if (tab && tab.needNet) {
+        vm.handleClick(tab, false, true);//强制刷新它
+    }
 });
 
 window.addEventListener('offline', function () {
@@ -434,5 +476,10 @@ window.addEventListener('offline', function () {
     console.debug(title.indexOf('[连接已断开]'));
     if (title.indexOf('[连接已断开]') === -1) {
         $('title,.zxx-title').text(title + ' [连接已断开]');
+    }
+
+    var tab = vm.tabs[vm.activeTab];
+    if (tab && tab.needNet) {
+        vm.handleClick(tab, false);//强制刷新它
     }
 });

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../assets/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../../assets/lib/iview/css/iview.css">
+    <link rel="stylesheet" href="../../assets/lib/element-ui/css/element.css">
+    <link rel="stylesheet" href="../../assets/css/animate.css">
+    <link rel="stylesheet" href="../../assets/css/ideawall.css">
+</head>
+
+<body style="overflow:hidden;">
+<div id="app" v-cloak v-loading="loading" class="animated fadeIn" style="width: 100%;height: 100%;background: #fff;">
+    <div style="text-align: center;height: 100%;margin: auto;padding-top: 150px;">
+        <img src="../../assets/images/404.jpg" alt=""
+             @click="proxy.alert('系统提示', '你当前处于未联网状态, 此页面需要连接到互联网以提供服务...')"
+             style="width: 420px;margin: auto;cursor:pointer;"/>
+    </div>
+</div>
+</body>
+<script src="../../core/Proxy.js"></script>
+<script src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/js/vue.min.js"></script>
+<script src="../../assets/lib/iview/js/iview.min.js"></script>
+<script src="../../assets/lib/element-ui/js/element.min.js"></script>
+<script src="../../assets/js/zxx.min.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                loading: true,
+            };
+        },
+        methods: {},
+        created: function () {
+        },
+        mounted() {
+        }
+    });
+
+
+    window.onload = function () {
+        vm.loading = false;
+    };
+</script>
+</html>

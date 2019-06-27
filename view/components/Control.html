@@ -35,7 +35,7 @@
                 </el-tab-pane>
             </el-tabs>
             <div class="zxx-controls animated fadeInRight" :style="proxy.appVar._platform === 'darwin'?'':'top:17px;'">
-                <template v-if="broswerControl || proxy.debug">
+                <template v-if="(broswerControl || proxy.debug) && netstatus === 'online' && !loadingControl">
                     <a href="javascript:void(0)" title="后退" class="animated fadeInRight broswer-btn"
                        onclick="vm.iframeAction('goback')">
                         <i class="ivu-icon ivu-icon-md-arrow-back"></i>

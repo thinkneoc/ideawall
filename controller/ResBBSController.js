@@ -20,28 +20,11 @@ var vm = new Vue({
             proxy.refreshAppVar();
             this.lock = swicth;
         });
-        proxy.appVar._controlwindow.webContents.on('did-start-loading', () => {
-            if(top.vm.activeTab === 'resbbs') {
-                try {
-                    top.vm.loadingMaster = true;
-                    this.$Loading.start();
-                } catch (e) {
-                    //...
-                }
-            }
+        top.vm.netLoading('resbbs', () => {
+            this.$Loading.start();
+        }, () => {
+            this.$Loading.finish();
         });
-        proxy.appVar._controlwindow.webContents.on('did-stop-loading', () => {
-            if(top.vm.activeTab === 'resbbs') {
-                try {
-                    top.vm.loadingMaster = false;
-                    this.loading = false;
-                    this.$Loading.finish();
-                } catch (e) {
-                    //...
-                }
-            }
-        });
-
         $('iframe#iframe_bbs').load(function () {
             top.vm.loadingTab = false;
         })

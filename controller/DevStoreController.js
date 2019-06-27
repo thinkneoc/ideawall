@@ -21,27 +21,12 @@ var vm = new Vue({
             proxy.refreshAppVar();
             that.lock = swicth;
         });
-        proxy.appVar._controlwindow.webContents.on('did-start-loading', () => {
-            if (top.vm.activeTab === 'deskstore') {
-                try {
-                    top.vm.loadingMaster = true;
-                    this.loading = true;
-                    this.$Loading.start();
-                } catch (e) {
-                    //...
-                }
-            }
-        });
-        proxy.appVar._controlwindow.webContents.on('did-stop-loading', () => {
-            if (top.vm.activeTab === 'deskstore') {
-                try {
-                    top.vm.loadingMaster = false;
-                    this.loading = false;
-                    this.$Loading.finish();
-                } catch (e) {
-                    //...
-                }
-            }
+        top.vm.netLoading('deskstore', () => {
+            this.loading = true;
+            this.$Loading.start();
+        }, () => {
+            this.loading = false;
+            this.$Loading.finish();
         });
     }
 });
