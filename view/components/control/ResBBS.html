@@ -13,7 +13,7 @@
 <body>
 <div id="app" v-cloak style="text-align: center;overflow: hidden;background: rgb(244,244,244);" v-loading="loading">
     <iframe id="iframe_bbs" class="iframe_wall J_iframe active" name="iframe_bbs"
-            :data-src="proxy.link('http://bbs.iw.16inet.com/')" frameborder="0" allowtransparency="true"></iframe>
+            :data-src="proxy.link(proxy.appVar._bbsurl)" frameborder="0" allowtransparency="true"></iframe>
 </div>
 </body>
 <script src="../../../core/Proxy.js"></script>

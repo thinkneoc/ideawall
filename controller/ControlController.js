@@ -44,6 +44,11 @@ var vm = new Vue({
                     needNet: true,
                     historyInit: 2,
                     style: 'background:rgb(244,244,244);',
+                    action: {
+                        refresh: function (cmd) {
+                            proxy.ipc.send('ipc_repeat', 'ipc_render_control_resbbs_refresh');
+                        }
+                    },
                 },
                 'preference': {
                     name: 'preference',
@@ -92,14 +97,20 @@ var vm = new Vue({
                 var xwin = document.getElementById('iframe_' + aTab.name).contentWindow;
                 var xhistory = xwin ? xwin.history : undefined;
                 var hashis = (xhistory && (xhistory.length > (aTab.historyInit ? aTab.historyInit : 1)));
-                if (typeof aTab.bcAction === 'function') {
-                    return aTab.bcAction(cmd, hashis);
-                }
                 if (cmd === 'goback' && hashis) {
+                    if (aTab.action && typeof aTab.action.goback === 'function') {
+                        return aTab.action.goback(cmd, hashis);
+                    }
                     xhistory.go(-1);
                 } else if (cmd === 'goforward' && hashis) {
+                    if (aTab.action && typeof aTab.action.goforward === 'function') {
+                        return aTab.action.goforward(cmd, hashis);
+                    }
                     xhistory.go(1);
                 } else if (cmd === 'refresh') {
+                    if (aTab.action && typeof aTab.action.refresh === 'function') {
+                        return aTab.action.refresh(cmd, hashis);
+                    }
                     this.loadingTab = true;
                     xhistory.go(0);
                 }
