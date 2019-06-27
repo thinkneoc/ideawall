@@ -259,7 +259,7 @@ template {
 
 ::-webkit-scrollbar-thumb { /*指滚动条里面可以拖动的部分，也就是滑块*/
     /*background: rgb(195, 195, 195, .5);*/
-    background-color: #eee !important;
+    background-color: #ddd !important;
     border-radius: 10px !important;
 }
 

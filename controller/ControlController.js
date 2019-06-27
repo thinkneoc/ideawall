@@ -30,6 +30,13 @@ var vm = new Vue({
                     link: './control/DeskStore.html',
                     preload: false,
                 },
+                'resbbs': {
+                    name: 'resbbs',
+                    title: '资源社区',
+                    icon: 'el-icon-chat-line-square',
+                    link: './control/ResBBS.html',
+                    preload: true,
+                },
                 'preference': {
                     name: 'preference',
                     title: '偏好设置',

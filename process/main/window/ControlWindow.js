@@ -31,8 +31,8 @@ function creat(isshow, paramJson) {
         height: 600,
         minWidth: 998,
         minHeight: 600,
-        maxWidth: 998,
-        maxHeight: 600,
+        maxWidth: appVar._platform === 'darwin' ? undefined : 998,
+        maxHeight: appVar._platform === 'darwin' ? undefined : 600,
         resizable: true,
         movable: true,
         minimizable: true,
@@ -88,7 +88,7 @@ function creat(isshow, paramJson) {
 
     // 当窗口将要关闭时触发
     xwindow.on('close', function (event) {
-        if(!appVar._lock){
+        if (!appVar._lock) {
             xwindow.hide();
         }
         event.preventDefault();//阻止关闭
@@ -101,11 +101,11 @@ function creat(isshow, paramJson) {
         //将全局xwindow置为null
         xwindow = null;
         //如果确定关闭控制面板, 那么其他的信息窗口也应该关闭
-        try{
+        try {
             appVar._deviceinfowindow.close();
             appVar._readmewindow.close();
             appVar._jsoneditorwindow.close();
-        }catch(e){
+        } catch (e) {
             //...
         }
     });
