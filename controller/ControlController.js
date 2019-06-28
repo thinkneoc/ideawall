@@ -39,7 +39,7 @@ var vm = new Vue({
                     title: '资源社区',
                     icon: 'el-icon-chat-line-square',
                     link: './control/ResBBS.html',
-                    preload: true,
+                    preload: false,
                     supportBC: true,
                     needNet: true,
                     historyInit: 2,
@@ -108,10 +108,10 @@ var vm = new Vue({
                     }
                     xhistory.go(1);
                 } else if (cmd === 'refresh') {
+                    this.loadingTab = true;
                     if (aTab.action && typeof aTab.action.refresh === 'function') {
                         return aTab.action.refresh(cmd, hashis);
                     }
-                    this.loadingTab = true;
                     xhistory.go(0);
                 }
             } else {
@@ -255,6 +255,7 @@ var vm = new Vue({
             var netbrokenUrl = '../errors/netbroken.html';
             //网络支持判定
             if (aTab.needNet && this.netstatus === 'offline') {
+                this.loadingTab = true;
                 ifa.attr('src', netbrokenUrl);
                 return;
             }
@@ -273,6 +274,7 @@ var vm = new Vue({
             }
             //未首次加载判定
             if (!aTab.preload && !ifa.attr('src')) {
+                this.loadingTab = true;
                 ifa.attr('src', aTab.link);
                 if (aTab.preloadTip) {
                     proxy.alert('系统提示', aTab.preloadTip);
@@ -281,6 +283,7 @@ var vm = new Vue({
 
             //强制刷新判定, 条件是: 当前 url 不为 netbroken.
             if (force && (ifa.attr('src') + '').indexOf(netbrokenUrl) > -1) {
+                this.loadingTab = true;
                 ifa.attr('src', aTab.link);
             }
         },

@@ -87,6 +87,23 @@ function creat(isshow, paramJson) {
         });
     }
 
+    xwindow.webContents.on('new-window', (event, url, frameName, disposition, options) => {
+        event.preventDefault();
+        const win = new Electron.BrowserWindow({
+            webContents: options.webContents, // use existing webContents if provided
+            show: false,
+            width: 998,
+            height: 600,
+            minWidth: 998,
+            minHeight: 600,
+        });
+        win.once('ready-to-show', () => win.show());
+        if (!options.webContents) {
+            win.loadURL(url) // existing webContents will be navigated automatically
+        }
+        event.newGuest = win
+    });
+
     // 当窗口将要关闭时触发
     xwindow.on('close', function (event) {
         if (!appVar._lock) {

@@ -71,6 +71,10 @@
     function gotoHomePage() {
         proxy.openExternal(proxy.appVar._siteurl);
     }
+
+    window.onload = function () {
+        top.vm.loadingTab = false;
+    }
 </script>
 
 </html>
