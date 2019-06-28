@@ -11,8 +11,13 @@ var vm = new Vue({
             nowURL: proxy.appVar._bbsurl,
         }
     },
-    methods: {},
+    methods: {
+        postMessage(data) {//data 结构为 指令+数据
+            $('iframe#iframe_bbs')[0].contentWindow.postMessage(data, '*');
+        }
+    },
     created: function () {
+
     },
     mounted() {
         proxy.ipc.on('ipc_lock_req', (event, swicth) => {
@@ -41,8 +46,9 @@ window.onload = function () {
 };
 
 window.addEventListener('message', function (rs) {
-    console.warn('接收到跨域窗口通信消息');
+    console.warn('[父域] 接收到跨域窗口通信消息');
     console.debug(rs.data);
     vm.nowURL = rs.data.location;
+    vm.postMessage('哈哈哈~ 我收到你了~~~ 😁');
 });
 
