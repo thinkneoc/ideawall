@@ -59,6 +59,7 @@ function creat(isshow, paramJson) {
             zoomFactor: 1.0, //页面的默认缩放系数, 3.0 表示 300%. 默认值为 1.0.
             textAreasAreResizable: false, //让 TextArea 元素可以调整大小. 默认值为 true.
             backgroundThrottling: false,//是否在页面成为背景时限制动画和计时器。 这也会影响到 Page Visibility API. 默认值为 true。
+            nativeWindowOpen: true,//是否使用原生的window.open(). 默认值为 false. Child windows will always have node integration disabled. Note: This option is currently experimental.
             // allowDisplayingInsecureContent: true,//是否允许一个使用 https的界面来展示由 http URLs 传过来的资源。默认false。
             // allowRunningInsecureContent: true,//是否允许一个使用 https的界面来渲染由 http URLs 提交的html，css，javascript。默认为 false。
         }

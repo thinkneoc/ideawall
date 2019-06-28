@@ -23,9 +23,9 @@ var config = {
 function createTransporter(user) {
     return nodemailer.createTransport({
         service: config.email.service,
-        // secure: true, // 使用 SSL
-        // port: 25, // SMTP 端口
-        // secureConnection: true, // 使用了 SSL
+        secure: true, // 使用 SSL
+        port: 465, // SMTP 端口
+        secureConnection: true, // 使用了 SSL
         auth: {
             user: config.email.user,
             pass: config.email.pass
