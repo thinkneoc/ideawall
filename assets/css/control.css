@@ -48,7 +48,8 @@ html, body, #app, .el-container, .el-tabs, .el-tabs__content, .el-tab-pane, .el-
     width: 100%;
     height: 100%;
     z-index: 1;
-    background: #fff;
+    /*background: #fff;*/
+    background: rgb(227,226,226);
 }
 
 .win-control-upbg{

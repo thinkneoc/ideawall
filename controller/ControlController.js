@@ -467,8 +467,8 @@ window.addEventListener('online', function () {
     // new window.Notification(option.title, option);
     console.warn('重新连上网络了');
     vm.netstatus = 'online';
-    var title = $('.zxx-title').text();
-    $('title,.zxx-title').text(title.replace(' [连接已断开]', ''));
+    var title = $('title').text();
+    $('title').text(title.replace(' [连接已断开]', ''));
 
     var tab = vm.tabs[vm.activeTab];
     if (tab && tab.needNet) {
@@ -486,10 +486,10 @@ window.addEventListener('offline', function () {
     // new window.Notification(option.title, option);
     console.warn('断网了');
     vm.netstatus = 'offline';
-    var title = $('.zxx-title').text();
+    var title = $('title').text();
     console.debug(title.indexOf('[连接已断开]'));
     if (title.indexOf('[连接已断开]') === -1) {
-        $('title,.zxx-title').text(title + ' [连接已断开]');
+        $('title').text(title + ' [连接已断开]');
     }
 
     var tab = vm.tabs[vm.activeTab];

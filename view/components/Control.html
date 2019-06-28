@@ -12,8 +12,8 @@
 </head>
 <body>
 <div id="app" v-cloak class="animated fadeIn">
-    <div class="win-control-bg" v-if="proxy.appVar._platform !== 'darwin'"></div>
-    <div :class="''+(proxy.appVar._platform !== 'darwin'?'win-control-upbg':'')" style="width:100%;height:100%;">
+    <div class="win-control-bg" v-if="proxy.appVar._platform == 'darwin'"></div>
+    <div :class="''+(proxy.appVar._platform === 'darwin'?'win-control-upbg':'')" style="width:100%;height:100%;">
         <div v-if="!loadingControl && loadingMaster"
              style="position: absolute;top: -20px;right: -20px;pointer-events: none;">
             <img src="../../assets/images/loading.jpg" alt="" style="width: 70px;height: 60px;">
@@ -21,7 +21,7 @@
         <el-container>
             <el-header id="zxx-drag" :height="proxy.appVar._platform === 'darwin'?'30px':'15px'"
                        class="win-maximize-dblclick zxx-title">
-                <span v-if="proxy.appVar._platform === 'darwin'">控制面板 - ideawall{{netstatus == 'offline'?' [连接已断开]':''}}</span>
+                <span ></span>
             </el-header>
             <el-tabs v-model="activeTab" @tab-click="handleClick"
                      :style="proxy.appVar._platform === 'darwin'?'height:calc(100% - 30px)':'height:calc(100% - 15px)'">
