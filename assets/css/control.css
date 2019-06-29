@@ -49,7 +49,7 @@ html, body, #app, .el-container, .el-tabs, .el-tabs__content, .el-tab-pane, .el-
     height: 100%;
     z-index: 1;
     /*background: #fff;*/
-    background: rgb(227,226,226);
+    background: rgb(229,228,228);
 }
 
 .win-control-upbg{
