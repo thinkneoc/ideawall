@@ -324,6 +324,28 @@ var vm = new Vue({
                 that.loadingMaster = false;
             }, 2500);
         },
+        //连网回调
+        isOnline() {
+            this.netstatus = 'online';
+            var title = $('title');
+            title.text(title.text().replace(' [连接已断开]', ''));
+            var tab = this.tabs[this.activeTab];
+            if (tab && tab.needNet) {
+                this.handleClick(tab, false, true, true);//强制刷新它
+            }
+        },
+        //断网回调
+        isOffline() {
+            this.netstatus = 'offline';
+            var title = $('title');
+            if (title.text().indexOf('[连接已断开]') === -1) {
+                title.text(title.text() + ' [连接已断开]');
+            }
+            var tab = this.tabs[this.activeTab];
+            if (tab && tab.needNet) {
+                this.handleClick(tab);//刷新它
+            }
+        },
         //设置所有设备桌面隐藏
         setAllHide(e, res, dontresend) {
             this.showLoadingMaster();
@@ -397,6 +419,13 @@ var vm = new Vue({
             proxy.appVar._lock = swicth;
             proxy.refreshAppVar();
             that.lock = swicth;
+        });
+        proxy.ipc.on('ipc_render_control_netlistener', function (event, bol) {
+            if(bol){
+                that.isOnline();
+            }else{
+                that.isOffline();
+            }
         });
         proxy.ipc.on('ipc_render_control_showloading', function (event, text, dur) {
             that.showLoading(text, dur);
@@ -488,49 +517,5 @@ $(function () {
             }
             return true;
         }
-    }
-});
-
-/**
- * 监测联网状态
- */
-window.addEventListener('online', function () {
-    // let option = {
-    //     title: "有网了!",
-    //     body: "机子帮你开好了, 快来上网啊~",
-    //     icon: "../../assets/images/online.png",
-    // };
-    // // 创建上线通知
-    // new window.Notification(option.title, option);
-    console.warn('重新连上网络了');
-    vm.netstatus = 'online';
-    var title = $('title').text();
-    $('title').text(title.replace(' [连接已断开]', ''));
-
-    var tab = vm.tabs[vm.activeTab];
-    if (tab && tab.needNet) {
-        vm.handleClick(tab, false, true, true);//强制刷新它
-    }
-});
-
-window.addEventListener('offline', function () {
-    // let option = {
-    //     title: "断网了!",
-    //     body: "尝尝10亿伏特!还敢上网不?(炮姐如是说!)",
-    //     icon: "../../assets/images/offline.png",
-    // };
-    // // 创建上线通知
-    // new window.Notification(option.title, option);
-    console.warn('断网了');
-    vm.netstatus = 'offline';
-    var title = $('title').text();
-    console.debug(title.indexOf('[连接已断开]'));
-    if (title.indexOf('[连接已断开]') === -1) {
-        $('title').text(title + ' [连接已断开]');
-    }
-
-    var tab = vm.tabs[vm.activeTab];
-    if (tab && tab.needNet) {
-        vm.handleClick(tab);//刷新它
     }
 });

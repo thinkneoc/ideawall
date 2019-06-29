@@ -28,7 +28,7 @@
             <el-form-item label="" size="mini">
                 <span slot="label">
                     README
-                    <el-tooltip placement="top" data-zxx-map="teach">
+                    <el-tooltip placement="top" data-zxx-map="teach" data-zxx-limit="onlyonline">
                         <div slot="content">
                             README 即说明文档, 它通常由开发者提供, <br/>用以表述桌面配置参数说明和注意事项.
                         </div>
@@ -50,7 +50,7 @@
             <el-form-item label="" size="mini">
                 <span slot="label">
                     {{ld.switch_source != 2?'桌面源':''}}
-                    <el-tooltip placement="top" data-zxx-map="teach">
+                    <el-tooltip placement="top" data-zxx-map="teach" data-zxx-limit="onlyonline">
                         <div slot="content">
                             桌面源是指通过绑定到壁纸层的窗口的上层容器, <br/>它为桌面的定制化提供了非常灵活的设计和想象.<br/>
                             通常情况下, 桌面源由开发者指定, 用户无法进行<br/>修改. 但我们为您提供了一个超桌示例, 它的桌面<br/>源
@@ -68,7 +68,7 @@
             <el-form-item label="" size="mini" v-if="ld.switch_source == 2">
                 <span slot="label">
                     {{ld.switch_source != 2?'桌面源':''}}
-                    <el-tooltip placement="top" data-zxx-map="teach">
+                    <el-tooltip placement="top" data-zxx-map="teach" data-zxx-limit="onlyonline">
                         <div slot="content">
                             桌面源是指通过绑定到壁纸层的窗口的上层容器, <br/>它为桌面的定制化提供了非常灵活的设计和想象.<br/>
                             通常情况下, 桌面源由开发者指定, 用户无法进行<br/>修改. 但我们为您提供了一个超桌示例, 它的桌面<br/>源
@@ -102,7 +102,7 @@
             <el-form-item label="" size="mini">
                 <span slot="label">
                     约定域参数
-                    <el-tooltip placement="top" data-zxx-map="teach">
+                    <el-tooltip placement="top" data-zxx-map="teach" data-zxx-limit="onlyonline">
                         <div slot="content">
                             所谓约定参数, 是指开发者与使用者约定的配置<br/>参数, 通常你需要先阅读开发者提供的 README<br/>文件, 根据说明来进行它们所支持的参数的配置<br/>
                             大部分情况下, 这部分数据是复杂且凌乱无规律的,<br/> 我们为你提供了一个高级编辑器(右侧按钮打开),<br/> 希望尽可能降低配置门槛.

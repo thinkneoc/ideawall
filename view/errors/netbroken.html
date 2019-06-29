@@ -58,10 +58,10 @@
 </body>
 <script src="../../core/Proxy.js"></script>
 <script>
-    var nb_title = decodeURIComponent(decodeURIComponent(T.p('title')));
-    var nb_des = decodeURIComponent(decodeURIComponent(T.p('des')));
-    nb_title = nb_title ? nb_title : '未连接到网络';
-    nb_des = nb_des ? nb_des : '你当前处于未联网状态, 此页面需要连接到互联网以提供服务...';
+    var nb_title = T.p('title');
+    var nb_des = T.p('des');
+    nb_title = nb_title ? decodeURIComponent(decodeURIComponent(nb_title)) : '未连接到网络';
+    nb_des = nb_des ? decodeURIComponent(decodeURIComponent(nb_des)) : '你当前处于未联网状态, 此页面需要连接到互联网以提供服务...';
     window.onload = function () {
         document.getElementById('nb_title').innerText = nb_title;
         document.getElementById('nb_des').innerText = nb_des;
