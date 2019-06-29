@@ -31,7 +31,8 @@ var vm = new Vue({
                     icon: 'el-icon-goods',
                     link: './control/DeskStore.html',
                     preload: true,
-                    preloadTip: '桌面商店开发中, 敬请期待!',
+                    supportBC: true,
+                    needNet: true,
                     historyInit: 2,
                     action: {
                         refresh: function (cmd) {
@@ -119,16 +120,16 @@ var vm = new Vue({
                     }
                     xhistory.go(1);
                 } else if (cmd === 'refresh') {
-                    this.loadingTab = true;
                     if (aTab.action && typeof aTab.action.refresh === 'function') {
                         return aTab.action.refresh(cmd, hashis);
                     }
+                    this.loadingTab = true;
                     xhistory.go(0);
                 } else if (cmd === 'home') {
                     if (aTab.action && typeof aTab.action.home === 'function') {
-                        this.loadingTab = true;
                         return aTab.action.home(cmd, hashis);
                     }
+                    this.loadingTab = true;
                     this.handleClick(aTab, false, true);
                 }
             } else {
@@ -396,6 +397,12 @@ var vm = new Vue({
             proxy.appVar._lock = swicth;
             proxy.refreshAppVar();
             that.lock = swicth;
+        });
+        proxy.ipc.on('ipc_render_control_showloading', function (event, text, dur) {
+            that.showLoading(text, dur);
+        });
+        proxy.ipc.on('ipc_render_control_showmsg', function (event, content, type, duration, closable, nodestory) {
+            that.showMessage(content, type, duration, closable, nodestory);
         });
     }
 });

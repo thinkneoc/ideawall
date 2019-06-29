@@ -37,12 +37,15 @@ var vm = new Vue({
             that.lock = swicth;
         });
         proxy.ipc.on('ipc_render_control_deskstore_refresh', (event, cmd) => {
+            that.loading = true;
             xiframe.attr('src', this.nowURL);
         });
         proxy.ipc.on('ipc_render_control_deskstore_home', (event, cmd) => {
+            that.loading = true;
             xiframe.attr('src', proxy.appVar._storeurl);
         });
         proxy.ipc.on('ipc_render_control_deskstore_changeurl', (event, url) => {
+            that.loading = true;
             this.nowURL = url;
             xiframe.attr('src', url);
         });

@@ -37,12 +37,15 @@ var vm = new Vue({
             this.lock = swicth;
         });
         proxy.ipc.on('ipc_render_control_resbbs_refresh', (event, cmd) => {
+            that.loading = true;
             xiframe.attr('src', this.nowURL);
         });
         proxy.ipc.on('ipc_render_control_resbbs_home', (event, cmd) => {
+            that.loading = true;
             xiframe.attr('src', proxy.appVar._bbsurl);
         });
         proxy.ipc.on('ipc_render_control_resbbs_changeurl', (event, url) => {
+            that.loading = true;
             this.nowURL = url;
             xiframe.attr('src', url);
         });
