@@ -163,6 +163,24 @@ function DeviceDeskDao(model) {
             + ")");
     };
 
+    /**
+     * 为目标设备(集合)清除桌面
+     *
+     * @param ld_ids
+     */
+    this.removesDesk = function (ld_ids) {
+        return this._self.exec("update "
+            + Model.tbname(model)
+            + " set "
+            + Model.fieldname(model, 'ld_id')
+            + " = 0" +
+            +" where "
+            + Model.fieldname(model, 'ld_id')
+            + " in ("
+            + ld_ids.join(",")
+            + ")");
+    };
+
     this.init();//自动初始化.
 }
 

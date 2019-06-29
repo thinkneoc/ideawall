@@ -84,6 +84,15 @@ function LocalDeskDao(model) {
         return this._self.update({id: obj.id}, obj);
     };
 
+    /**
+     * 根据 id 删除桌面, 须提前取消桌面引用!
+     * @param id
+     * @returns {*}
+     */
+    this.deleteById = function (id) {
+        return this._self.delete({id: obj.id});
+    };
+
     this.init();//自动初始化.
 }
 

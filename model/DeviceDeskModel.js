@@ -107,6 +107,10 @@ function DeviceDeskModel(appVar) {
         this.setsDesk([display_id], 0);
     };
 
+    this.removesDesk = function (desk_ids) {
+        return this.dao.removesDesk(desk_ids);
+    };
+
     this.isDesk = function (display_id, deskId) {
         if (!deskId) {
             var display = this.getDisplayById(display_id);

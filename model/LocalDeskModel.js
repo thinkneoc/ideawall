@@ -223,6 +223,10 @@ function LocalDeskModel(appVar) {
         !dontsync ? this.syncUpdate() : '';
     };
 
+    this.deleteById = function (id) {
+        return this.dao.deleteById(id);
+    };
+
     /**
      * 同步更新信号发送
      */

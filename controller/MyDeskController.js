@@ -495,9 +495,18 @@ var autoContextMenu = {
         });
         menuItems.push({
             label: '删除',
-            enabled: (desk.ename.indexOf('default-') === 0),
+            enabled: !(desk.ename.indexOf('default-') === 0),
             click: function () {
-
+                proxy.confirm('警告', '你正在删除本地桌面项资源, 此动作无法回滚! 请确认是否继续?', (res) => {
+                    if (res === 0) {
+                        //取消引用
+                        deviceDeskModel.removesDesk([desk_id]);
+                        //物理删除
+                        localDeskModel.deleteById(desk_id);
+                        //渲染更新
+                        vm.updateDeskAndDisplay(desk_id);
+                    }
+                }, false, 'warning');
             }
         });
         return menuItems;
