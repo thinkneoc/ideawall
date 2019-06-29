@@ -37,8 +37,8 @@
 </div>
 <section class="simple-page-content" style="margin: 0 auto;margin-top: -130px;width: 680px;text-align: left;">
     <blockquote>
-        <p id="nb_title" style="color:#666;">Loading Tip....</p>
-        <p id="nb_des" style="color:#666;">....</p>
+        <p id="nb_title" style="color:#666;font-size: 13px;">Loading Tip....</p>
+        <p id="nb_des" style="color:#666;font-size: 13px;">....</p>
         <pre style="position: absolute;float: right;bottom: -30px;right: 150px;">
         <img src="../../assets/images/404.jpg" alt=""
              onclick="showTip()"
@@ -58,8 +58,10 @@
 </body>
 <script src="../../core/Proxy.js"></script>
 <script>
-    var nb_title = T.p('title') ? T.p('title') : '未连接到网络';
-    var nb_des = T.p('des') ? T.p('des') : '你当前处于未联网状态, 此页面需要连接到互联网以提供服务...';
+    var nb_title = decodeURIComponent(decodeURIComponent(T.p('title')));
+    var nb_des = decodeURIComponent(decodeURIComponent(T.p('des')));
+    nb_title = nb_title ? nb_title : '未连接到网络';
+    nb_des = nb_des ? nb_des : '你当前处于未联网状态, 此页面需要连接到互联网以提供服务...';
     window.onload = function () {
         document.getElementById('nb_title').innerText = nb_title;
         document.getElementById('nb_des').innerText = nb_des;
