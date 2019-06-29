@@ -12,7 +12,7 @@ var vm = new Vue({
             lock: proxy.lock,
             loadingMaster: false,
             loadingControl: true,
-            loadingTab: false,
+            loadingTab: true,
             loadingHandler: undefined,
             broswerControl: false,
             winMaxsize: false,//windows的最大化最小化状态判定有问题, 直接记录一下.
@@ -285,7 +285,7 @@ var vm = new Vue({
                 });
             }
             //未首次加载判定
-            if (!aTab.preload && !ifa.attr('src')) {
+            if (!aTab.preload && !ifa.attr('src') && !ifa.attr('loadingHandler')) {
                 console.log('preload');
                 this.loadingTab = true;
                 ifa.attr('src', aTab.link);
@@ -294,14 +294,14 @@ var vm = new Vue({
                 }
             }
             //强制刷新判定, 条件是: 当前 url 不为 netbroken.
-            if (force && (ifa.attr('src') + '').indexOf(netbrokenUrl) === -1) {
+            if (force && (ifa.attr('src') + '').indexOf(netbrokenUrl) === -1 && !ifa.attr('loadingHandler')) {
                 console.log('forceload');
                 this.loadingTab = true;
                 ifa.attr('src', aTab.link);
                 return;
             }
             //超强制刷新判定, 条件是: 当前 url 为 netbroken
-            if (realforce && (ifa.attr('src') + '').indexOf(netbrokenUrl) > -1) {
+            if (realforce && (ifa.attr('src') + '').indexOf(netbrokenUrl) > -1 && !ifa.attr('loadingHandler')) {
                 console.log('realforceload');
                 this.loadingTab = true;
                 ifa.attr('src', aTab.link);
@@ -395,6 +395,7 @@ var vm = new Vue({
 
 window.onload = function () {
     vm.loading = false;
+    vm.loadingTab = false;
     //更新提醒.
     if (proxy.appVar._platform === 'darwin' && proxy.appVar._updateavaava) {
         proxy.alert('ideawall 更新提醒', '检测到全新版本, 点击前往下载', (response) => {
