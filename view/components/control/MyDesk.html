@@ -17,7 +17,8 @@
             <div id="my-device">
                 <h3 class="zxx-desk-m-title">
                     我的设备
-                    <el-tooltip placement="top" data-zxx-map="teach" data-tooltip-limit="onlyonline" :popper-class="window.navigator.onLine?'popper-tooltip popper-only-online':'popper-tooltip'">
+                    <el-tooltip placement="top" data-zxx-map="teach" data-tooltip-limit="onlyonline"
+                                :popper-class="window.navigator.onLine?'popper-tooltip popper-only-online':'popper-tooltip'">
                         <div slot="content">
                             1. 我们将定时抓取你的设备监视器快照(在尽可能低能耗的情况下), <br/>以便能实时反馈桌面配置预览情况.<br/>
                             2. 你可以在偏好设置中修改快照时间或关闭快照功能.<br/>
@@ -31,7 +32,7 @@
                      element-loading-spinner="el-icon-loading" style="min-height: 170px;">
                     <div class="zxx-desk-con zxx-device animated fadeInLeftBig" v-for="(item, index) in displays"
                          :data-id="item.display_id">
-                        <el-card shadow="hover">
+                        <el-card :shadow="item.is_set_desk?'always':'hover'">
                             <div class="zxx-desk-panel zxx-desk-bg"
                                  :onclick="'vm.configDesk(\''+item.is_set_desk+'\')'">
                                 <div class="zxx-desk-overlay zxx-desk-bg zxx-overlay zxx-desk-overlay-top zxx-menu-listener"
@@ -105,7 +106,8 @@
             <div id="my-desktop">
                 <h3 class="zxx-desk-m-title">
                     我的桌面
-                    <el-tooltip placement="top" data-zxx-map="teach" data-tooltip-limit="onlyonline" :popper-class="window.navigator.onLine?'popper-tooltip popper-only-online':'popper-tooltip'">
+                    <el-tooltip placement="top" data-zxx-map="teach" data-tooltip-limit="onlyonline"
+                                :popper-class="window.navigator.onLine?'popper-tooltip popper-only-online':'popper-tooltip'">
                         <div slot="content">
                             这些是你本地的桌面项资源, 你可以: <br/>
                             1. 点击桌面项以配置它们, 桌面预览图下方会实时显示你正在配置中的桌面, <br/>并且, 如果有设备启用了它, 设备也将显示"正在配置"信息;<br/>
@@ -132,7 +134,7 @@
                      element-loading-spinner="el-icon-loading" style="min-height: 170px;">
                     <div class="zxx-desk-con zxx-desktop animated fadeInLeftBig" v-for="(item, index) in lds"
                          v-show="item.type === tag.id || tag.id === 'all'">
-                        <el-card shadow="hover">
+                        <el-card :shadow="(item.setsdisplays && item.setsdisplays.length > 0)?'always':'hover'">
                             <div class="zxx-desk-panel zxx-desk-bg"
                                  :data-link-type="item.source_type"
                                  :data-link="item.source_val"

@@ -58,7 +58,7 @@
     color: #0094E3;
 }
 
-.zxx-desk-tooltip{
+.zxx-desk-tooltip {
     overflow: hidden;
 }
 
@@ -101,7 +101,7 @@
     padding-left: 5px;
 }
 
-.zxx-desk-tooltip-init{
+.zxx-desk-tooltip-init {
     position: absolute;
     top: 0;
     left: 0;
@@ -166,4 +166,8 @@
     background: transparent;
     z-index: 20001 !important;
     display: block !important;
+}
+
+.project-shadow {
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
 }
