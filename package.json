@@ -113,6 +113,7 @@
   },
   "dependencies": {
     "electron-updater": "^4.0.12",
+    "mousetrap": "^1.6.3",
     "archiver": "^3.0.0",
     "async": "^2.6.1",
     "auto-launch": "^5.0.5",

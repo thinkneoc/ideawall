@@ -118,6 +118,7 @@
     "better-sqlite3": "^5.4.0",
     "electron-updater": "^4.0.12",
     "electron-wallpaper": "^0.0.3",
+    "mousetrap": "^1.6.3",
     "log4js": "^3.0.6",
     "nodemailer": "^6.2.1",
     "nodemailer-smtp-transport": "^2.7.4",
