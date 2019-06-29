@@ -124,6 +124,7 @@
     "nodemailer-smtp-transport": "^2.7.4",
     "screenshot-desktop": "^1.8.0",
     "unirest": "^0.5.1",
+    "request": "^2.87.0",
     "uuid": "^3.3.2"
   },
   "__npminstall_done": false

@@ -37,7 +37,7 @@ let appVar = {
         dir: {
             home: workspace,
             snapscreen: workspace + "/snapscreen",
-            desk: workspace + "/desk",
+            wall: workspace + "/wall",
             data: workspace + "/data",
             user: workspace + "/user",
             cache: workspace + "/cache",

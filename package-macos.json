@@ -122,6 +122,7 @@
     "nodemailer": "^6.2.1",
     "nodemailer-smtp-transport": "^2.7.4",
     "unirest": "^0.5.1",
+    "request": "^2.87.0",
     "uuid": "^3.3.2"
   },
   "__npminstall_done": false
