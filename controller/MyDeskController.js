@@ -402,6 +402,7 @@ var autoContextMenu = {
      */
     buildDeskContextMenu: function (elem) {
         var desk_id = $(elem).data('id');
+        var desk = localDeskModel.getDesk(desk_id);
         var gotoDesktopKey = (proxy.appVar._platform === 'darwin' ? 'F11' : '<i class="ivu-icon ivu-icon-logo-windows" style="margin-top: -2px;"></i> + D');
         var stasdPref = preferenceModel.getByKey('dontshowTipAfter_setDesk');
         stasdPref.value = JSON.parse(stasdPref.value);
@@ -409,7 +410,6 @@ var autoContextMenu = {
         menuItems.push({
             label: '预览',
             click: function () {
-                var desk = localDeskModel.getDesk(desk_id);
                 if (!desk) {
                     proxy.alert('系统提示', '桌面数据索引失败!', false, 'error');
                     return;
@@ -495,7 +495,7 @@ var autoContextMenu = {
         });
         menuItems.push({
             label: '删除',
-            enabled: false,
+            enabled: (desk.ename.indexOf('default-') === 0),
             click: function () {
 
             }
