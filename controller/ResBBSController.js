@@ -30,6 +30,10 @@ var vm = new Vue({
             var xiframe = $('iframe#iframe_bbs');
             xiframe.attr('src', this.nowURL);
         });
+        proxy.ipc.on('ipc_render_control_resbbs_home', (event, cmd) => {
+            var xiframe = $('iframe#iframe_bbs');
+            xiframe.attr('src', xiframe.attr('src'));
+        });
         top.vm.netLoading('resbbs', () => {
             this.$Loading.start();
         }, () => {

@@ -47,6 +47,9 @@ var vm = new Vue({
                     action: {
                         refresh: function (cmd) {
                             proxy.ipc.send('ipc_repeat', 'ipc_render_control_resbbs_refresh');
+                        },
+                        home: function(cmd){
+                            proxy.ipc.send('ipc_repeat', 'ipc_render_control_resbbs_home');
                         }
                     },
                 },
@@ -113,6 +116,12 @@ var vm = new Vue({
                         return aTab.action.refresh(cmd, hashis);
                     }
                     xhistory.go(0);
+                } else if (cmd === 'home') {
+                    if (aTab.action && typeof aTab.action.home === 'function') {
+                        this.loadingTab = true;
+                        return aTab.action.home(cmd, hashis);
+                    }
+                    this.handleClick(aTab, false, true);
                 }
             } else {
                 proxy.alert('警告', '当前标签页尚未支持 History 动作!', false, 'warning');
@@ -248,6 +257,7 @@ var vm = new Vue({
             console.log(tab);
             var aTab = this.tabs[tab.name];
             if (!aTab) {
+                console.log('invaild');
                 return;
             }
             this.activeTab = tab.name;
@@ -255,6 +265,7 @@ var vm = new Vue({
             var netbrokenUrl = '../errors/netbroken.html';
             //网络支持判定
             if (aTab.needNet && this.netstatus === 'offline') {
+                console.log('netbroken');
                 this.loadingTab = true;
                 ifa.attr('src', netbrokenUrl);
                 return;
@@ -267,6 +278,7 @@ var vm = new Vue({
             }
             //需要定位更新支持判定
             if (aTab.needCoords) {
+                console.log('needCoords');
                 agent.Agent.getCoords((coords) => {
                     vm.ua['地理坐标'] = coords;
                     console.debug(vm.ua);
@@ -274,15 +286,16 @@ var vm = new Vue({
             }
             //未首次加载判定
             if (!aTab.preload && !ifa.attr('src')) {
+                console.log('preload');
                 this.loadingTab = true;
                 ifa.attr('src', aTab.link);
                 if (aTab.preloadTip) {
                     proxy.alert('系统提示', aTab.preloadTip);
                 }
             }
-
             //强制刷新判定, 条件是: 当前 url 不为 netbroken.
-            if (force && (ifa.attr('src') + '').indexOf(netbrokenUrl) > -1) {
+            if (force && (ifa.attr('src') + '').indexOf(netbrokenUrl) === -1) {
+                console.log('forceload');
                 this.loadingTab = true;
                 ifa.attr('src', aTab.link);
             }
