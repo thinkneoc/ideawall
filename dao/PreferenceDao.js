@@ -1,7 +1,7 @@
 const Model = require('../core/Model')();
 const datetime = require('../core/Datetime')();
 
-const tbs = ['iw_devicedesk', 'iw_media', 'iw_localdesk', 'iw_preference'];
+const c_tbs = ['iw_devicedesk', 'iw_media', 'iw_localdesk', 'iw_preference'];
 
 const initscript = '' +
     'CREATE TABLE IF NOT EXISTS "iw_preference" (\n' +
@@ -38,9 +38,13 @@ function PreferenceDao(model) {
      * 清空所有的数据库
      * @param tablename
      */
-    this.clearDatabase = function () {
-        for (var x in tbs) {
-            this._self.dropTable(tbs[x]);
+    this.clearDatabase = function (tablename) {
+        if (tablename) {
+            this._self.dropTable(tablename);
+        } else {
+            for (var x in c_tbs) {
+                this._self.dropTable(c_tbs[x]);
+            }
         }
     };
 

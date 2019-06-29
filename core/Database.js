@@ -49,20 +49,6 @@ function Database(model) {
     };
 
     /**
-     * 执行初始化脚本, 初始化数据库. 如果已经有就不会再处理.
-     * 建议在程序启动之后检测执行一次. 不需要传入 model.
-     */
-    this.initial = function (sqlpath) {
-        fs.readFile(sqlpath, (err, data) => {
-            if (err) {
-                logger.warn(err);
-            }
-            var stmt = db.prepare(data);
-            return stmt.run(params)
-        });
-    };
-
-    /**
      * SQL脚本自构建算法, 构建并执行
      * 对于 codition 和 setter, 如果不执行的话, 这里只需要用到键.
      * 其中:
