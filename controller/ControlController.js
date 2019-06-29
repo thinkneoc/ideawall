@@ -326,6 +326,7 @@ var vm = new Vue({
         },
         //连网回调
         isOnline() {
+            console.warn('重新连上网络了');
             this.netstatus = 'online';
             var title = $('title');
             title.text(title.text().replace(' [连接已断开]', ''));
@@ -336,6 +337,7 @@ var vm = new Vue({
         },
         //断网回调
         isOffline() {
+            console.warn('断网了');
             this.netstatus = 'offline';
             var title = $('title');
             if (title.text().indexOf('[连接已断开]') === -1) {
@@ -422,9 +424,9 @@ var vm = new Vue({
             that.lock = swicth;
         });
         proxy.ipc.on('ipc_render_control_netlistener', function (event, bol) {
-            if(bol){
+            if (bol) {
                 that.isOnline();
-            }else{
+            } else {
                 that.isOffline();
             }
         });
@@ -519,4 +521,12 @@ $(function () {
             return true;
         }
     }
+});
+
+window.addEventListener('online', function () {
+    vm.isOnline();
+});
+
+window.addEventListener('offline', function () {
+    vm.isOffline();
 });
