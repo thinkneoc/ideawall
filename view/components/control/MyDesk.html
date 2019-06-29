@@ -30,7 +30,8 @@
                 <div v-loading="loadingDevices"
                      element-loading-text="正在抓取监视器组快照..."
                      element-loading-spinner="el-icon-loading" style="min-height: 170px;">
-                    <div class="zxx-desk-con zxx-device animated fadeInLeftBig" v-for="(item, index) in displays"
+                    <div :class="'zxx-desk-con zxx-device '+(firstTime?'animated fadeInLeftBig':'')"
+                         v-for="(item, index) in displays"
                          :data-id="item.display_id">
                         <el-card :shadow="item.is_set_desk?'always':'hover'">
                             <div class="zxx-desk-panel zxx-desk-bg"
@@ -58,11 +59,11 @@
                                           style="background: transparent;z-index:521;">
                                     <i class="el-icon-edit"></i> 正在配置...
                                 </span>
-                                    <span class="zxx-desk-tooltip-control animated fadeIn"
+                                    <span class="zxx-desk-tooltip-control animated fadeInRight"
                                           v-if="item.is_set_desk">
                                     <i class="el-icon-s-claim"></i>
                                 </span>
-                                    <span class="zxx-desk-tooltip-init animated fadeInLeft"
+                                    <span class="zxx-desk-tooltip-right animated fadeInRight"
                                           v-if="!item.displays_has_screen">
                                     <i class="el-icon-loading"></i>
                                 </span>
@@ -163,7 +164,7 @@
                                           :style="'top:'+(inde*25)+'px;'">
                                     {{disp.screen_title}}
                                 </span>
-                                    <span class="zxx-desk-tooltip-init animated fadeInLeft"
+                                    <span class="zxx-desk-tooltip-left animated fadeInLeft"
                                           v-if="item.init_sign == 1 || ((item.type !== 'page' && item.medias.length <= 0) || (item.type === 'page' && item.source_val === ''))">
                                     <i class="el-icon-magic-stick"></i>
                                 </span>

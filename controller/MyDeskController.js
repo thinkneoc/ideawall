@@ -21,6 +21,7 @@ var vm = new Vue({
                 highconfig: true,
                 info: true,
             },
+            firstTime: true,
             cardStyle: {
                 width: 200,
                 height: 142,
@@ -244,6 +245,7 @@ var vm = new Vue({
                     setTimeout(() => {
                         that.loadingDevices = false;
                         that.loadingControl = false;
+                        that.firstTime = false;
                         top.vm.loadingControl = false;
                     }, 3000);
                 }
@@ -255,13 +257,12 @@ var vm = new Vue({
         this.tag = this.tags[0];
         this.dealWithLdsData(localDeskModel.initial().selectAll());
         this.snapscreen(true);
-        proxy.appVar._controlwindow.on('show', (e) => {
-            that.loadingDevices = true;
+        proxy.appVar._controlwindow.on('focus', (e) => {
+            // $('.zxx-device').remove();
+            // that.loadingDevices = true;
             that.snapscreen();
         });
-        proxy.appVar._controlwindow.on('hide', (e) => {
-            $('.zxx-device').remove();
-            that.loadingDevices = true;
+        proxy.appVar._controlwindow.on('blur', (e) => {
             deviceDeskModel.closeSnapscreen();
         });
         proxy.ipc.on('ipc_render_snapscreen_stop', function (event) {

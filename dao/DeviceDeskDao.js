@@ -52,6 +52,12 @@ function DeviceDeskDao(model) {
      */
     this.insertOrUpdate = function (screen) {
         var display = screen.display;
+        if (!display) {//可能undefined, 在新接入新设备的时候, 表征概率很低, 并且, 名字和分辨率有概率需要重新计算.
+            const Screen = require('../core/Screen')();
+            screen.title = display.title ? display.title : Screen.calcScreenTitle(screen.name);
+            screen.display_rp = display.display_rp ? display.display_rp : Screen.calcScreenRp(false, display);
+            display = Screen.getDisplay(display.id + '');
+        }
         return this._self.insertOrUpdate({
             display_id: display.id + '',
         }, {
