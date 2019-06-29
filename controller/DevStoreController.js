@@ -98,11 +98,6 @@ var vm = new Vue({
         }
     },
     created: function () {
-        //把本地的桌面项索引发送过去, 方便判定处理.
-        this.postMessage({
-            cmd: 'pready',
-            data: localDeskModel.initial().selectAll(),
-        })
     },
     mounted() {
         var that = this;
@@ -136,6 +131,11 @@ var vm = new Vue({
         xiframe.load(function () {
             that.loading = false;
             top.vm.loadingTab = false;
+            //把本地的桌面项索引发送过去, 方便判定处理.
+            that.postMessage({
+                cmd: 'pready',
+                data: localDeskModel.initial().selectAll(),
+            })
         });
     }
 });
