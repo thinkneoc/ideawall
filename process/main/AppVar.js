@@ -17,6 +17,7 @@ let workspace = os.homedir() + "/.ideawall";
 let appVar = {
     _siteurl: 'http://iw.16inet.com/',
     _updateurl: 'http://update.iw.16inet.com/',
+    _storeurl: 'http://store.iw.16inet.com/',
     _bbsurl: 'http://bbs.iw.16inet.com/',
     _updateavaava: false,//是否有可用更新.
     _dirname: __dirname, //应用目录
