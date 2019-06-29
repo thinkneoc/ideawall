@@ -220,6 +220,8 @@ ipcMain.on('ipc_window_open', function (event, winKey, data, paramJson) {
         getJsonEditorWindow(data);
     } else if (winKey === 'about') {
         getAboutWindow(paramJson);
+    } else if (winKey === 'control') {
+        getControlWindow(data, paramJson);
     }
 });
 

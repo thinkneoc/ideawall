@@ -29,6 +29,7 @@ var vm = new Vue({
     },
     mounted() {
         var that = this;
+        var xiframe = $('iframe#iframe_bbs');
         proxy.ipc.on('ipc_lock_req', (event, swicth) => {
             proxy.lock = swicth;
             proxy.appVar._lock = swicth;
@@ -36,22 +37,24 @@ var vm = new Vue({
             this.lock = swicth;
         });
         proxy.ipc.on('ipc_render_control_resbbs_refresh', (event, cmd) => {
-            var xiframe = $('iframe#iframe_bbs');
             xiframe.attr('src', this.nowURL);
         });
         proxy.ipc.on('ipc_render_control_resbbs_home', (event, cmd) => {
-            var xiframe = $('iframe#iframe_bbs');
-            xiframe.attr('src', xiframe.attr('src'));
+            xiframe.attr('src', proxy.appVar._bbsurl);
+        });
+        proxy.ipc.on('ipc_render_control_resbbs_changeurl', (event, url) => {
+            this.nowURL = url;
+            xiframe.attr('src', url);
         });
         top.vm.netLoading('resbbs', () => {
             this.$Loading.start();
         }, () => {
             this.$Loading.finish();
         });
-        $('iframe#iframe_bbs').load(function () {
+        xiframe.load(function () {
             that.loading = false;
             top.vm.loadingTab = false;
-        })
+        });
     }
 });
 

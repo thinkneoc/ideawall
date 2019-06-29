@@ -45,6 +45,9 @@ let appVar = {
             shellrc: workspace + ".ideawall_shellrc",
         }
     },
+    _upath: {
+        teach: 'http://' + 'bbs.' + host + '/' + 'forum.php?mod=viewthread&tid=3&extra=',//基础教程贴
+    },
     _path: {
         home: App.getPath('home'),//用户的 home 文件夹（主目录）
         appData: App.getPath('appData'),//当前用户的应用数据文件夹，默认对应：%APPDATA% Windows 中; $XDG_CONFIG_HOME or ~/.config Linux 中; ~/Library/Application Support OS X 中

@@ -33,6 +33,14 @@ var vm = new Vue({
                     preload: true,
                     preloadTip: '桌面商店开发中, 敬请期待!',
                     historyInit: 2,
+                    action: {
+                        refresh: function (cmd) {
+                            proxy.ipc.send('ipc_repeat', 'ipc_render_control_deskstore_refresh');
+                        },
+                        home: function (cmd) {
+                            proxy.ipc.send('ipc_repeat', 'ipc_render_control_deskstore_home');
+                        }
+                    },
                 },
                 'resbbs': {
                     name: 'resbbs',
