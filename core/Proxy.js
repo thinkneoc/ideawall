@@ -156,19 +156,76 @@ function NodeJsProxy() {
         }, 100);//因为 popup 系统菜单将会导致 js 主线程强制暂停, 所以, 这里拖鞋增加一个同步等待逻辑.
     };
 
+    /**
+     * Windows 下的定制系统提示框 [样式表在 ideawall.css 中.]
+     */
+    this.alertInWindows = function (message, detail, callback, type, btns) {
+        var ihtml = '' +
+            '            <div class="zxx-dialog-panel animated slideInDown">\n' +
+            '                <div class="zxx-dialog-logo">\n' +
+            '                    <img src="' + this.appVar._logo + '" alt="">\n' +
+            '                </div>\n' +
+            '                <div class="zxx-dialog-info">\n' +
+            '                    <div class="zxx-dialog-info-title">' + message + '</div>\n' +
+            '                    <div class="zxx-dialog-info-detail">' + detail + '</div>\n' +
+            '                    <div class="zxx-dialog-info-btns">\n';
+        var i = 0;
+        for (var x in btns) {
+            i++;
+            if (i > 3) {
+                break;//大于 3 个不显示.
+            }
+            var btn = btns[x] + '';
+            if (i === 2) {
+                btn = (btn.length <= 6) ? btn : (btn.substring(0, 5) + '...');//大于 6 个字自动截取
+            } else if (i === 3) {
+                btn = (btn.length <= 4) ? btn : (btn.substring(0, 3) + '...');//大于 4 个字自动截取
+            } else {
+                btn = (btn.length <= 8) ? btn : (btn.substring(0, 8) + '...');//大于 8 个字自动截取
+            }
+            ihtml += '' +
+                '<button class="ivu-btn ivu-btn-default ivu-btn-small" onclick="proxy.clickalertInWindowsBtn(' + x + ')">\n' +
+                '   <span>' + btn + '</span>\n' +
+                '</button>\n';
+        }
+        ihtml += '</div></div></div>';
+        var serial = this.uuid.serial(6, 2);
+        var dialogDom = document.createElement("div");
+        dialogDom.id = 'zxx-dialog-' + serial;
+        dialogDom.className = 'zxx-dialog';
+        dialogDom.innerHTML = ihtml;
+        document.body.appendChild(dialogDom);
+        $('#zxx-dialog-' + serial).show();
+
+        this.clickalertInWindowsBtn = function (index) {
+            $('#zxx-dialog-' + serial).removeClass('animated slideInDown').addClass('animated fadeOutUp').fadeOut(500, function () {
+                if (typeof callback === 'function') {
+                    callback(index);
+                }
+                $(this).remove();
+            });
+        }
+    };
+
     // 系统提示框
     this.alert = function (message, detail, callback, type, btns) {
-        detail = detail ? detail : '';
+        message = message ? message : '系统提示';
+        detail = detail ? detail : '消息体为空';
         type = type ? type : 'info';
+        btns = btns ? btns : ['确定'];
         console.warn('Dialog::Alert::' + type + ' => [' + message + '] ' + detail);
-        var serial = this.uuid.serial(6, 2);
-        var returnVal = this.ipc.send('dialog.showMessageBox', T.windowKey, 'dialog-error-tip-' + serial, type, btns ? btns : ['确定'], undefined, undefined, message, detail, undefined, 1, undefined);
-        //监听回复
-        this.ipc.on('dialog-error-tip-' + serial, function (event, response) {
-            if (typeof callback === 'function') {
-                callback(response);//0
-            }
-        });
+        if (this.appVar._platform === 'darwin') {
+            top.proxy.alertInWindows(message, detail, callback, type, btns);
+        } else {
+            var serial = this.uuid.serial(6, 2);
+            var returnVal = this.ipc.send('dialog.showMessageBox', T.windowKey, 'dialog-error-tip-' + serial, type, btns, undefined, undefined, message, detail, undefined, 1, undefined);
+            //监听回复
+            this.ipc.on('dialog-error-tip-' + serial, function (event, response) {
+                if (typeof callback === 'function') {
+                    callback(response);//0
+                }
+            });
+        }
     };
 
     // 系统确认选择框
@@ -177,14 +234,18 @@ function NodeJsProxy() {
         btns = btns ? btns : ['确认', '取消'];//0,1
         type = type ? type : 'warning';
         console.warn('Dialog::Confirm::' + type + ' => [' + message + '] ' + detail + ' ' + '(' + JSON.stringify(btns) + ')');
-        var serial = this.uuid.serial(6, 2);
-        var returnVal = this.ipc.send('dialog.showMessageBox', T.windowKey, 'dialog-confirm-' + serial, type, btns, undefined, undefined, message, detail, undefined, 1, undefined);
-        //监听回复
-        this.ipc.on('dialog-confirm-' + serial, function (event, response) {
-            if (typeof callback === 'function') {
-                callback(response);
-            }
-        });
+        if (this.appVar._platform === 'darwin') {
+            top.proxy.alertInWindows(message, detail, callback, type, btns);
+        } else {
+            var serial = this.uuid.serial(6, 2);
+            var returnVal = this.ipc.send('dialog.showMessageBox', T.windowKey, 'dialog-confirm-' + serial, type, btns, undefined, undefined, message, detail, undefined, 1, undefined);
+            //监听回复
+            this.ipc.on('dialog-confirm-' + serial, function (event, response) {
+                if (typeof callback === 'function') {
+                    callback(response);
+                }
+            });
+        }
     };
 
     // 文件保存确认框

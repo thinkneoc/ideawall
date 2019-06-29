@@ -28,6 +28,7 @@ let appVar = {
     _preloadscript: path.join(__dirname, relative + 'core/Proxy.js'),
     _viewpath: path.join(__dirname, relative + 'view'),//视图目录
     _staticpath: path.join(__dirname, relative + 'static'),//静态资源目录
+    _logo: path.join(__dirname, relative + 'static/logo/blue-min-300_2@2x.png'),//LOGO
     _lock: false,
     _guide: false,
     _dbath: workspace + "/data/iw.db",//本地数据库
