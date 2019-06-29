@@ -64,6 +64,13 @@ var vm = new Vue({
             if (preference.sync === 2) {//同步到设备桌面
                 deviceMessage.syncUpdate();
             }
+            if(preference.reboot === 2){//重启提示
+                proxy.confirm('系统提示', '此配置项需要重启 ideawall 以生效, 是否立刻重启?', (res)=>{
+                    if(res === 0){
+                        this.reboot();
+                    }
+                }, ['立刻重启', '稍后手动重启']);
+            }
         },
         //设置开机自启动
         setAutoLaunch(enable) {
