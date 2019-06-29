@@ -72,11 +72,17 @@ var _Screen = function () {
      * 根据设备 id 获取 display 信息
      *
      * @param display_id
+     * @param displays
      */
-    this.getDisplay = function (display_id) {
-        return appVar._displays.filter((item) => {
+    this.getDisplay = function (display_id, displays) {
+        var display = appVar._displays.filter((item) => {
             return item.id + '' == display_id + '';
         })[0];
+        if (!display && !displays) {
+            displays = Screen.getAllDisplays();//没找到, 就重新匹配一次, 不用管其他地方的有没有改变, 管不了.
+            this.getDisplay(display_id, displays);//递归一次
+        }
+        return display;
     };
 
     /**
@@ -155,7 +161,7 @@ var _Screen = function () {
      * 包装映射一下display数据结构, 对win下的截屏策略
      * 具体思路: 利用bound和rp值来比对. 比较低效, 索性绝大部分用户没有那么多监视器设备.
      *
-     * @param display
+     * @param displays
      */
     this.calcPackDisplay_win = function (displays) {
         var _primarydisplay = appVar._primarydisplay;
@@ -247,7 +253,7 @@ var _Screen = function () {
             target.screens = result;
             console.debug(result);
             if (typeof callback === 'function') {
-                callback(result, rIds, Screen.getAllDisplays());
+                callback(result, rIds, appVar._displays);
             }
         })
     };
