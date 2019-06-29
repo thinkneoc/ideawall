@@ -626,7 +626,7 @@ template {
 }
 
 .zxx-dialog-info {
-    margin-left: 25px;
+    padding-left: 25px;
     width: 100%;
     text-align: left;
 }
@@ -651,6 +651,7 @@ template {
     position: absolute;
     right: 20px;
     bottom: 15px;
+    width: 290px;
 }
 
 .zxx-dialog-info-btns button {
@@ -662,9 +663,14 @@ template {
     border: 1px solid #bbb;
     box-shadow: 0 0px 2px rgba(0, 0, 0, .2);
     margin-right: 15px;
+    float: right;
 }
 
-.zxx-dialog-info-btns button:last-child {
+.zxx-dialog-info-btns button:last-child{
+    float: left;
+}
+
+.zxx-dialog-info-btns button:first-child {
     margin-right: 0;
     color: #fff;
     border: 1px solid #2d8cf0;

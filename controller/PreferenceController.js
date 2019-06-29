@@ -74,7 +74,7 @@ var vm = new Vue({
                         preferenceModel.updateById(JSON.parse(JSON.stringify(this.tipReboot)));
                         console.debug(this.tipReboot);
                     }
-                }, ['重启', '稍后', '不在提醒']);
+                }, ['重启', '稍后', '不再提醒']);
             }
         },
         //设置开机自启动
