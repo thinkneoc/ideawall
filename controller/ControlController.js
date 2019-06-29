@@ -405,7 +405,6 @@ var vm = new Vue({
     created: function () {
     },
     mounted() {
-        proxy.alert();
         var that = this;
         this.handleClick({name: this.activeTab});
         proxy.ipc.on('ipc_window_control_cgi', function (event, isshow, paramJson) {

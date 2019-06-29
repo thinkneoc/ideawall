@@ -40,6 +40,8 @@ function NodeJsProxy() {
     this.debug = undefined;
 
     this.lock = undefined;
+    this.br = undefined;
+    this.osname = undefined;
 
     this.init = function () {
         this.electron = this.require('electron');
@@ -58,7 +60,8 @@ function NodeJsProxy() {
         this.appVar = this.remote.getGlobal('appVar');
         this.lock = this.appVar._lock;
         this.uuid = this.require('./UUID')();
-
+        this.br = this.appVar._platform === 'darwin' ? '\r\n' : '<br/>';//用于 dialog
+        this.osname = this.appVar._platform === 'darwin' ? 'Mac' : 'Windows';
         this.debug = this.appVar._debug;
     };
 
@@ -214,7 +217,7 @@ function NodeJsProxy() {
         type = type ? type : 'info';
         btns = btns ? btns : ['确定'];
         console.warn('Dialog::Alert::' + type + ' => [' + message + '] ' + detail);
-        if (this.appVar._platform === 'darwin') {
+        if (this.appVar._platform !== 'darwin') {
             top.proxy.alertInWindows(message, detail, callback, type, btns);
         } else {
             var serial = this.uuid.serial(6, 2);
@@ -234,7 +237,7 @@ function NodeJsProxy() {
         btns = btns ? btns : ['确认', '取消'];//0,1
         type = type ? type : 'warning';
         console.warn('Dialog::Confirm::' + type + ' => [' + message + '] ' + detail + ' ' + '(' + JSON.stringify(btns) + ')');
-        if (this.appVar._platform === 'darwin') {
+        if (this.appVar._platform !== 'darwin') {
             top.proxy.alertInWindows(message, detail, callback, type, btns);
         } else {
             var serial = this.uuid.serial(6, 2);

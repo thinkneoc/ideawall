@@ -403,6 +403,7 @@ var autoContextMenu = {
      */
     buildDeskContextMenu: function (elem) {
         var desk_id = $(elem).data('id');
+        var gotoDesktopKey = (proxy.appVar._platform === 'darwin' ? 'F11' : '<i class="ivu-icon ivu-icon-logo-windows" style="margin-top: -2px;"></i> + D');
         var menuItems = [];
         menuItems.push({
             label: '预览',
@@ -432,6 +433,7 @@ var autoContextMenu = {
                     top.vm.showLoadingMaster();
                     deviceDeskModel.setsDesk([vm.displays], desk_id);
                     vm.updateDeskAndDisplay(desk_id, zxx.display_id);
+                    proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  (再按一次可以恢复窗口哦~)', false, false, ['知道了']);
                 }
             });
         }
@@ -444,6 +446,7 @@ var autoContextMenu = {
                         top.vm.showLoadingMaster();
                         deviceDeskModel.setsDesk([zxx.display_id], desk_id);
                         vm.updateDeskAndDisplay(desk_id, zxx.display_id);
+                        proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  (再按一次可以恢复窗口哦~)', false, false, ['知道了']);
                     }
                 });
             }
