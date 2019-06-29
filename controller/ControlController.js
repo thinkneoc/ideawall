@@ -399,7 +399,7 @@ window.onload = function () {
     //更新提醒.
     if (proxy.appVar._platform === 'darwin' && proxy.appVar._updateavaava) {
         proxy.alert('ideawall 更新提醒', '检测到全新版本, 点击前往下载', (response) => {
-            if (response === 0) proxy.openExternal(proxy.appVar._siteurl + 'update.html');
+            if (response === 0) proxy.openExternal(proxy.appVar._updatepageurl);
         }, 'info', ['前往下载']);
     }
 };

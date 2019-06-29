@@ -14,7 +14,6 @@ const logger = require('../../core/Logger');//引入全局日志组件
 const config = require('../../core/Config');//引入全局配置组件
 
 const helper = require('./MainProcessHelper');
-const share = require('../../third/Share')();
 
 const relative = '../../';
 
@@ -25,6 +24,7 @@ let appTray;
  * 设置系统托盘
  */
 function init(appVar) {
+    const share = require('../../third/Share')(appVar);
     let shareConfig = {
         url: appVar._siteurl,
         source: 'ideawall - 创意者桌面',
@@ -35,12 +35,12 @@ function init(appVar) {
 
     appTray = new Tray(path.join(appVar._staticpath, 'logo/black-min@3x.png'));
     appTray.setToolTip('ideawall - 创意者桌面');//设置鼠标指针在托盘图标上悬停时显示的文本
-    // appTray.setContextMenu(buildTrayMenu(appVar, shareConfig));//设置内容菜单, 这个的菜单一旦生成, 无法更改. 所以, 改用点击弹出上下文菜单的方式.
+    // appTray.setContextMenu(buildTrayMenu(appVar, share, shareConfig));//设置内容菜单, 这个的菜单一旦生成, 无法更改. 所以, 改用点击弹出上下文菜单的方式.
     // appTray.setTitle('创意者桌面');//在 macOS 中，设置显示在状态栏中托盘图标旁边的标题 (支持ANSI色彩), 一般用于制作状态栏歌词
     appTray.setPressedImage(path.join(appVar._staticpath, 'logo/white-min@3x.png'));//在 macOS 中，设置image作为托盘图标被按下时显示的图标
     appTray.on('click', () => {//mac/win/linux
         if (appVar._platform === 'darwin') {
-            appTray.popUpContextMenu(buildTrayMenu(appVar, shareConfig));
+            appTray.popUpContextMenu(buildTrayMenu(appVar, share, shareConfig));
         } else {
             helper.getControlWindow(true);
         }
@@ -50,7 +50,7 @@ function init(appVar) {
     // });
     appTray.on('right-click', () => {//mac/win
         if (appVar._platform !== 'darwin') {
-            appTray.popUpContextMenu(buildTrayMenu(appVar, shareConfig));
+            appTray.popUpContextMenu(buildTrayMenu(appVar, share, shareConfig));
         }
     });
     appTray.on('drop-files', () => {//mac
@@ -63,7 +63,7 @@ function init(appVar) {
     return appTray;
 }
 
-function buildTrayMenu(appVar, shareConfig) {
+function buildTrayMenu(appVar, share, shareConfig) {
     // 注册应用全局菜单
     var template = [];
     template.push({label: 'ideawall - 创意者桌面', type: 'normal', enabled: false});

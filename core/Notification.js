@@ -68,7 +68,7 @@ function notifyUpdater() {
         ]
     }, (cmd, e, p) => {
         if (cmd === 'click' || (cmd === 'action' && p === 0)) {
-            Shell.openExternal(appVar._siteurl + 'update.html');
+            Shell.openExternal(appVar._updatepageurl);
         }
     });
 }

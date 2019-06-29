@@ -111,7 +111,7 @@ var vm = new Vue({
                                 that.btnLoading.checkUpdate.htext = '检测到新更新包';
                                 if (proxy.appVar._platform === 'darwin') {
                                     proxy.alert('ideawall 更新提醒', '检测到全新版本, 点击前往下载', (response) => {
-                                        if (response === 0) proxy.openExternal(proxy.appVar._siteurl + 'update.html');
+                                        if (response === 0) proxy.openExternal(proxy.appVar._updatepageurl);
                                     }, 'info', ['前往下载', '稍后处理']);
                                 }
                             } else if (obj.code === 'updateNotAva') {

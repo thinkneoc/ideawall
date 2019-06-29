@@ -13,12 +13,14 @@ const relative = '../../';
 
 /* ↓全局变量配置区开始↓ */
 let workspace = os.homedir() + "/.ideawall";
+let host = 'iw.16inet.com';
 //全局参数, 大部分情况下是为了方便渲染进程调用.
 let appVar = {
-    _siteurl: 'http://iw.16inet.com/',
-    _updateurl: 'http://update.iw.16inet.com/',
-    _storeurl: 'http://store.iw.16inet.com/',
-    _bbsurl: 'http://bbs.iw.16inet.com/',
+    _siteurl: 'http://' + host + '/',
+    _updatepageurl: 'http://' + host + '/download.html',
+    _updateurl: 'http://' + 'update.' + host + '/',
+    _storeurl: 'http://' + 'store.' + host + '/',
+    _bbsurl: 'http://' + 'bbs.' + host + '/',
     _updateavaava: false,//是否有可用更新.
     _dirname: __dirname, //应用目录
     _config: config,

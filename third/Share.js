@@ -5,7 +5,7 @@
  * @param
  * @return
  */
-var Share = function () {
+var Share = function (appVar) {
 
     this.template = {
         qzone: "http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={{URL}}&title={{TITLE}}&desc={{DESCRIPTION}}&summary={{SUMMARY}}&site={{SOURCE}}&pics={{IMAGE}}",
@@ -20,7 +20,7 @@ var Share = function () {
     };
 
     this.$socialconfig = {
-        url: 'http://iw.16inet.com/',
+        url: appVar._siteurl,
         source: 'ideawall - 创意者桌面',
         title: 'ideawall - 创意者桌面. 重新定义桌面, 极致就是艺术.', // 标题，默认读取 document.title 或者 <meta name="title" content="share.js" />
         description: '我给你推荐了一个超酷的动态桌面壁纸软件, 快来试试吧~~ ',
@@ -67,6 +67,6 @@ var Share = function () {
     this.init();//自动初始化
 };
 
-module.exports = () => {
-    return new Share();
+module.exports = (appVar) => {
+    return new Share(appVar);
 };

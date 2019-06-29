@@ -13,7 +13,9 @@
 <body>
 <div id="app" v-cloak style="text-align: center;overflow: hidden;" v-loading="loading">
     <iframe id="iframe_game_dragon" class="iframe_wall J_iframe active" name="iframe_game_dragon"
-            :data-src="proxy.link(proxy.appVar._storeurl)" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+            :data-src="proxy.link(proxy.appVar._storeurl)"
+            data-nb-title="桌面商店维护升级中..." data-nb-des=""
+            frameborder="0" scrolling="no" allowtransparency="true"></iframe>
 </div>
 </body>
 <script src="../../../core/Proxy.js"></script>

@@ -24,7 +24,7 @@ function updateHandle(appVar, callback) {
         updateNotAva: '现在使用的就是最新版本，不用更新',
     };
     const feed = appVar._updateurl;
-    // const feed = `http://localhost:88/`;
+    const feedPage = appVar._updatepageurl;
 
     autoUpdater.setFeedURL(feed);
 
@@ -82,7 +82,7 @@ function updateHandle(appVar, callback) {
                 };
 
                 Dialog.showMessageBox(appVar._controlwindow, dialogOpts, (response) => {
-                    if (response === 0) Shell.openExternal(feed + 'page');
+                    if (response === 0) Shell.openExternal(feedPage);
                 });
             } catch (e) {
                 //...
