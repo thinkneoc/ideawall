@@ -48,7 +48,7 @@ var vm = new Vue({
                         refresh: function (cmd) {
                             proxy.ipc.send('ipc_repeat', 'ipc_render_control_resbbs_refresh');
                         },
-                        home: function(cmd){
+                        home: function (cmd) {
                             proxy.ipc.send('ipc_repeat', 'ipc_render_control_resbbs_home');
                         }
                     },
@@ -253,7 +253,7 @@ var vm = new Vue({
             var ihtml = '<div id="dragWin-div" class="dragwin-dblclick window-drag" style="z-index:20990909;position:absolute;width:100%;top:0;left:0;pointer-events: none;height:' + height + ';"></div>';//
             $(panelId).prepend(ihtml);
         },
-        handleClick(tab, event, force) {
+        handleClick(tab, event, force, realforce) {
             console.log(tab);
             var aTab = this.tabs[tab.name];
             if (!aTab) {
@@ -264,7 +264,7 @@ var vm = new Vue({
             var ifa = $('#iframe_' + aTab.name);
             var netbrokenUrl = '../errors/netbroken.html';
             //网络支持判定
-            if (aTab.needNet && this.netstatus === 'offline') {
+            if (aTab.needNet && this.netstatus === 'offline' && (ifa.attr('src') + '').indexOf(netbrokenUrl) === -1) {
                 console.log('netbroken');
                 this.loadingTab = true;
                 ifa.attr('src', netbrokenUrl);
@@ -298,6 +298,14 @@ var vm = new Vue({
                 console.log('forceload');
                 this.loadingTab = true;
                 ifa.attr('src', aTab.link);
+                return;
+            }
+            //超强制刷新判定, 条件是: 当前 url 为 netbroken
+            if (realforce && (ifa.attr('src') + '').indexOf(netbrokenUrl) > -1) {
+                console.log('realforceload');
+                this.loadingTab = true;
+                ifa.attr('src', aTab.link);
+                return;
             }
         },
         showLoadingMaster() {
@@ -485,7 +493,7 @@ window.addEventListener('online', function () {
 
     var tab = vm.tabs[vm.activeTab];
     if (tab && tab.needNet) {
-        vm.handleClick(tab, false, true);//强制刷新它
+        vm.handleClick(tab, false, true, true);//强制刷新它
     }
 });
 
@@ -507,6 +515,6 @@ window.addEventListener('offline', function () {
 
     var tab = vm.tabs[vm.activeTab];
     if (tab && tab.needNet) {
-        vm.handleClick(tab, false);//强制刷新它
+        vm.handleClick(tab);//刷新它
     }
 });

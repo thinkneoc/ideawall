@@ -102,7 +102,7 @@ template {
     z-index: 20190105;
 }
 
-.exclude-events{
+.exclude-events {
     pointer-events: none;
 }
 
@@ -358,6 +358,70 @@ template {
     }
 }
 
+@-webkit-keyframes play {
+    0% {
+        /*
+        水平翻转
+        */
+        -webkit-transform: rotateY(0deg);
+        /*
+        垂直翻转
+        -webkit-transform:rotateX(0deg);
+        顺时针旋转
+        -webkit-transform:rotate(0deg);
+        逆时针旋转
+        -webkit-transform:rotate(0deg);
+        */
+    }
+    100% {
+        /* 水平翻转 */
+        -webkit-transform: rotateY(360deg);
+        /* 垂直翻转
+        -webkit-transform:rotateX(360deg);
+        顺时针旋转
+        -webkit-transform:rotate(360deg);
+        逆时针旋转
+        -webkit-transform:rotate(-360deg);
+        */
+    }
+}
+
+/*翻转动画*/
+@keyframes flip {
+    0% {
+        transform: rotateY(0deg);
+        /*
+        transform:rotateX(0deg);
+        transform:rotate(0deg);
+        transform:rotate(0deg);
+        */
+    }
+    50% {
+        transform: rotateY(0deg);
+        /*
+        transform:rotateX(0deg);
+        transform:rotate(0deg);
+        transform:rotate(0deg);
+        */
+    }
+    75% {
+        transform: rotateY(180deg);
+        /*
+        transform:rotateX(0deg);
+        transform:rotate(0deg);
+        transform:rotate(0deg);
+        */
+    }
+    100% {
+        transform: rotateY(360deg);
+        /*
+        transform:rotateX(360deg);
+        transform:rotate(360deg);
+        transform:rotate(-360deg);
+        */
+    }
+}
+
 .zxx-page-panel {
     text-align: center;
     margin-top: 15px;
@@ -503,20 +567,20 @@ template {
     overflow-x: auto;
 }
 
-.el-backtop{
+.el-backtop {
     z-index: 999999;
 }
 
-.el-tooltip{
+.el-tooltip {
     padding: 0;
 }
 
-.el-tooltip__popper{
+.el-tooltip__popper {
     /*color: #666 !important;*/
     /*border: 1px solid #999 !important;*/
     filter: opacity(85%);
 }
 
-.el-tabs__item.is-disabled{
+.el-tabs__item.is-disabled {
     color: #666;
 }
