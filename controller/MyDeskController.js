@@ -247,7 +247,7 @@ var vm = new Vue({
                         that.loadingControl = false;
                         that.firstTime = false;
                         top.vm.loadingControl = false;
-                    }, 3000);
+                    }, 2000);
                 }
             }, pref_deviceSnapscreenTTL, true, onlyone);
         }
@@ -258,8 +258,8 @@ var vm = new Vue({
         this.dealWithLdsData(localDeskModel.initial().selectAll());
         this.snapscreen(true);
         proxy.appVar._controlwindow.on('focus', (e) => {
-            // $('.zxx-device').remove();
-            // that.loadingDevices = true;
+            $('.zxx-device').remove();
+            that.loadingDevices = true;
             that.snapscreen();
         });
         proxy.appVar._controlwindow.on('blur', (e) => {

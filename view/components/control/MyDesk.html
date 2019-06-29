@@ -15,7 +15,7 @@
     <div style="display:flex;height:100%;width:100%;">
         <div class="zxx-desk-list-container">
             <div id="my-device">
-                <h3 class="zxx-desk-m-title">
+                <h3 class="zxx-desk-m-title animated fadeInLeftBig">
                     我的设备
                     <el-tooltip placement="top" data-zxx-map="teach" data-tooltip-limit="onlyonline"
                                 :popper-class="window.navigator.onLine?'popper-tooltip popper-only-online':'popper-tooltip'">
@@ -28,9 +28,9 @@
                     </el-tooltip>
                 </h3>
                 <div v-loading="loadingDevices"
-                     element-loading-text="正在抓取监视器组快照..."
+                     :element-loading-text="firstTime?'正在抓取监视器组快照...':'正在刷新监视器组快照...'"
                      element-loading-spinner="el-icon-loading" style="min-height: 170px;">
-                    <div :class="'zxx-desk-con zxx-device '+(firstTime?'animated fadeInLeftBig':'')"
+                    <div :class="'zxx-desk-con zxx-device ' + (firstTime?'animated fadeInLeftBig':'animated flipInY')"
                          v-for="(item, index) in displays"
                          :data-id="item.display_id">
                         <el-card :shadow="item.is_set_desk?'always':'hover'">
@@ -105,7 +105,7 @@
             </div>
 
             <div id="my-desktop">
-                <h3 class="zxx-desk-m-title">
+                <h3 class="zxx-desk-m-title animated fadeInLeftBig">
                     我的桌面
                     <el-tooltip placement="top" data-zxx-map="teach" data-tooltip-limit="onlyonline"
                                 :popper-class="window.navigator.onLine?'popper-tooltip popper-only-online':'popper-tooltip'">
