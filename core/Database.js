@@ -64,8 +64,8 @@ function Database(model) {
         var tableName = Model.tbname(model);
         var columns = model.tbinfo.columns;
         var st = sqltype.toLowerCase();
-        logger.debug('[Core][Database]' + model.tbinfo.anno + '[' + model.tbinfo.name + '] --' + st);
-        logger.debug('[Core][Database]' + '参数集: ' + JSON.stringify({codition: codition, setter: setter}, false, 2));
+        logger.sql('[Core][Database]' + model.tbinfo.anno + '[' + model.tbinfo.name + '] --' + st);
+        logger.sql('[Core][Database]' + '参数集: ' + JSON.stringify({codition: codition, setter: setter}, false, 2));
 
         //2.codition 构建
         var codScript = '';
@@ -112,35 +112,35 @@ function Database(model) {
         // console.debug(params);
         if (st === 'insert') {//insert 语句构建
             resultScript = "insert into " + tableName + " (" + setterScript + ") VALUES (" + setterExactScript + ")";
-            logger.debug('[Core][Database]' + '[源脚本] ' + resultScript);
+            logger.sql('[Core][Database]' + '[源脚本] ' + resultScript);
             stmt = db.prepare(resultScript);
             (!dontexec) ? (result = stmt.run(params)) : '';
         } else if (st === 'update') {
             resultScript = "update " + tableName + " set " + setterScript + " where 1=1 " + codScript;
-            logger.debug('[Core][Database]' + '[源脚本] ' + resultScript);
+            logger.sql('[Core][Database]' + '[源脚本] ' + resultScript);
             stmt = db.prepare(resultScript);
             (!dontexec) ? (result = stmt.run(params)) : '';
         } else if (st === 'delete') {
             resultScript = "delete from " + tableName + " where 1=1 " + codScript;
-            logger.debug('[Core][Database]' + '[源脚本] ' + resultScript);
+            logger.sql('[Core][Database]' + '[源脚本] ' + resultScript);
             stmt = db.prepare(resultScript);
             (!dontexec) ? (result = stmt.run(params)) : '';
         } else if (st === 'selectone') {
             resultScript = "select " + (setterScript !== '' ? setterScript : "*") + " from " + tableName + " where 1=1 " + codScript;
-            logger.debug('[Core][Database]' + '[源脚本] ' + resultScript);
+            logger.sql('[Core][Database]' + '[源脚本] ' + resultScript);
             stmt = db.prepare(resultScript);
             (!dontexec) ? (result = stmt.get(params)) : '';//get, 返回匹配到的第一行
         } else if (st === 'select') {
             resultScript = "select " + (setterScript !== '' ? setterScript : "*") + " from " + tableName + " where 1=1 " + codScript;
-            logger.debug('[Core][Database]' + '[源脚本] ' + resultScript);
+            logger.sql('[Core][Database]' + '[源脚本] ' + resultScript);
             stmt = db.prepare(resultScript);
             (!dontexec) ? (result = stmt.all(params)) : '';//all, 返回匹配到的数组
         }
 
         //5.日志打印
-        (!dontexec) ? logger.debug('[Core][Database]' + ((!dontexec) ? '[已执行] ' + '结果集: ' + JSON.stringify(result, false, 2) : '[暂未执行] ')) : '';
+        (!dontexec) ? logger.sql('[Core][Database]' + ((!dontexec) ? '[已执行] ' + '结果集: ' + JSON.stringify(result, false, 2) : '[暂未执行] ')) : '';
         result = Model.rmFps(model, result);
-        // ((!dontexec) ? logger.debug('[Core][Database]' + '[已执行] ' + '切面集: ' + JSON.stringify(result, false, 2)) : '[暂未执行] ');
+        // ((!dontexec) ? logger.sql('[Core][Database]' + '[已执行] ' + '切面集: ' + JSON.stringify(result, false, 2)) : '[暂未执行] ');
 
         //6.执行>? 返回构建结果
         return {
@@ -328,9 +328,9 @@ function Database(model) {
      * @returns {*|void}
      */
     this.execSelect = function (sqlscript, sqlparam) {
-        logger.debug('[Core][Database]' + model.tbinfo.anno + '[' + model.tbinfo.name + '] --execSelect');
-        logger.debug('[Core][Database]' + '参数集: ' + JSON.stringify(sqlparam, false, 2));
-        logger.debug('[Core][Database]' + '[源脚本] ' + sqlscript);
+        logger.sql('[Core][Database]' + model.tbinfo.anno + '[' + model.tbinfo.name + '] --execSelect');
+        logger.sql('[Core][Database]' + '参数集: ' + JSON.stringify(sqlparam, false, 2));
+        logger.sql('[Core][Database]' + '[源脚本] ' + sqlscript);
         var stmt = db.prepare(sqlscript);
         var result;
         if (sqlparam) {
@@ -338,7 +338,7 @@ function Database(model) {
         } else {
             result = stmt.all();
         }
-        logger.debug('[Core][Database]' + '[已执行] ' + '结果集: ' + JSON.stringify(result, false, 2));
+        logger.sql('[Core][Database]' + '[已执行] ' + '结果集: ' + JSON.stringify(result, false, 2));
         return Model.rmFps(model, result);
     };
 
@@ -350,9 +350,9 @@ function Database(model) {
      * @returns {*|void}
      */
     this.exec = function (sqlscript, sqlparam) {
-        logger.debug('[Core][Database]' + model.tbinfo.anno + '[' + model.tbinfo.name + '] --exec');
-        logger.debug('[Core][Database]' + '参数集: ' + JSON.stringify(sqlparam, false, 2));
-        logger.debug('[Core][Database]' + '[源脚本] ' + sqlscript);
+        logger.sql('[Core][Database]' + model.tbinfo.anno + '[' + model.tbinfo.name + '] --exec');
+        logger.sql('[Core][Database]' + '参数集: ' + JSON.stringify(sqlparam, false, 2));
+        logger.sql('[Core][Database]' + '[源脚本] ' + sqlscript);
         var stmt = db.prepare(sqlscript);
         var result;
         if (sqlparam) {
@@ -360,7 +360,7 @@ function Database(model) {
         } else {
             result = stmt.run();
         }
-        logger.debug('[Core][Database]' + '[已执行] ' + '结果集: ' + JSON.stringify(result, false, 2));
+        logger.sql('[Core][Database]' + '[已执行] ' + '结果集: ' + JSON.stringify(result, false, 2));
         return result;
     };
 

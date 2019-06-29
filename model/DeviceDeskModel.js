@@ -99,7 +99,7 @@ function DeviceDeskModel(appVar) {
         for (var x in display_ids) {
             var display_id = display_ids[x];
             //通知壁纸窗口更新数据.
-            appVar._wallwindows[display_id].window.webContents.send('ipc_window_wall_init', (desk_id === 0));
+            appVar._wallwindows[parseInt(display_id)].window.webContents.send('ipc_window_wall_init', (desk_id === 0));
         }
     };
 

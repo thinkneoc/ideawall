@@ -15,7 +15,7 @@ let model = new (function () {
         columns: {//列, 传入一个对象
             id: null,//唯一标识 id
             key: '',//设置键
-            value: '',//设置值
+            value: {},//设置值
             name: '',//设置名称
             description: '',//描述
             remark: '',//备注
@@ -24,6 +24,7 @@ let model = new (function () {
             sort: 100,//排序
             reboot: 1,//是否需要重新启动生效
             sync: 1,//是否需要同步到设备桌面
+            explicit: 2,//是否显式
         },
     };
 });
@@ -37,6 +38,7 @@ let defaults = [
         description: '启动之后立即打开 ideawall 控制面板',
         sort: 15,
         reboot: 1,
+        explicit: 2,
         value: {
             enable: false,
         },
@@ -49,6 +51,7 @@ let defaults = [
         description: '单位: 毫秒, 为 0 代表仅启动时刻快照一次. 该配置将有效降低能耗.',
         sort: 20,
         reboot: 2,
+        explicit: 2,
         value: {
             val: os.platform() === 'darwin' ? 3000 : 6000,//当前数值
             precision: 0,//小数位
@@ -69,6 +72,7 @@ let defaults = [
         sort: 30,
         reboot: 1,
         sync: 2,
+        explicit: 2,
         value: {
             val: 1.0,//当前数值
             step: 0.1,//步长
@@ -96,6 +100,7 @@ let defaults = [
         sort: 210,
         reboot: 2,
         sync: 2,
+        explicit: 2,
         value: {
             val: 'random',//当前数值
             descNewLine: true,//描述信息新起一行
@@ -110,9 +115,21 @@ let defaults = [
         sort: 220,
         reboot: 2,
         sync: 2,
+        explicit: 2,
         value: {
             val: 'random',//当前数值
             descNewLine: true,//描述信息新起一行
+        },
+    },
+    {
+        type: 'implicit',
+        formitem: '',
+        key: 'dontshowTipAfter_setDesk',
+        name: '设置桌面后不再提醒快捷键提示消息',
+        description: '',
+        explicit: 1,
+        value: {
+            val: false,
         },
     }
 ];
@@ -161,6 +178,10 @@ function PreferenceModel(appVar) {
 
     this.updateById = function (obj) {
         return this.dao.updateById(obj);
+    };
+
+    this.updateByKey = function (obj) {
+        return this.dao.updateByKey(obj);
     };
 
     this.add = function (obj) {

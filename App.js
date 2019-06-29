@@ -97,14 +97,16 @@ if (!gotTheLock) {
     });
 
     //当应用程序准备退出时执行动作
-    app.on('will-quit', () => {gpu-process-crashed
+    app.on('will-quit', () => {
         logger.info("程序即将退出");
+        app.releaseSingleInstanceLock();//释放所有的单例锁
         appTray.destroy(); //干掉托盘
         appTray = null;
     });
     //当 gpu 进程崩溃或被杀时触发。
     app.on('gpu-process-crashed', () => {
         logger.info("程序即将退出");
+        app.releaseSingleInstanceLock();//释放所有的单例锁
         appTray.destroy(); //干掉托盘
         appTray = null;
     });

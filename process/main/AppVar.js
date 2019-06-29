@@ -31,6 +31,7 @@ let appVar = {
     _logo: path.join(__dirname, relative + 'static/logo/blue-min-300_2@2x.png'),//LOGO
     _lock: false,
     _guide: false,
+    _sqllog: true,
     _dbath: workspace + "/data/iw.db",//本地数据库
     _apath: {
         dir: {

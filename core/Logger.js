@@ -55,7 +55,7 @@ function trace(data) {
 function debug(data) {
     logger.level = 'debug';
     logger.debug(data);
-    // console.log(data);//debug 级别不在控制台打印
+    appVar._debug ? console.log(data) : '';//debug 级别不在控制台打印
 }
 
 /**
@@ -114,6 +114,16 @@ function fatal(data) {
 }
 
 /**
+ * 定制: 数据库层 打印
+ * @param data
+ */
+function sql(data) {
+    logger.level = 'debug';
+    logger.debug(data);
+    (appVar._debug && appVar._sqllog) ? console.log(data) : '';//debug 级别不在控制台打印
+}
+
+/**
  * 压缩打包日志文件, 限定渲染进程调用.
  */
 function archive(ipc, callback, dateLimit) {
@@ -145,5 +155,5 @@ function archive(ipc, callback, dateLimit) {
 
 //对外暴露方法
 module.exports = {
-    trace, debug, info, warn, log, error, fatal, archive
+    trace, debug, info, warn, log, error, fatal, sql, archive
 };

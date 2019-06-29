@@ -16,6 +16,7 @@ const initscript = '' +
     '  "p_sort" integer(6) DEFAULT 100,\n' +
     '  "p_reboot" integer(1) DEFAULT 1,\n' +
     '  "p_sync" integer(1) DEFAULT 1,\n' +
+    '  "p_explicit" integer(1) DEFAULT 2,\n' +
     '  CONSTRAINT "p_key_id" UNIQUE ("p_id" COLLATE NOCASE ASC) ON CONFLICT IGNORE\n' +
     ');';
 
@@ -85,6 +86,20 @@ function PreferenceDao(model) {
             obj.value = JSON.stringify(obj.value);
         }
         return this._self.update({id: obj.id}, obj);
+    };
+
+    /**
+     * 根据 key 更新设置项
+     *
+     * @param obj
+     * @returns {*}
+     */
+    this.updateBykey = function (obj) {
+        console.debug(obj.value);
+        if (obj.value && typeof (obj.value) != 'string') {
+            obj.value = JSON.stringify(obj.value);
+        }
+        return this._self.update({key: obj.key}, obj);
     };
 
     /**

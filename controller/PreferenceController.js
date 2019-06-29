@@ -64,9 +64,9 @@ var vm = new Vue({
             if (preference.sync === 2) {//同步到设备桌面
                 deviceMessage.syncUpdate();
             }
-            if(preference.reboot === 2){//重启提示
-                proxy.confirm('系统提示', '此配置项需要重启 ideawall 以生效, 是否立刻重启?', (res)=>{
-                    if(res === 0){
+            if (preference.reboot === 2) {//重启提示
+                proxy.confirm('系统提示', '此配置项需要重启 ideawall 以生效, 是否立刻重启?', (res) => {
+                    if (res === 0) {
                         this.reboot();
                     }
                 }, ['立刻重启', '稍后手动重启']);
@@ -204,11 +204,13 @@ var vm = new Vue({
         }
     },
     created: function () {
-        this.preferences = preferenceModel.getAll();
-        for (var x in this.preferences) {
-            this.preferences[x].value = JSON.parse(this.preferences[x].value);
+        var preferences = preferenceModel.getAll();
+        for (var x in preferences) {
+            if (preferences[x].explicit === 2) {
+                preferences[x].value = JSON.parse(preferences[x].value);
+            }
         }
-        this.preferences = this.preferences.sort(function (a, b) {
+        this.preferences = preferences.sort(function (a, b) {
             return a.sort - b.sort;
         });
     },

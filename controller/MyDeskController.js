@@ -126,15 +126,14 @@ var vm = new Vue({
                     // }
                 }
             }
-            if (display_id) {
-                for (var y in this.displays) {
-                    var itm = this.displays[y];
-                    if (itm.display_id + '' == display_id) {
-                        itm.is_set_desk = deviceDeskModel.isDesk(itm.display_id, itm.ld_id);
-                        this.displays[y] = itm;
-                        // break;
-                    }
+            //更新所有设备
+            for (var y in this.displays) {
+                var itm = this.displays[y];
+                if (display_id && display_id + '' != itm.display_id + '') {
+                    break;
                 }
+                itm.is_set_desk = deviceDeskModel.isDesk(itm.display_id, itm.ld_id);
+                this.displays[y] = itm;
             }
         },
         //设置设备桌面静音
@@ -404,6 +403,8 @@ var autoContextMenu = {
     buildDeskContextMenu: function (elem) {
         var desk_id = $(elem).data('id');
         var gotoDesktopKey = (proxy.appVar._platform === 'darwin' ? 'F11' : '<i class="ivu-icon ivu-icon-logo-windows" style="margin-top: -2px;"></i> + D');
+        var stasdPref = preferenceModel.getByKey('dontshowTipAfter_setDesk');
+        stasdPref.val = JSON.parse(stasdPref.value).val;
         var menuItems = [];
         menuItems.push({
             label: '预览',
@@ -431,9 +432,19 @@ var autoContextMenu = {
                 label: '为 所有屏幕 启用',
                 click: function () {
                     top.vm.showLoadingMaster();
-                    deviceDeskModel.setsDesk([vm.displays], desk_id);
-                    vm.updateDeskAndDisplay(desk_id, zxx.display_id);
-                    proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  (再按一次可以恢复窗口哦~)', false, false, ['知道了']);
+                    deviceDeskModel.setsDesk([vm.displays.map(x => {
+                        return x.display_id
+                    })], desk_id);
+                    vm.updateDeskAndDisplay(desk_id);
+                    if (!stasdPref.val) {
+                        proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  (再按一次可以恢复窗口哦~)', (res) => {
+                            if (res === 1) {
+                                console.debug(res);
+                                stasdPref.value.val = true;
+                                preferenceModel.updateById(stasdPref);
+                            }
+                        }, false, ['知道了', '不再提醒']);
+                    }
                 }
             });
         }
@@ -446,7 +457,15 @@ var autoContextMenu = {
                         top.vm.showLoadingMaster();
                         deviceDeskModel.setsDesk([zxx.display_id], desk_id);
                         vm.updateDeskAndDisplay(desk_id, zxx.display_id);
-                        proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  (再按一次可以恢复窗口哦~)', false, false, ['知道了']);
+                        if (!stasdPref.val) {
+                            proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  (再按一次可以恢复窗口哦~)', (res) => {
+                                if (res === 1) {
+                                    console.debug(res);
+                                    stasdPref.value.val = true;
+                                    preferenceModel.updateById(stasdPref);
+                                }
+                            }, false, ['知道了', '不再提醒']);
+                        }
                     }
                 });
             }
