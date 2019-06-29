@@ -99,7 +99,7 @@ let defaults = [
         description: '',
         sort: 210,
         reboot: 2,
-        sync: 2,
+        sync: 1,
         explicit: 2,
         value: {
             val: 'random',//当前数值
@@ -114,7 +114,7 @@ let defaults = [
         description: '',
         sort: 220,
         reboot: 2,
-        sync: 2,
+        sync: 1,
         explicit: 2,
         value: {
             val: 'random',//当前数值
@@ -126,6 +126,17 @@ let defaults = [
         formitem: '',
         key: 'dontshowTipAfter_setDesk',
         name: '设置桌面后不再提醒快捷键提示消息',
+        description: '',
+        explicit: 1,
+        value: {
+            val: false,
+        },
+    },
+    {
+        type: 'implicit',
+        formitem: '',
+        key: 'dontshowTipAfter_changePref',
+        name: '偏好设置变更后不再提醒重启提示消息',
         description: '',
         explicit: 1,
         value: {

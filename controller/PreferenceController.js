@@ -10,6 +10,7 @@ var vm = new Vue({
         return {
             loading: true,
             lock: proxy.lock,
+            tipReboot: undefined,
             btnLoading: {
                 checkUpdate: {
                     bol: false,
@@ -64,12 +65,16 @@ var vm = new Vue({
             if (preference.sync === 2) {//同步到设备桌面
                 deviceMessage.syncUpdate();
             }
-            if (preference.reboot === 2) {//重启提示
+            if (preference.reboot === 2 && !this.tipReboot.value.val) {//重启提示
                 proxy.confirm('系统提示', '此配置项需要重启 ideawall 以生效, 是否立刻重启?', (res) => {
                     if (res === 0) {
                         this.reboot();
+                    } else if (res === 2) {
+                        this.tipReboot.value.val = true;
+                        preferenceModel.updateById(JSON.parse(JSON.stringify(this.tipReboot)));
+                        console.debug(this.tipReboot);
                     }
-                }, ['立刻重启', '稍后手动重启']);
+                }, ['重启', '稍后', '不在提醒']);
             }
         },
         //设置开机自启动
@@ -216,6 +221,10 @@ var vm = new Vue({
     },
     mounted() {
         var that = this;
+        var stacpPref = preferenceModel.getByKey('dontshowTipAfter_changePref');
+        stacpPref.value = JSON.parse(stacpPref.value);
+        this.tipReboot = stacpPref;
+        console.debug(this.tipReboot);
         proxy.ipc.on('ipc_lock_req', function (event, swicth) {
             proxy.lock = swicth;
             proxy.appVar._lock = swicth;

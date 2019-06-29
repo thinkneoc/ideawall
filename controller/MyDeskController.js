@@ -443,7 +443,6 @@ var autoContextMenu = {
                             if (!stasdPref.value.val) {
                                 proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  (再按一次可以恢复窗口哦~)', (res) => {
                                     if (res === 1) {
-                                        console.debug(res);
                                         stasdPref.value.val = true;
                                         preferenceModel.updateById(stasdPref);
                                     }
@@ -464,7 +463,6 @@ var autoContextMenu = {
                                 if (!stasdPref.value.val) {
                                     proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  (再按一次可以恢复窗口哦~)', (res) => {
                                         if (res === 1) {
-                                            console.debug(res);
                                             stasdPref.value.val = true;
                                             preferenceModel.updateById(stasdPref);
                                         }
@@ -507,7 +505,6 @@ var autoContextMenu = {
                         if (!stasdPref.value.val) {
                             proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  (再按一次可以恢复窗口哦~)', (res) => {
                                 if (res === 1) {
-                                    console.debug(res);
                                     stasdPref.value.val = true;
                                     preferenceModel.updateById(stasdPref);
                                 }
