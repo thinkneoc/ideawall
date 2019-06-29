@@ -516,3 +516,7 @@ template {
     /*border: 1px solid #999 !important;*/
     filter: opacity(85%);
 }
+
+.el-tabs__item.is-disabled{
+    color: #666;
+}

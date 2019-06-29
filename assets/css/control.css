@@ -151,3 +151,8 @@ html, body{
     cursor: pointer;
     margin: 0 5px;
 }
+
+.zxx-control-loading{
+    position: absolute;
+    top: 3px;
+}
