@@ -42,8 +42,23 @@ let appVar = {
         },
         file: {
             cnf: workspace + "/ideawall." + (process.platform !== 'darwin' ? 'ini' : 'cnf'),
-            shellrc: workspace + ".ideawall_shellrc",
-        }
+            shellrc: {
+                path: workspace + "/.ideawall_shellrc",
+                text: App.getVersion(),
+                action: function (isexist, _this) {
+                    if (isexist) {//存在, 判定一下值是否匹配
+                        var data = fs.readFileSync(_this.path);
+                        if ((data + '').trim() != (_this.text + '').trim()) {
+                            fs.writeFileSync(_this.path, _this.text);
+                            setAppVar({_guide: true});
+                        }
+                    } else {//不存在, 写入当前版本号
+                        fs.writeFileSync(_this.path, _this.text);
+                        setAppVar({_guide: true});
+                    }
+                }
+            }
+        },
     },
     _upath: {
         teach: 'http://' + 'bbs.' + host + '/' + 'forum.php?mod=viewthread&tid=3&extra=',//基础教程贴
@@ -92,8 +107,7 @@ global.buffer = Buffer;
 //修改主进程中appVar的值: 只能把改好的appVar传回来, 不能传键值对, 因为ipc通信会将对象自动转为json字符串, 所以无法分清对象和单一变量值.
 ipcMain.on('change-appVar', function (event, newAppVar) {
     try {
-        appVar = newAppVar;
-        global.appVar = newAppVar;
+        changeAppVar(newAppVar);
         event.sender.send('change-appVar-response', true);
     } catch (e) {
         console.error(e);
@@ -108,6 +122,15 @@ ipcMain.on('ipc_clean', function (event) {
         console.error(e);
     }
 });
+
+/**
+ * 修改 AppVar
+ * @param newAppVar
+ */
+function changeAppVar(newAppVar) {
+    appVar = newAppVar;
+    global.appVar = newAppVar;
+}
 
 /**
  * 返回全局内部配置变量
@@ -175,18 +198,28 @@ function checkAppWorkSpace(callback) {
         var zyy = appVar._apath.file[y];
         if (typeof (zyy) != 'string') {//不是路径, 就是对象了~
             var source = zyy.source;
-            var target = zyy.target;
-            if (!fs.existsSync(target)) {
-                var readStream = fs.createReadStream(source);
-                var writeStream = fs.createWriteStream(target);
-                readStream.pipe(writeStream);
+            var text = zyy.text;
+            var target = zyy.path;
+            var action = zyy.action;
+            var isexist = fs.existsSync(target);
+            if (typeof action === 'function') {
+                action(isexist, zyy);
+            } else {
+                if (!isexist) {
+                    if (source) {
+                        var readStream = fs.createReadStream(source);
+                        var writeStream = fs.createWriteStream(target);
+                        readStream.pipe(writeStream);
+                    } else if (text) {
+                        fs.writeFileSync(target, text);
+                    } else {
+                        fs.writeFileSync(target, '');
+                    }
+                }
             }
         } else {
             if (!fs.existsSync(zyy)) {
                 fs.writeFileSync(zyy, '');
-                if (zyy.indexOf('ideawall_shellrc') > -1) {
-                    appVar._guide = true;
-                }
             }
         }
     }
@@ -220,6 +253,7 @@ function removeSheelRc() {
 module.exports = {
     checkAppWorkSpace,
     clearAppWorkSpace,
+    changeAppVar,
     getAppVar,
     setAppVar,
     getStaticResourcePath,
