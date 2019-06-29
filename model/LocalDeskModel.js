@@ -203,6 +203,14 @@ function LocalDeskModel(appVar) {
         return false;
     };
 
+    this.isExist = function (desk) {
+        return this.dao.isExist(desk);
+    };
+
+    this.addDesk = function (desk) {
+        return this.dao.addDesk(desk);
+    };
+
     this.getDesk = function (desk_id) {
         return this.dao.getDeskById(desk_id + '');
     };

@@ -38,6 +38,7 @@ let appVar = {
             home: workspace,
             snapscreen: workspace + "/snapscreen",
             wall: workspace + "/wall",
+            download: workspace + "/download",
             data: workspace + "/data",
             user: workspace + "/user",
             cache: workspace + "/cache",
@@ -226,6 +227,9 @@ function checkAppWorkSpace(callback) {
             }
         }
     }
+
+    //清空下载文件夹
+    Fs.delDir(appVar._apath.dir.download);
 
     if (typeof callback === 'function') {
         callback();

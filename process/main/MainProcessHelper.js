@@ -235,6 +235,9 @@ ipcMain.on('ipc_resolver', function (event, resolverKey, data) {
             event.sender.send('ipc_resolver_ret', reb);
         });
         ArchiveResolver.fromGlob(data.glob, data.name);//传入压缩正则和新名称.
+    } else if (resolverKey === 'unzip') {
+        const unzip = require('unzip');
+        fs.createReadStream(data.zipPath).pipe(unzip.Extract({path: data.outPath}));
     }
 });
 

@@ -300,6 +300,14 @@ var vm = new Vue({
             proxy.refreshAppVar();
             that.lock = swicth;
         });
+        //请求重新加载桌面项: 暂不考虑分页
+        proxy.ipc.on('ipc_render_control_mydesk_reload', function (event) {
+            that.loadingDesks = true;
+            that.dealWithLdsData(localDeskModel.initial().selectAll());
+            setTimeout(() => {
+                that.loadingDesks = false;
+            });
+        });
     }
 });
 
@@ -531,6 +539,7 @@ var autoContextMenu = {
                         localDeskModel.deleteById(desk_id);
                         //渲染更新
                         vm.updateDeskAndDisplay(desk_id);
+                        vm.initConfigDesk();
                     }
                 }, false, 'warning');
             }

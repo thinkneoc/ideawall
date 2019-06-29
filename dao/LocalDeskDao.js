@@ -55,6 +55,20 @@ function LocalDeskDao(model) {
     };
 
     /**
+     * 增加桌面项
+     *
+     * @param desk
+     */
+    this.addDesk = function (desk) {
+        if (!this._self.exist({
+            ename: desk.ename
+        })) {//未存在
+            return this._self.insert(Model.field(model, desk));
+        }
+        return false;
+    };
+
+    /**
      * 获取所有桌面数据, 等待修正为分页获取.
      */
     this.getPage = function () {
@@ -91,6 +105,16 @@ function LocalDeskDao(model) {
      */
     this.deleteById = function (id) {
         return this._self.delete({id: obj.id});
+    };
+
+    /**
+     * 根据索引来判断是否已经存在
+     * @param desk
+     */
+    this.isExist = function (desk) {
+        return this._self.exist({
+            ename: desk.ename
+        });
     };
 
     this.init();//自动初始化.

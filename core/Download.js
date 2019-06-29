@@ -1,4 +1,7 @@
-const downloadRequest = esLibrary.require('request');
+const downloadRequest = require('request');
+const path = require('path');
+const fs = require("fs");
+const logger = require('../core/Logger');
 
 // ---- 流式下载类 ---- //
 function StreamDownload() {
@@ -13,10 +16,19 @@ StreamDownload.prototype.showProgress = function (received, total, file, chunkLe
     this.downloadCallback('progress', percentage, received, total, file, chunkLength);
 };
 
-// 下载过程
+/**
+ * 下载控制
+ *
+ * @param patchUrl 目标地址
+ * @param baseDir 本地存储地址[目录]
+ * @param setFileName   下载文件名设置
+ * @param file  文件对象, 用于传递记录
+ * @param callback  下载过程回调
+ * @param errorCallback 下载异常回调
+ */
 StreamDownload.prototype.downloadFile = function (patchUrl, baseDir, setFileName, file, callback, errorCallback) {
     try {
-        console.debug('开始下载 ' + patchUrl);
+        logger.info('开始下载 ' + patchUrl);
         this.downloadCallback = callback; // 注册回调函数
 
         const downloadFile = setFileName; // 下载文件名称，也可以从外部传进来
@@ -29,7 +41,7 @@ StreamDownload.prototype.downloadFile = function (patchUrl, baseDir, setFileName
             uri: patchUrl
         });
 
-        const out = Fs.createWriteStream(Path.join(baseDir, downloadFile));
+        const out = fs.createWriteStream(path.join(baseDir, downloadFile));
         req.pipe(out);
 
 
@@ -46,8 +58,7 @@ StreamDownload.prototype.downloadFile = function (patchUrl, baseDir, setFileName
 
         var target = this;
         req.on('end', () => {
-            console.log('[' + file.name + '] 下载已完成，等待后切面处理.');
-            // TODO: 检查文件，部署文件，删除文件
+            logger.info('[' + file.name + '] 下载已完成，等待后切面处理.');
             target.downloadCallback('finished', 100, totalBytes, totalBytes, file, 0);
         });
     } catch (e) {
@@ -56,7 +67,7 @@ StreamDownload.prototype.downloadFile = function (patchUrl, baseDir, setFileName
     }
 };
 
-const streamDownload = new StreamDownload();
 
-// 调用下载
-// StreamDownload.downloadFile("http://mywebsite/update.7z", "./file", downloadFileCallback)
+module.exports = () => {
+    return new StreamDownload();
+};

@@ -123,6 +123,7 @@
     "nodemailer-smtp-transport": "^2.7.4",
     "unirest": "^0.5.1",
     "request": "^2.87.0",
+    "unzip": "^0.1.11",
     "uuid": "^3.3.2"
   },
   "__npminstall_done": false
