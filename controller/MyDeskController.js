@@ -422,38 +422,83 @@ var autoContextMenu = {
                 proxy.ipc.send('ipc_window_open', 'preview', desk_id, {link: encodeURI(encodeURI(link))});
             }
         });
-        var displaySubMenuItems = [];
-        var thisDisplays = deviceDeskModel.getDisplays(desk_id);
-        var thisDisplayIds = thisDisplays.map((item) => {
-            return item.display_id + '';
-        });
-        if (thisDisplays.length !== vm.displays.length && vm.displays.length > 1) {
-            displaySubMenuItems.push({
-                label: '为 所有屏幕 启用',
-                click: function () {
-                    top.vm.showLoadingMaster();
-                    deviceDeskModel.setsDesk([vm.displays.map(x => {
-                        return x.display_id
-                    })], desk_id);
-                    vm.updateDeskAndDisplay(desk_id);
-                    if (!stasdPref.value.val) {
-                        proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  (再按一次可以恢复窗口哦~)', (res) => {
-                            if (res === 1) {
-                                console.debug(res);
-                                stasdPref.value.val = true;
-                                preferenceModel.updateById(stasdPref);
+        if (vm.displays) {
+            if (vm.displays.length > 1) {
+                var displaySubMenuItems = [];
+                var thisDisplays = deviceDeskModel.getDisplays(desk_id);
+                var thisDisplayIds = thisDisplays.map((item) => {
+                    return item.display_id + '';
+                });
+                if (thisDisplays.length !== vm.displays.length && vm.displays.length > 1) {
+                    displaySubMenuItems.push({
+                        label: '为 所有屏幕 启用',
+                        click: function () {
+                            top.vm.showLoadingMaster();
+                            deviceDeskModel.setsDesk([vm.displays.map(x => {
+                                return x.display_id
+                            })], desk_id);
+                            vm.updateDeskAndDisplay(desk_id);
+                            if (!stasdPref.value.val) {
+                                proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  (再按一次可以恢复窗口哦~)', (res) => {
+                                    if (res === 1) {
+                                        console.debug(res);
+                                        stasdPref.value.val = true;
+                                        preferenceModel.updateById(stasdPref);
+                                    }
+                                }, false, ['知道了', '不再提醒']);
                             }
-                        }, false, ['知道了', '不再提醒']);
+                        }
+                    });
+                }
+                for (let x in vm.displays) {
+                    let zxx = vm.displays[x];//这里必须用 let. 不然会一直是最后一个.
+                    if (thisDisplayIds.indexOf(zxx.display_id + '') === -1) {
+                        displaySubMenuItems.push({
+                            label: '为 ' + zxx.title + ' 启用',
+                            click: function () {
+                                top.vm.showLoadingMaster();
+                                deviceDeskModel.setsDesk([zxx.display_id], desk_id);
+                                vm.updateDeskAndDisplay(desk_id, zxx.display_id);
+                                if (!stasdPref.value.val) {
+                                    proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  (再按一次可以恢复窗口哦~)', (res) => {
+                                        if (res === 1) {
+                                            console.debug(res);
+                                            stasdPref.value.val = true;
+                                            preferenceModel.updateById(stasdPref);
+                                        }
+                                    }, false, ['知道了', '不再提醒']);
+                                }
+                            }
+                        });
                     }
                 }
-            });
-        }
-        for (let x in vm.displays) {
-            let zxx = vm.displays[x];//这里必须用 let. 不然会一直是最后一个.
-            if (thisDisplayIds.indexOf(zxx.display_id + '') === -1) {
-                displaySubMenuItems.push({
-                    label: '为 ' + zxx.title + ' 启用',
+                if (thisDisplays.length > 0 && thisDisplays.length !== vm.displays.length) {
+                    displaySubMenuItems.push({type: 'separator'});
+                }
+                if (thisDisplays.length === vm.displays.length && vm.displays.length > 1) {
+                    displaySubMenuItems.push({
+                        label: '所有屏幕 已启用',
+                        enabled: false,
+                    });
+                }
+                for (let y in thisDisplays) {
+                    let zyy = thisDisplays[y];
+                    if (thisDisplayIds.indexOf(zyy.display_id + '') > -1) {
+                        displaySubMenuItems.push({
+                            label: '' + zyy.screen_title + ' 已启用',
+                            enabled: false,
+                        });
+                    }
+                }
+                menuItems.push({
+                    label: '设置启用',
+                    submenu: displaySubMenuItems,
+                });
+            } else {
+                menuItems.push({
+                    label: '为 主屏幕 启用',
                     click: function () {
+                        let zxx = vm.displays[0];
                         top.vm.showLoadingMaster();
                         deviceDeskModel.setsDesk([zxx.display_id], desk_id);
                         vm.updateDeskAndDisplay(desk_id, zxx.display_id);
@@ -469,30 +514,13 @@ var autoContextMenu = {
                     }
                 });
             }
-        }
-        if (thisDisplays.length > 0 && thisDisplays.length !== vm.displays.length) {
-            displaySubMenuItems.push({type: 'separator'});
-        }
-        if (thisDisplays.length === vm.displays.length && vm.displays.length > 1) {
-            displaySubMenuItems.push({
-                label: '所有屏幕 已启用',
+        } else {
+            menuItems.push({
+                label: '未检测到设备',
                 enabled: false,
             });
         }
-        for (let y in thisDisplays) {
-            let zyy = thisDisplays[y];
-            if (thisDisplayIds.indexOf(zyy.display_id + '') > -1) {
-                displaySubMenuItems.push({
-                    label: '' + zyy.screen_title + ' 已启用',
-                    enabled: false,
-                });
-            }
-        }
 
-        menuItems.push({
-            label: '设置启用',
-            submenu: displaySubMenuItems,
-        });
         menuItems.push({
             label: '删除',
             enabled: !(desk.ename.indexOf('default-') === 0),
