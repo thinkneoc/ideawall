@@ -159,7 +159,7 @@
                                 </span>
                                     <span class="zxx-desk-tooltip-control2 animated fadeIn"
                                           v-for="(disp, inde) in item.setsdisplays"
-                                          v-if="item.setsdisplays && item.setsdisplays.length > 0"
+                                          v-if="(item.setsdisplays && item.setsdisplays.length > 0) && (displayIds && displayIds.indexOf(disp.display_id+'') > -1)"
                                           :style="'top:'+(inde*25)+'px;'">
                                     {{disp.screen_title}}
                                 </span>

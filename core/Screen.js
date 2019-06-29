@@ -223,7 +223,7 @@ var _Screen = function () {
                     var dataurl = 'data:image/jpg;base64,' + img.toString('base64');
                     let display = target.getDisplay(zyy.id);
                     var obj = {
-                        id: 'screen-' + zyy.id,
+                        id: zyy.id,
                         display_id: zyy.id,
                         display: display,
                         name: zyy.name,
@@ -237,7 +237,7 @@ var _Screen = function () {
                     } else {
                         result.push(obj);
                     }
-                    rIds.push('screen-' + zyy.id);
+                    rIds.push(zyy.id);
                 }).catch((err) => {
                     // ...
                     logger.error(err);
@@ -297,7 +297,7 @@ var _Screen = function () {
             sources.forEach(function (source) {
                 var display = target.getDisplay(source.display_id);
                 result.push({
-                    id: source.id,
+                    id: source.display_id,
                     display_id: source.display_id,
                     display: display,
                     name: source.name,
@@ -306,7 +306,7 @@ var _Screen = function () {
                     thumbnail: source.thumbnail,
                     stream: source.thumbnail.toDataURL(),
                 });
-                rIds.push(source.id);
+                rIds.push(source.display_id);
             });
         });
         target.screenIds = rIds;
