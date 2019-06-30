@@ -35,6 +35,10 @@ electron-rebuild -d=http://npm.taobao.org/mirrors/atom-shell -f -w $module_with_
 以上骚操作, 在 MacOS 下, 完美起飞. Win 下待测.
 
 
+# 打包细节
+1.build添加配置: "compression": "maximum", 高压缩模式(耗时较长)
+2.删除devDependencies依赖. 
+
 
 # 集成 Webpack
 - 添加依赖

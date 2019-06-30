@@ -34,6 +34,7 @@
     "desktop"
   ],
   "build": {
+    "compression": "maximum",
     "electronDownload": {
       "mirror": "https://npm.taobao.org/mirrors/electron/"
     },
