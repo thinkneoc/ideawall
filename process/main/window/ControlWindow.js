@@ -105,12 +105,23 @@ function creat(isshow, paramJson) {
         event.newGuest = win
     });
 
+    xwindow.onbeforeunload = (e) => {
+        console.log('I do not want to be closed')
+
+        // 与通常的浏览器不同,会提示给用户一个消息框,
+        //返回非空值将默认取消关闭
+        //建议使用对话框 API 让用户确认关闭应用程序.
+        e.returnValue = false // 相当于 `return false` ，但是不推荐使用
+    };
+
     // 当窗口将要关闭时触发
     xwindow.on('close', function (event) {
-        // if (!global.appVar._destory) {
-        //     xwindow.hide();
-        //     event.preventDefault();//阻止关闭
-        // }
+        logger.info("[Process][MainProcessHelper][_ControlWindow_.on._close_]控制中心窗口即将关闭");
+        if (!global.appVar._destory) {
+            logger.info("[Process][MainProcessHelper][_ControlWindow_.on._close_]控制中心窗口驳回了关闭请求");
+            xwindow.hide();
+            event.preventDefault();//阻止关闭, 此动作将阻塞线程.
+        }
     });
 
     // 当窗口关闭时触发

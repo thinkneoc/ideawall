@@ -92,9 +92,16 @@ if (!gotTheLock) {
         }
     });
 
+    //在应用程序开始关闭其窗口之前发出。调用event.preventDefault（）将阻止默认行为，这将终止应用程序。
+    // 注意：如果应用程序quit是由autoupdater.quitandinstall（）启动的，那么在所有窗口上发出close事件并关闭它们之后，将发出before quit。
+    app.on('before-quit', function () {
+        logger.info("before-quit");
+        AppVar.setAppVar({_destory: true});
+    });
+
     // 当所有窗口关闭时关闭应用程序
     app.on('window-all-closed', function () {
-        helper.exit(true);
+        logger.info("window-all-closed");
         app.quit();
         if (process.platform !== 'darwin') { //如果是非 mac 系统, 直接退出
 
@@ -104,21 +111,28 @@ if (!gotTheLock) {
     //当应用程序准备退出时执行动作
     //在 Windows 系统中，如果应用程序因系统关机/重启或用户注销而关闭，那么这个事件不会被触发。
     app.on('will-quit', () => {
+        logger.info("will-quit");
+        //...
     });
 
     //在应用程序退出时发出
     //在 Windows 系统中，如果应用程序因系统关机/重启或用户注销而关闭，那么这个事件不会被触发。
     app.on('quit', () => {
+        logger.info("quit");
+        app.releaseSingleInstanceLock();//释放所有的单例锁
+        appTray.destroy(); //干掉托盘
+        appTray = null;
     });
 
     //当应用程序激活时，通常在macOS下, win下基本见不到.
     app.on('activate', function () {
+        logger.info("activate");
         if (!appTray) {
             appTray = tray.init(appVar);
         }
         dock.init(appVar);
         helper.getWallWindow();
-        helper.getControlWindow(pref_autoOpenControl || appVar._guide);
+        helper.getControlWindow(true);
     });
 }
 

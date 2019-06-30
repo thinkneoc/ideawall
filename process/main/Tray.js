@@ -265,7 +265,7 @@ function buildTrayMenu(appVar, share, shareConfig) {
         type: 'normal',
         accelerator: 'CmdOrCtrl+Q',
         click: function () {
-            helper.exit();
+            App.quit();
         },
     });
     return Menu.buildFromTemplate(template);
