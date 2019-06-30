@@ -163,6 +163,7 @@ function NodeJsProxy() {
      * Windows 下的定制系统提示框 [样式表在 ideawall.css 中.]
      */
     this.alertInWindows = function (message, detail, callback, type, btns) {
+        return alert(detail);
         var ihtml = '' +
             '            <div class="zxx-dialog-panel animated slideInDown">\n' +
             '                <div class="zxx-dialog-logo">\n' +
@@ -217,9 +218,9 @@ function NodeJsProxy() {
         type = type ? type : 'info';
         btns = btns ? btns : ['确定'];
         console.warn('Dialog::Alert::' + type + ' => [' + message + '] ' + detail);
-        if (this.appVar._platform !== 'darwin') {
-            top.proxy.alertInWindows(message, detail, callback, type, btns);
-        } else {
+        // if (this.appVar._platform !== 'darwin') {
+        //     top.proxy.alertInWindows(message, detail, callback, type, btns);
+        // } else {
             var serial = this.uuid.serial(6, 2);
             var returnVal = this.ipc.send('dialog.showMessageBox', T.windowKey, 'dialog-error-tip-' + serial, type, btns, undefined, undefined, message, detail, undefined, 1, undefined);
             //监听回复
@@ -228,7 +229,7 @@ function NodeJsProxy() {
                     callback(response);//0
                 }
             });
-        }
+        // }
     };
 
     // 系统确认选择框
@@ -237,9 +238,9 @@ function NodeJsProxy() {
         btns = btns ? btns : ['确认', '取消'];//0,1
         type = type ? type : 'warning';
         console.warn('Dialog::Confirm::' + type + ' => [' + message + '] ' + detail + ' ' + '(' + JSON.stringify(btns) + ')');
-        if (this.appVar._platform !== 'darwin') {
-            top.proxy.alertInWindows(message, detail, callback, type, btns);
-        } else {
+        // if (this.appVar._platform !== 'darwin') {
+        //     top.proxy.alertInWindows(message, detail, callback, type, btns);
+        // } else {
             var serial = this.uuid.serial(6, 2);
             var returnVal = this.ipc.send('dialog.showMessageBox', T.windowKey, 'dialog-confirm-' + serial, type, btns, undefined, undefined, message, detail, undefined, 1, undefined);
             //监听回复
@@ -248,7 +249,7 @@ function NodeJsProxy() {
                     callback(response);
                 }
             });
-        }
+        // }
     };
 
     // 文件保存确认框

@@ -5,6 +5,7 @@ html, body {
     padding: 0;
     /*使用系统字体.*/
     font: caption !important;
+    font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
     height: 100% !important;
     user-select: none !important;
     -webkit-user-select: none !important;
@@ -634,6 +635,7 @@ template {
 .zxx-dialog-info-title {
     font-weight: bold;
     color: #222;
+    font-size: 13px;
 }
 
 .zxx-dialog-info-detail {

@@ -27,18 +27,18 @@ function init(appVar) {
     const share = require('../../third/Share')(appVar);
     let shareConfig = {
         url: appVar._siteurl,
-        source: 'ideawall - 创意者桌面',
-        title: 'ideawall - 创意者桌面. 重新定义桌面, 极致就是艺术.', // 标题，默认读取 document.title 或者 <meta name="title" content="share.js" />
+        source: appVar._appname,
+        title: appVar._appname + '. 重新定义桌面, 极致就是艺术.', // 标题，默认读取 document.title 或者 <meta name="title" content="share.js" />
         description: '我给你推荐了一个超酷的动态桌面壁纸软件, 快来试试吧~~ ',
         image: 'http://m.cdn.ideanote.16inet.com/blue-min-pretty.png', // 图片, 默认取网页中第一个img标签
     };
 
-    var trayIcon = (appVar._platform === 'darwin'?'logo/black-min@3x.png':'logo/blue-min-300_2@2x.png');
-    appTray = new Tray(path.join(appVar._staticpath, trayIcon));
-    appTray.setToolTip('ideawall - 创意者桌面');//设置鼠标指针在托盘图标上悬停时显示的文本
+    var trayIcon = appVar._icon;
+    appTray = new Tray(trayIcon);
+    appTray.setToolTip(appVar._appname);//设置鼠标指针在托盘图标上悬停时显示的文本
     appTray.setContextMenu(buildTrayMenu(appVar, share, shareConfig));//设置内容菜单, 这个的菜单一旦生成, 无法更改. 所以, 改用点击弹出上下文菜单的方式.
     // appTray.setTitle('创意者桌面');//在 macOS 中，设置显示在状态栏中托盘图标旁边的标题 (支持ANSI色彩), 一般用于制作状态栏歌词
-    appTray.setPressedImage(path.join(appVar._staticpath, trayIcon));//在 macOS 中，设置image作为托盘图标被按下时显示的图标
+    appTray.setPressedImage(trayIcon);//在 macOS 中，设置image作为托盘图标被按下时显示的图标
     appTray.on('click', () => {//mac/win/linux
         if (appVar._platform === 'darwin') {
             appTray.popUpContextMenu(buildTrayMenu(appVar, share, shareConfig));
@@ -76,7 +76,7 @@ function fuck(){
 function buildTrayMenu(appVar, share, shareConfig) {
     // 注册应用全局菜单
     var template = [];
-    template.push({label: 'ideawall - 创意者桌面', type: 'normal', enabled: false});
+    template.push({label: appVar._appname, type: 'normal', enabled: false});
     template.push({type: 'separator'});
     template.push({
         label: '控制面板',

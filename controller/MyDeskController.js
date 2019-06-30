@@ -416,7 +416,7 @@ var autoContextMenu = {
     buildDeskContextMenu: function (elem) {
         var desk_id = $(elem).data('id');
         var desk = localDeskModel.getDesk(desk_id);
-        var gotoDesktopKey = (proxy.appVar._platform === 'darwin' ? 'F11' : '<i class="ivu-icon ivu-icon-logo-windows" style="margin-top: -2px;"></i> + D');
+        var gotoDesktopKey = (proxy.appVar._platform === 'darwin' ? 'F11' : 'Win + D');
         var stasdPref = preferenceModel.getByKey('dontshowTipAfter_setDesk');
         stasdPref.value = JSON.parse(stasdPref.value);
         var menuItems = [];
@@ -452,7 +452,7 @@ var autoContextMenu = {
                             })], desk_id);
                             vm.updateDeskAndDisplay(desk_id);
                             if (!stasdPref.value.val) {
-                                proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  (再按一次可以恢复窗口哦~)', (res) => {
+                                proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  \r\n(再按一次可以恢复窗口哦~)', (res) => {
                                     if (res === 1) {
                                         stasdPref.value.val = true;
                                         preferenceModel.updateById(stasdPref);
@@ -472,7 +472,7 @@ var autoContextMenu = {
                                 deviceDeskModel.setsDesk([zxx.display_id], desk_id);
                                 vm.updateDeskAndDisplay(desk_id, zxx.display_id);
                                 if (!stasdPref.value.val) {
-                                    proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  (再按一次可以恢复窗口哦~)', (res) => {
+                                    proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  \r\n(再按一次可以恢复窗口哦~)', (res) => {
                                         if (res === 1) {
                                             stasdPref.value.val = true;
                                             preferenceModel.updateById(stasdPref);
@@ -514,7 +514,7 @@ var autoContextMenu = {
                         deviceDeskModel.setsDesk([zxx.display_id], desk_id);
                         vm.updateDeskAndDisplay(desk_id, zxx.display_id);
                         if (!stasdPref.value.val) {
-                            proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  (再按一次可以恢复窗口哦~)', (res) => {
+                            proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  \r\n(再按一次可以恢复窗口哦~)', (res) => {
                                 if (res === 1) {
                                     stasdPref.value.val = true;
                                     preferenceModel.updateById(stasdPref);

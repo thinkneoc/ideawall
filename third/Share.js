@@ -21,8 +21,8 @@ var Share = function (appVar) {
 
     this.$socialconfig = {
         url: appVar._siteurl,
-        source: 'ideawall - 创意者桌面',
-        title: 'ideawall - 创意者桌面. 重新定义桌面, 极致就是艺术.', // 标题，默认读取 document.title 或者 <meta name="title" content="share.js" />
+        source: appVar._appname,
+        title: appVar._appname + '. 重新定义桌面, 极致就是艺术.', // 标题，默认读取 document.title 或者 <meta name="title" content="share.js" />
         description: '我给你推荐了一个超酷的动态桌面壁纸软件, 快来试试吧~~ ',
         image: 'http://m.cdn.ideanote.16inet.com/blue-min-pretty.png', // 图片, 默认取网页中第一个img标签
         origin: '', // 分享 @ 相关 twitter 账号
