@@ -36,7 +36,7 @@ function init(appVar) {
     var trayIcon = (appVar._platform === 'darwin'?'logo/black-min@3x.png':'logo/blue-min-300_2@2x.png');
     appTray = new Tray(path.join(appVar._staticpath, trayIcon));
     appTray.setToolTip('ideawall - 创意者桌面');//设置鼠标指针在托盘图标上悬停时显示的文本
-    // appTray.setContextMenu(buildTrayMenu(appVar, share, shareConfig));//设置内容菜单, 这个的菜单一旦生成, 无法更改. 所以, 改用点击弹出上下文菜单的方式.
+    appTray.setContextMenu(buildTrayMenu(appVar, share, shareConfig));//设置内容菜单, 这个的菜单一旦生成, 无法更改. 所以, 改用点击弹出上下文菜单的方式.
     // appTray.setTitle('创意者桌面');//在 macOS 中，设置显示在状态栏中托盘图标旁边的标题 (支持ANSI色彩), 一般用于制作状态栏歌词
     appTray.setPressedImage(path.join(appVar._staticpath, trayIcon));//在 macOS 中，设置image作为托盘图标被按下时显示的图标
     appTray.on('click', () => {//mac/win/linux
@@ -56,14 +56,21 @@ function init(appVar) {
             appTray.popUpContextMenu(buildTrayMenu(appVar, share, shareConfig));
         }
     });
-    appTray.on('drop-files', () => {//mac
+    // appTray.on('drop-files', () => {//mac
 
-    });
-    appTray.on('drop-text', () => {//mac
+    // });
+    // appTray.on('drop-text', () => {//mac
 
-    });
+    // });
 
     return appTray;
+}
+
+function fuck(){
+    if(!appTray.isDestroyed()){
+        appTray.destroy(); //干掉托盘
+        appTray = null;
+    }
 }
 
 function buildTrayMenu(appVar, share, shareConfig) {
@@ -81,97 +88,108 @@ function buildTrayMenu(appVar, share, shareConfig) {
     });
     template.push({type: 'separator'});
 
-    try {
-        var displays = Electron.screen.getAllDisplays();
-        const deviceDeskModel = require('../../model/DeviceDeskModel')();
-        for (let x in displays) {
-            let title = '';
-            if (x == 0) {
-                title = "主屏幕";
-            } else {
-                if (displays.length > 2) {
-                    title = '扩展屏幕 ' + x;
-                } else {
-                    title = "扩展屏幕";
-                }
-            }
-            let db_display = deviceDeskModel.getDisplayById(displays[x].id);
-            if (!db_display) {
-                template.push({
-                    label: title,
-                    submenu: [{
-                        label: '新增设备',
-                        type: 'normal',
-                        enabled: false
-                    }]
-                });
-                continue;
-            }
-            var dbd_desk = deviceDeskModel.getDesk(displays[x].id);
-            if (!dbd_desk) {
-                template.push({
-                    label: title,
-                    submenu: [{
-                        label: '未启用桌面',
-                        type: 'normal',
-                        enabled: false
-                    }]
-                });
-            } else {
-                let subMenu = [];
-                var ispause = db_display.api_pause == 2 ? '播放' : '暂停';
-                var ismuted = db_display.api_muted == 2 ? '打开声音' : '静音';
-                var ishide = db_display.api_hide == 2 ? '恢复显示' : '隐藏';
-                subMenu.push({
-                    label: ispause,
-                    type: 'normal',
-                    accelerator: 'CmdOrCtrl+Option+P',
-                    click: function () {
-                        deviceDeskModel.setApi(displays[x].id, 'pause', !(db_display.api_pause == 2));
-                        try {
-                            appVar._controlwindow.webContents.send('ipc_device_wall_api', 'pause', displays[x].id, !(db_display.api_pause == 2), true);
-                        } catch (e) {
-                            //...尽职
-                        }
-                    },
-                });
-                subMenu.push({
-                    label: ismuted,
-                    type: 'normal',
-                    accelerator: 'CmdOrCtrl+Option+M',
-                    click: function () {
-                        deviceDeskModel.setApi(displays[x].id, 'muted', !(db_display.api_muted == 2));
-                        try {
-                            appVar._controlwindow.webContents.send('ipc_device_wall_api', 'muted', displays[x].id, !(db_display.api_muted == 2), true);
-                        } catch (e) {
-                            //...尽职
-                        }
-                    },
-                });
-                subMenu.push({
-                    label: ishide,
-                    type: 'normal',
-                    accelerator: 'CmdOrCtrl+Option+H',
-                    click: function () {
-                        deviceDeskModel.setApi(displays[x].id, 'hide', !(db_display.api_hide == 2));
-                        try {
-                            appVar._controlwindow.webContents.send('ipc_device_wall_api', 'hide', displays[x].id, !(db_display.api_hide == 2), true);
-                        } catch (e) {
-                            //...尽职
-                        }
-                    },
-                });
-                template.push({
-                    label: title,
-                    submenu: subMenu
-                });
-            }
-        }
-        template.push({type: 'separator'});
-    } catch (e) {
-        //... screen 模块需要在 app.onReady 之后才能调用.
-        console.error(e);
-    }
+    // try {
+    //     var displays = Electron.screen.getAllDisplays();
+    //     var primaryDisplay = Electron.screen.getPrimaryDisplay();
+    //     //把主屏幕移动到第一位.
+    //     if(displays.length > 1){
+    //         for (var i = 0; i < displays.length; i++) {
+    //             if (displays[i].id === primaryDisplay.id) {
+    //                 displays.splice(i, 1);
+    //                 break;
+    //             }
+    //         }
+    //         displays.unshift(primaryDisplay);
+    //     }
+    //     const deviceDeskModel = require('../../model/DeviceDeskModel')();
+    //     for (let x in displays) {
+    //         let title = '';
+    //         if (displays[x].id === primaryDisplay.id) {
+    //             title = "主屏幕";
+    //         } else {
+    //             if (displays.length > 2) {
+    //                 title = '扩展屏幕 ' + x;
+    //             } else {
+    //                 title = "扩展屏幕";
+    //             }
+    //         }
+    //         let db_display = deviceDeskModel.getDisplayById(displays[x].id);
+    //         if (!db_display) {
+    //             template.push({
+    //                 label: title,
+    //                 submenu: [{
+    //                     label: '新增设备',
+    //                     type: 'normal',
+    //                     enabled: false
+    //                 }]
+    //             });
+    //             continue;
+    //         }
+    //         var dbd_desk = deviceDeskModel.getDesk(displays[x].id);
+    //         if (!dbd_desk) {
+    //             template.push({
+    //                 label: title,
+    //                 submenu: [{
+    //                     label: '未启用桌面',
+    //                     type: 'normal',
+    //                     enabled: false
+    //                 }]
+    //             });
+    //         } else {
+    //             let subMenu = [];
+    //             var ispause = db_display.api_pause == 2 ? '播放' : '暂停';
+    //             var ismuted = db_display.api_muted == 2 ? '打开声音' : '静音';
+    //             var ishide = db_display.api_hide == 2 ? '恢复显示' : '隐藏';
+    //             subMenu.push({
+    //                 label: ispause,
+    //                 type: 'normal',
+    //                 accelerator: 'CmdOrCtrl+Option+P',
+    //                 click: function () {
+    //                     deviceDeskModel.setApi(displays[x].id, 'pause', !(db_display.api_pause == 2));
+    //                     try {
+    //                         appVar._controlwindow.webContents.send('ipc_device_wall_api', 'pause', displays[x].id, !(db_display.api_pause == 2), true);
+    //                     } catch (e) {
+    //                         //...尽职
+    //                     }
+    //                 },
+    //             });
+    //             subMenu.push({
+    //                 label: ismuted,
+    //                 type: 'normal',
+    //                 accelerator: 'CmdOrCtrl+Option+M',
+    //                 click: function () {
+    //                     deviceDeskModel.setApi(displays[x].id, 'muted', !(db_display.api_muted == 2));
+    //                     try {
+    //                         appVar._controlwindow.webContents.send('ipc_device_wall_api', 'muted', displays[x].id, !(db_display.api_muted == 2), true);
+    //                     } catch (e) {
+    //                         //...尽职
+    //                     }
+    //                 },
+    //             });
+    //             subMenu.push({
+    //                 label: ishide,
+    //                 type: 'normal',
+    //                 accelerator: 'CmdOrCtrl+Option+H',
+    //                 click: function () {
+    //                     deviceDeskModel.setApi(displays[x].id, 'hide', !(db_display.api_hide == 2));
+    //                     try {
+    //                         appVar._controlwindow.webContents.send('ipc_device_wall_api', 'hide', displays[x].id, !(db_display.api_hide == 2), true);
+    //                     } catch (e) {
+    //                         //...尽职
+    //                     }
+    //                 },
+    //             });
+    //             template.push({
+    //                 label: title,
+    //                 submenu: subMenu
+    //             });
+    //         }
+    //     }
+    //     template.push({type: 'separator'});
+    // } catch (e) {
+    //     //... screen 模块需要在 app.onReady 之后才能调用.
+    //     console.error(e);
+    // }
     template.push({
         label: '偏好设置',
         type: 'normal',
@@ -275,5 +293,6 @@ function buildTrayMenu(appVar, share, shareConfig) {
 }
 
 module.exports = {
-    init
+    init,
+    fuck,
 };

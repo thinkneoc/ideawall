@@ -120,7 +120,7 @@ if (!gotTheLock) {
     app.on('quit', () => {
         logger.info("quit");
         app.releaseSingleInstanceLock();//释放所有的单例锁
-        appTray.destroy(); //干掉托盘
+        tray.fuck(); //干掉托盘
         appTray = null;
     });
 
