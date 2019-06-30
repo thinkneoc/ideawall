@@ -167,7 +167,7 @@ var vm = new Vue({
                                     proxy.ipc.send('ipc_clean');//清空缓存数据[日志等]
                                     $('.zxx-pre-repair-tip').css('color', '#F56C6C').text('修复完毕, 最后还有几件小事, 请稍后...');
                                     setTimeout(() => {
-                                        that.btnLoading.repair.bol = false;
+                                        // that.btnLoading.repair.bol = false;
                                         proxy.ipc.send('ipc_lock', false);
                                         $('.zxx-pre-repair-tip').css('color', '#F56C6C').text('正在请求重新启动 ideawall...');
                                         that.reboot();

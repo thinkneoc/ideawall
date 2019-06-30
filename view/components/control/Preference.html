@@ -112,7 +112,7 @@
                 </div>
                 <el-form ref="form" :model="preferences" style="margin-top:210px;">
                     <el-form-item>
-                        <span slot="label">桌面源入场动画<sup>*</sup></span>
+                        <span slot="label">桌面源入场动画</span>
                         <div class="zxx-show-animate-panel">
                             <el-radio-group v-model="animation.in" size="mini"
                                             @change="(nval)=>{vm.previewAnimate('in');vm.doSetPreference(false, 'deskAnimationOn', nval)}">
@@ -155,7 +155,7 @@
                         </div>
                     </el-form-item>
                     <el-form-item style="margin-top: 20px;">
-                        <span slot="label">桌面源离场动画<sup>*</sup></span>
+                        <span slot="label">桌面源离场动画</span>
                         <div class="zxx-show-animate-panel">
                             <el-radio-group v-model="animation.out" size="mini"
                                             @change="(nval)=>{vm.previewAnimate('out');vm.doSetPreference(false, 'deskAnimationOut', nval)}">
