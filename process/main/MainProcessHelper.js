@@ -2,13 +2,13 @@
 const Electron = require('electron');
 const App = Electron.app;
 const BrowserWindow = Electron.BrowserWindow;
-const path = require('path');//原生库path模块
+const path = require('path'); //原生库path模块
 const url = require('url');
 const os = require("os");
 const fs = require("fs");
 
-const logger = require('../../core/Logger');//引入全局日志组件
-const config = require('../../core/Config');//引入全局配置组件
+const logger = require('../../core/Logger'); //引入全局日志组件
+const config = require('../../core/Config'); //引入全局配置组件
 
 const AppVar = require('./AppVar');
 let appVar = AppVar.getAppVar();
@@ -28,7 +28,8 @@ const JsonEditorWindow = require('./window/JsonEditorWindow');
 
 // 为了保证一个对全局windows对象的引用，就必须在方法体外声明变量
 // 否则当方法执行完成时就会被JavaScript的垃圾回收机制清理
-let wallWins = [], controlWin, previewWin, deviceInfoWin, ReadmeWin, AboutWin, JsonEditorWin;
+let wallWins = [],
+    controlWin, previewWin, deviceInfoWin, ReadmeWin, AboutWin, JsonEditorWin;
 
 /**
  * 返回全局wallWindow对象
@@ -48,7 +49,10 @@ function getWallWindow(paramJson) {
         wallWins = wallWindow.creat(paramJson);
         res = false;
     }
-    return {result: res, win: wallWins};
+    return {
+        result: res,
+        win: wallWins
+    };
 }
 
 function getControlWindow(isshow, paramJson) {
@@ -56,19 +60,17 @@ function getControlWindow(isshow, paramJson) {
     try {
         controlWin.webContents.send('ipc_window_control_cgi', isshow, paramJson);
         setTimeout(() => {
-            if (controlWin.isVisible()) {
-                controlWin.restore();
-                controlWin.moveTop();
-            } else {
-                controlWin.show();
-            }
+            controlWin.show();
         }, 300);
     } catch (e) {
         controlWin = controlWindow.creat(isshow, paramJson);
-        getWallWindow();//如果是手动停止了, 那么这里需要判定一下桌面壁纸层是否启动.
+        getWallWindow(); //如果是手动停止了, 那么这里需要判定一下桌面壁纸层是否启动.
         res = false;
     }
-    return {result: res, win: controlWin};
+    return {
+        result: res,
+        win: controlWin
+    };
 }
 
 function getPreviewWindow(deskId, paramJson) {
@@ -76,18 +78,16 @@ function getPreviewWindow(deskId, paramJson) {
     try {
         previewWin.webContents.send('ipc_window_preview_cgi', deskId, paramJson);
         setTimeout(() => {
-            if (previewWin.isVisible()) {
-                previewWin.restore();
-                previewWin.moveTop();
-            } else {
-                previewWin.show();
-            }
+            previewWin.show();
         }, 300);
     } catch (e) {
         previewWin = previewWindow.creat(deskId, paramJson);
         res = false;
     }
-    return {result: res, win: previewWin};
+    return {
+        result: res,
+        win: previewWin
+    };
 }
 
 function getDeviceInfoWindow(displayId, paramJson) {
@@ -97,18 +97,16 @@ function getDeviceInfoWindow(displayId, paramJson) {
         setTimeout(() => {
             let xy = deviceInfoWindow.calcPosition();
             deviceInfoWin.setPosition(xy.x, xy.y);
-            if (deviceInfoWin.isVisible()) {
-                deviceInfoWin.restore();
-                deviceInfoWin.moveTop();
-            } else {
-                deviceInfoWin.show();
-            }
+            deviceInfoWin.show();
         }, 300);
     } catch (e) {
         deviceInfoWin = deviceInfoWindow.creat(displayId, paramJson);
         res = false;
     }
-    return {result: res, win: deviceInfoWin};
+    return {
+        result: res,
+        win: deviceInfoWin
+    };
 }
 
 function getReadmeWindow(deskId, paramJson) {
@@ -118,18 +116,16 @@ function getReadmeWindow(deskId, paramJson) {
         setTimeout(() => {
             let xy = ReadmeWindow.calcPosition();
             ReadmeWin.setPosition(xy.x, xy.y);
-            if (ReadmeWin.isVisible()) {
-                ReadmeWin.restore();
-                ReadmeWin.moveTop();
-            } else {
-                ReadmeWin.show();
-            }
+            ReadmeWin.show();
         }, 300);
     } catch (e) {
         ReadmeWin = ReadmeWindow.creat(deskId, paramJson);
         res = false;
     }
-    return {result: res, win: ReadmeWin};
+    return {
+        result: res,
+        win: ReadmeWin
+    };
 }
 
 function getAboutWindow(paramJson) {
@@ -137,18 +133,16 @@ function getAboutWindow(paramJson) {
     try {
         AboutWin.webContents.send('ipc_window_about_cgi', paramJson);
         setTimeout(() => {
-            if (AboutWin.isVisible()) {
-                AboutWin.restore();
-                AboutWin.moveTop();
-            } else {
-                AboutWin.show();
-            }
+            AboutWin.show();
         }, 300);
     } catch (e) {
         AboutWin = AboutWindow.creat(paramJson);
         res = false;
     }
-    return {result: res, win: AboutWin};
+    return {
+        result: res,
+        win: AboutWin
+    };
 }
 
 function getJsonEditorWindow(json) {
@@ -158,18 +152,16 @@ function getJsonEditorWindow(json) {
         setTimeout(() => {
             let xy = JsonEditorWindow.calcPosition();
             JsonEditorWin.setPosition(xy.x, xy.y);
-            if (JsonEditorWin.isVisible()) {
-                JsonEditorWin.restore();
-                JsonEditorWin.moveTop();
-            } else {
-                JsonEditorWin.show();
-            }
+            JsonEditorWin.show();
         }, 300);
     } catch (e) {
         JsonEditorWin = JsonEditorWindow.creat(json);
         res = false;
     }
-    return {result: res, win: JsonEditorWin};
+    return {
+        result: res,
+        win: JsonEditorWin
+    };
 }
 
 /**
@@ -191,7 +183,7 @@ function closeAllWindows() {
     wallWins = [];
 }
 
-const ipcMain = require('electron').ipcMain;//ipcMain进程对象
+const ipcMain = require('electron').ipcMain; //ipcMain进程对象
 
 function sendCommandToAllWindows(cmd, data) {
     try {
@@ -236,15 +228,17 @@ ipcMain.on('ipc_window_open', function (event, winKey, data, paramJson) {
 ipcMain.on('ipc_resolver', function (event, resolverKey, data) {
     if (resolverKey === 'mail') {
         const MailResolver = require('../../resolver/MailResolver');
-        event.sender.send('ipc_resolver_ret', MailResolver.sendMail(data));//传入一个对象
+        event.sender.send('ipc_resolver_ret', MailResolver.sendMail(data)); //传入一个对象
     } else if (resolverKey === 'archive') {
         const ArchiveResolver = require('../../resolver/ArchiveResolver')(data.output, (reb) => {
             event.sender.send('ipc_resolver_ret', reb);
         });
-        ArchiveResolver.fromGlob(data.glob, data.name);//传入压缩正则和新名称.
+        ArchiveResolver.fromGlob(data.glob, data.name); //传入压缩正则和新名称.
     } else if (resolverKey === 'unzip') {
         const unzip = require('unzip');
-        fs.createReadStream(data.zipPath).pipe(unzip.Extract({path: data.outPath}));
+        fs.createReadStream(data.zipPath).pipe(unzip.Extract({
+            path: data.outPath
+        }));
     }
 });
 

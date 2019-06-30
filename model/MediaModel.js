@@ -53,7 +53,9 @@ function MediaModel(appVar) {
     }
 
     this.addsByDeskId = function(deskId, medias){
-        return  this.dao.addsByDeskId(deskId, medias);
+        this.dao.addsByDeskId(deskId, medias);
+        this.parent.updateById({id: deskId}, true);//更新掉初始化标记, 并且不发送通信指令.
+        this.syncUpdate();
     };
 
     this.getsByDeskId = function (deskId) {

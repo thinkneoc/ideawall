@@ -257,8 +257,10 @@ var vm = new Vue({
         this.dealWithLdsData(localDeskModel.initial().selectAll());
         this.snapscreen(true);
         proxy.appVar._controlwindow.on('show', (e) => {
-            that.loadingDevices = true;
-            that.snapscreen();
+            if(deviceDeskModel.snapscreenNum === 0){
+                that.loadingDevices = true;
+                that.snapscreen();
+            }
         });
         proxy.appVar._controlwindow.on('hide', (e) => {
             that.firstTime = false;
