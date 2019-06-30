@@ -131,9 +131,6 @@ var vm = new Vue({
             //更新所有设备
             for (var y in this.displays) {
                 var itm = this.displays[y];
-                if (display_id && display_id + '' != itm.display_id + '') {
-                    break;
-                }
                 itm.is_set_desk = deviceDeskModel.isDesk(itm.display_id, itm.ld_id);
                 this.displays[y] = itm;
             }
