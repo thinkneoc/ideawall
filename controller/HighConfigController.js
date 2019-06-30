@@ -27,6 +27,7 @@ var vm = new Vue({
             },
             readmePath: '',//README.md 文件路径.
             isSourceEffect: true,//桌面源是否有效.
+            redrawSign: false,
         };
     },
     computed: {
@@ -124,6 +125,10 @@ var vm = new Vue({
                         params: JSON.parse(JSON.stringify(this.ld.params)),//阻止引用指针
                     }, true);
                     this.ld_backUp = JSON.parse(JSON.stringify(this.ld));//阻止引用
+                    if(!this.redrawSign){
+                        proxy.ipc.send('ipc_repeat', 'ipc_render_control_mydesk_hideInitSign', this.ld.id);
+                        this.redrawSign = true;
+                    }
                 }
             } else {
                 this.showApply = false;

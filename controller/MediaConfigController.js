@@ -40,6 +40,7 @@ var vm = new Vue({
                 listType: 'text', //文件列表的类型: text/picture/picture-card
                 data: [], //文件列表
             },
+            redrawSign: false,
         };
     },
     methods: {
@@ -173,6 +174,10 @@ var vm = new Vue({
             if (tList.length > 0) {
                 mediaModel.addsByDeskId(this.ld.id, tList);
                 this.dealWithLdData();
+                if(!this.redrawSign){
+                    proxy.ipc.send('ipc_repeat', 'ipc_render_control_mydesk_hideInitSign', this.ld.id);
+                    this.redrawSign = true;
+                }
                 return true;
             }
         },

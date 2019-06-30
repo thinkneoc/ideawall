@@ -309,7 +309,18 @@ var vm = new Vue({
             that.dealWithLdsData(localDeskModel.initial().selectAll());
             setTimeout(() => {
                 that.loadingDesks = false;
-            });
+            }, 500);
+        });
+        //重绘某桌面项和所有设备项
+        proxy.ipc.on('ipc_render_control_mydesk_hideInitSign', function (event, deskId) {
+            setTimeout(() => {
+                for(var x in that.lds){
+                    if(that.lds[x].id+'' == deskId + ''){
+                        that.lds[x].init_sign = 2;
+                        break;
+                    }
+                }
+            }, 500);
         });
     }
 });
