@@ -33,6 +33,7 @@ function creat(isshow, paramJson) {
         minHeight: 600,
         maxWidth: appVar._platform === 'darwin' ? undefined : 998,
         maxHeight: appVar._platform === 'darwin' ? undefined : 600,
+        title: appVar._platform === 'darwin' ? undefined :'',
         resizable: true,
         movable: true,
         minimizable: true,

@@ -2,7 +2,7 @@
   "name": "ideawall",
   "author": "周曦 <1747128171@qq.com>",
   "version": "1.1.7",
-  "description": "ideawall - 创意者桌面 [MacOs 版]",
+  "description": "ideawall - 创意者桌面 [Window 版]",
   "private": true,
   "license": "",
   "main": "App.js",
@@ -22,7 +22,6 @@
     "dist:w64": "electron-builder --win --x64",
     "dist:mac": "export CSC_IDENTITY_AUTO_DISCOVERY=false && electron-builder --mac --x64",
     "rebuild": "cnpm rebuild -f --runtime=electron --target=5.0.4 --disturl=https://npm.taobao.org/mirrors/atom-shell --abi=72",
-    "clean": "yarn autoclean -I && yarn autoclean -F",
     "mail": "node resolver/MailResolver.js",
     "archive": "node resolver/ArchiverResolver.js",
     "uuid": "node resolver/UUIDResolver.js --serial --v1",
@@ -41,7 +40,7 @@
     },
     "appId": "com.inetech.leo.ideawall",
     "productName": "ideawall",
-    "copyright": "Copyright © 2018 16inet.com",
+    "copyright": "16inet.com",
     "directories": {
       "output": "dist"
     },
@@ -108,17 +107,23 @@
     "node": ">= 6.0.0"
   },
   "devDependencies": {
+    "electron": "^5.0.4",
+    "electron-rebuild": "^1.8.5",
+    "electron-packager": "^14.0.0",
+    "electron-builder": "^20.44.4"
   },
   "dependencies": {
-    "electron-updater": "^4.0.12",
-    "mousetrap": "^1.6.3",
     "archiver": "^3.0.0",
     "async": "^2.6.1",
     "auto-launch": "^5.0.5",
     "better-sqlite3": "^5.4.0",
+    "electron-updater": "^4.0.12",
+    "electron-wallpaper": "^0.0.3",
+    "mousetrap": "^1.6.3",
     "log4js": "^3.0.6",
     "nodemailer": "^6.2.1",
     "nodemailer-smtp-transport": "^2.7.4",
+    "screenshot-desktop": "^1.8.0",
     "unirest": "^0.5.1",
     "request": "^2.87.0",
     "unzip": "^0.1.11",

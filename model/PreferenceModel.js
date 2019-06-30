@@ -98,7 +98,7 @@ let defaults = [
         name: '桌面源入场动画',
         description: '',
         sort: 210,
-        reboot: 2,
+        reboot: 1,
         sync: 1,
         explicit: 2,
         value: {
@@ -113,7 +113,7 @@ let defaults = [
         name: '桌面源离场动画',
         description: '',
         sort: 220,
-        reboot: 2,
+        reboot: 1,
         sync: 1,
         explicit: 2,
         value: {
