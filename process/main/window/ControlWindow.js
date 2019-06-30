@@ -91,14 +91,12 @@ function creat(isshow, paramJson) {
     xwindow.webContents.on('new-window', (event, url, frameName, disposition, options) => {
         event.preventDefault();
         console.log(options);
-        const win = new Electron.BrowserWindow({
-            webContents: options.webContents, // use existing webContents if provided
-            show: false,
-            width: 955,
-            height: 600,
-            minWidth: 955,
-            minHeight: 600,
-        });
+        const win = new Electron.BrowserWindow(options);
+        options.show = false;
+        options.width = 955;
+        options.height = 600;
+        options.minWidth = 955;
+        options.minHeight = 600;
         win.once('ready-to-show', () => win.show());
         if (!options.webContents) {
             win.loadURL(url) // existing webContents will be navigated automatically

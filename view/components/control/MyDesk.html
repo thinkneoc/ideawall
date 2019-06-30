@@ -152,22 +152,22 @@
                                 </div>
                                 <div class="zxx-desk-tooltip zxx-desk-bg zxx-overlay-nofilter animated fadeIn"
                                      style="z-index:999;display:block;overflow-y: auto;">
-                                <span class="zxx-desk-tooltip-edit animated fadeInUp" v-if="item.id === ld.id">
-                                </span>
+                                    <span class="zxx-desk-tooltip-edit animated fadeInUp" v-if="item.id === ld.id">
+                                    </span>
                                     <span class="zxx-desk-tooltip-edit animated fadeInUp" v-if="item.id === ld.id"
                                           style="background: transparent;z-index:521;">
-                                    <i class="el-icon-edit"></i> 正在配置...
-                                </span>
+                                        <i class="el-icon-edit"></i> 正在配置...
+                                    </span>
                                     <span class="zxx-desk-tooltip-control2 animated fadeIn"
                                           v-for="(disp, inde) in item.setsdisplays"
-                                          v-if="(item.setsdisplays && item.setsdisplays.length > 0) && (displayIds && displayIds.indexOf(disp.display_id+'') > -1)"
+                                          v-if="(item.setsdisplays && item.setsdisplays.length > 0) && (displayIds && displayIds.join(',').indexOf(disp.display_id+'') > -1)"
                                           :style="'top:'+(inde*25)+'px;'">
-                                    {{disp.screen_title}}
-                                </span>
+                                        {{disp.screen_title}}
+                                    </span>
                                     <span class="zxx-desk-tooltip-left animated fadeInLeft"
                                           v-if="item.init_sign == 1 || ((item.type !== 'page' && item.medias.length <= 0) || (item.type === 'page' && item.source_val === ''))">
-                                    <i class="el-icon-magic-stick"></i>
-                                </span>
+                                        <i class="el-icon-magic-stick"></i>
+                                    </span>
                                 </div>
                                 <img :src="item.preview" alt=""
                                      class="iframe_wall zxx-desk-showpanel"/>

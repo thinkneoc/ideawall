@@ -227,7 +227,7 @@ var vm = new Vue({
             deviceDeskModel.initial(this.cardStyle, (result, rIds, first) => {
                 that.displays = result;
                 that.displayIds = rIds;
-                // console.debug(that.displays);
+                console.debug(that.displayIds);
                 if (first) {//首次快照到达
                     for (var x in that.displays) {
                         var display_id = that.displays[x].display_id;
