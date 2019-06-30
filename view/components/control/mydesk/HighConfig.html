@@ -47,10 +47,10 @@
         </el-form>
 
         <el-form label-position="top" label-width="80px" :model="ld" size="mini">
-            <el-form-item label="" size="mini">
+            <el-form-item label="" size="mini" v-if="ld.switch_source != 2">
                 <span slot="label">
                     {{ld.switch_source != 2?'桌面源':''}}
-                    <el-tooltip placement="top" data-zxx-map="teach" data-tooltip-limit="onlyonline" :popper-class="window.navigator.onLine?'popper-tooltip popper-only-online':'popper-tooltip'">
+                    <el-tooltip v-if="ld.switch_source != 2" placement="top" data-zxx-map="teach" data-tooltip-limit="onlyonline" :popper-class="window.navigator.onLine?'popper-tooltip popper-only-online':'popper-tooltip'">
                         <div slot="content">
                             桌面源是指通过绑定到壁纸层的窗口的上层容器, <br/>它为桌面的定制化提供了非常灵活的设计和想象.<br/>
                             通常情况下, 桌面源由开发者指定, 用户无法进行<br/>修改. 但我们为您提供了一个超桌示例, 它的桌面<br/>源
@@ -65,10 +65,10 @@
                     该{{localDeskModel.getDeskTypeName(ld.type).name}}暂不支持桌面源配置更改
                 </el-button>
             </el-form-item>
-            <el-form-item label="" size="mini" v-if="ld.switch_source == 2">
+            <el-form-item label="" size="mini" v-else>
                 <span slot="label">
-                    {{ld.switch_source != 2?'桌面源':''}}
-                    <el-tooltip placement="top" data-zxx-map="teach" data-tooltip-limit="onlyonline" :popper-class="window.navigator.onLine?'popper-tooltip popper-only-online':'popper-tooltip'">
+                    {{ld.switch_source == 2?'桌面源':''}}
+                    <el-tooltip v-if="ld.switch_source == 2" placement="top" data-zxx-map="teach" data-tooltip-limit="onlyonline" :popper-class="window.navigator.onLine?'popper-tooltip popper-only-online':'popper-tooltip'">
                         <div slot="content">
                             桌面源是指通过绑定到壁纸层的窗口的上层容器, <br/>它为桌面的定制化提供了非常灵活的设计和想象.<br/>
                             通常情况下, 桌面源由开发者指定, 用户无法进行<br/>修改. 但我们为您提供了一个超桌示例, 它的桌面<br/>源

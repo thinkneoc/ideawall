@@ -33,7 +33,7 @@ let appVar = {
     _icon: path.join(__dirname, relative + 'static/' + (os.platform() === 'darwin'?'logo/black-min@3x.png':'logo/blue-min-300_2@2x.png')),
     _lock: false,
     _guide: false,
-    _sqllog: true,
+    _sqllog: false && config.get("debug"),
     _dbath: workspace + "/data/iw.db",//本地数据库
     _apath: {
         dir: {

@@ -35,6 +35,7 @@ var vm = new Vue({
                 this.wallaperEmptyTip = '媒体组为空';
             }
         },
+
         getAnimate(syncPref) {
             var flag = 0;
             for (var x in syncPref) {
@@ -60,6 +61,7 @@ var vm = new Vue({
             }
         },
         setWallpaper(cancel) {
+            this.showEmptyTip(false);
             var that = this;
             console.debug(cancel);
             //1.数据预备
