@@ -61,9 +61,9 @@
       "perMachine": false,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "installerIcon": "static/icon/blue-pretty.ico",
-      "uninstallerIcon": "static/icon/blue-pretty.ico",
-      "installerHeaderIcon": "static/icon/blue-pretty.ico"
+      "installerIcon": "static/icon/ideawall.ico",
+      "uninstallerIcon": "static/icon/ideawall.ico",
+      "installerHeaderIcon": "static/icon/ideawall.ico"
     },
     "linux": {
       "target": [
@@ -71,11 +71,11 @@
         "appImage",
         "deb"
       ],
-      "icon": "static/icon/blue-pretty.ico"
+      "icon": "static/icon/ideawall.ico"
     },
     "win": {
       "target": "nsis",
-      "icon": "static/icon/blue-pretty.ico"
+      "icon": "static/icon/ideawall.ico"
     },
     "dmg": {
       "contents": [
@@ -93,7 +93,7 @@
       ]
     },
     "mac": {
-      "icon": "static/icon/blue-pretty.icns"
+      "icon": "static/icon/ideawall.icns"
     },
     "publish": [
       {
