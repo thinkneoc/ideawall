@@ -691,6 +691,7 @@ template {
 .el-upload-list__item .el-icon-upload-success{
     color: #67C23A;
     font-size: 15px;
+    line-height: 1.5;
 }
 
 .el-upload-list__item .el-icon-close{
@@ -701,4 +702,5 @@ template {
 .zxx-error { 
     color: #F56C6C !important;
     font-size: 15px;
+    line-height: 1.5;
 }

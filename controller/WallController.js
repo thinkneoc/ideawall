@@ -13,13 +13,14 @@ var vm = new Vue({
         return {
             lock: proxy.lock,
             wallpaperLoading: false,
-            wallpaperEmpty: false,
-            wallaperEmptyTip: '媒体组为空',
+            wallpaperTipHandler: false,
+            wallpaperTipShow: false,
+            wallaperTip: '媒体组为空',
             netstatus: (navigator.onLine ? 'online' : 'offline'),
-            displayId: T.p("displayId"),//当前窗体所在设备id
+            displayId: T.p("displayId"), //当前窗体所在设备id
             display: {},
-            syncPref: [],//需要进行同步的偏好配置
-            desk: {},//配置的桌面信息
+            syncPref: [], //需要进行同步的偏好配置
+            desk: {}, //配置的桌面信息
             animate: {
                 in: '',
                 out: '',
@@ -27,27 +28,28 @@ var vm = new Vue({
         };
     },
     methods: {
-        showEmptyTip(bol, tip) {
-            this.wallpaperEmpty = bol;
-            if (tip) {
-                this.wallaperEmptyTip = tip;
-            } else {
-                this.wallaperEmptyTip = '媒体组为空';
+        showTip(bol, tip) {
+            this.wallpaperTipShow = bol;
+            if (bol) {
+                if (tip) {
+                    this.wallaperTip = tip;
+                } else {
+                    this.wallaperTip = '媒体组为空';
+                }
             }
         },
-
         getAnimate(syncPref) {
             var flag = 0;
             for (var x in syncPref) {
                 var zxx = syncPref[x];
-                if (zxx.key == 'deskAnimationOn') {//入场动画, 入场动画其实不归这里管, 但还是一并处理一下.
+                if (zxx.key == 'deskAnimationOn') { //入场动画, 入场动画其实不归这里管, 但还是一并处理一下.
                     flag += 1;
                     var val = JSON.parse(zxx.value).val;
                     if (val === 'random') {
                         val = animation.getAnimateIn();
                     }
                     this.animate.in = val;
-                } else if (zxx.key == 'deskAnimationOut') {//离场动画
+                } else if (zxx.key == 'deskAnimationOut') { //离场动画
                     flag += 1;
                     var val = JSON.parse(zxx.value).val;
                     if (val === 'random') {
@@ -61,8 +63,9 @@ var vm = new Vue({
             }
         },
         setWallpaper(cancel) {
-            this.showEmptyTip(false);
             var that = this;
+            that.wallpaperTipHandler = false;
+            that.showTip(false);
             console.debug(cancel);
             //1.数据预备
             var display = deviceDeskModel.getDisplayById(that.displayId);
@@ -77,7 +80,7 @@ var vm = new Vue({
             var wallFrame = $('.iframe_wall');
             wallFrame.removeClass().addClass('iframe_wall');
             $('html').attr('display-id', that.displayId)
-            if (cancel || !desk || desk == undefined || !display) {//没有配置桌面
+            if (cancel || !desk || desk == undefined || !display) { //没有配置桌面
                 wallFrame.addClass('animated ' + that.animate.out).fadeOut(500, function () {
                     wallFrame.removeAttr('src');
                 });
@@ -98,12 +101,12 @@ var vm = new Vue({
             console.debug(that.syncPref);
 
             //3.桌面配置过滤
-            if (that.desk && desk.id + '' == that.desk.id + '') {//桌面没变
-                if (desk.source_type == that.desk.source_type && desk.source_val == that.desk.source_val) {//桌面源没变
+            if (that.desk && desk.id + '' == that.desk.id + '') { //桌面没变
+                if (desk.source_type == that.desk.source_type && desk.source_val == that.desk.source_val) { //桌面源没变
                     //如果源没有发生变动, 就不主动刷新. => 可能是媒体发生了改变
                     proxy.ipc.send('ipc_repeat', 'ipc_wall_update', desk, display, syncPref);
+                    that.wallpaperTipHandler = true;
                     that.desk = desk;
-                    that.showEmptyTip((that.desk.type !== 'page' && (!that.desk.medias || that.desk.medias.length <= 0)));
                     return;
                 }
             }
@@ -116,7 +119,8 @@ var vm = new Vue({
                 console.debug(link);
                 if (link && link != null) {
                     that.wallpaperLoading = true;
-                    link = (desk.type === 'page' ? './wall/Page.html' : link);//超桌面指定一个默认中继器.
+                    that.wallpaperTipShow = false;
+                    link = (desk.type === 'page' ? './wall/Page.html' : link); //超桌面指定一个默认中继器.
                     var src = proxy.link(link);
                     if (desk) {
                         clearTimeout(amIndex);
@@ -127,7 +131,7 @@ var vm = new Vue({
                                     $(this).removeClass().addClass('iframe_wall').show();
                                     that.wallpaperLoading = false;
                                     proxy.ipc.send('ipc_repeat', 'ipc_wall_update', desk, display, syncPref);
-                                    that.showEmptyTip((desk.type !== 'page' && (!desk.medias || desk.medias.length <= 0)));
+                                    that.wallpaperTipHandler = true;
                                 }, 100);
                             });
                         });
@@ -137,7 +141,7 @@ var vm = new Vue({
                             $(this).show();
                             that.wallpaperLoading = false;
                             proxy.ipc.send('ipc_repeat', 'ipc_wall_update', desk, display, syncPref);
-                            that.showEmptyTip((desk.type !== 'page' && (!desk.medias || desk.medias.length <= 0)));
+                            that.wallpaperTipHandler = true;
                         });
                     }
                 } else {
@@ -153,11 +157,11 @@ var vm = new Vue({
                     //这里需要处理一下离场动画效果
                     wallFrame.addClass('animated ' + this.animate.out).stop(true).fadeOut(500, function () {
                         wallFrame.hide();
-                        wallFrame.css('visibility', 'hidden');//why? 因为 show 和 hide 会被接下来的动作逻辑给干掉...
+                        wallFrame.css('visibility', 'hidden'); //why? 因为 show 和 hide 会被接下来的动作逻辑给干掉...
                     });
                 } else {
-                    if(wallFrame.is(':hidden')){
-                        wallFrame.show();//记住重新 show 是会激活入场动画的.
+                    if (wallFrame.is(':hidden')) {
+                        wallFrame.show(); //记住重新 show 是会激活入场动画的.
                         wallFrame.css('visibility', 'visible');
                     }
                 }
@@ -173,8 +177,7 @@ var vm = new Vue({
             }
         }
     },
-    created: function () {
-    },
+    created: function () {},
     mounted() {
         var that = this;
         //监听初始化数据信息
@@ -194,6 +197,9 @@ var vm = new Vue({
             proxy.appVar._lock = swicth;
             proxy.refreshAppVar();
             that.lock = swicth;
+        });
+        proxy.ipc.on('ipc_wall_showtip', function (event, bol, txt) {
+            that.showTip(bol, txt);
         });
     }
 });

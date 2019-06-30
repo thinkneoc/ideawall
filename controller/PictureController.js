@@ -64,7 +64,7 @@ var vm = new Vue({
         }
     },
     methods: {
-        calcData() {
+        calcData(isf) {
             this.carousel.data = [];
             for (var x in this.desk.medias) {
                 var zxx = this.desk.medias[x].filepath;
@@ -72,9 +72,7 @@ var vm = new Vue({
                     this.carousel.data.push('<img class="picture_carousel" src="' + zxx + '" style="width:100%;height:100%;"/>');
                 }
             }
-            if (this.carousel.data.length <= 0) {
-                top.vm.showEmptyTip(true);
-            } else if (this.carousel.data.length <= 1) {//如果只有一张图片, 就不自动切换
+            if (this.carousel.data.length === 1) {//如果只有一张图片, 就不自动切换
                 this.carousel.autoplay = false;
             } else if (this.params.sx === '-') {
                 return this.carousel.data.reverse();
@@ -106,7 +104,7 @@ var vm = new Vue({
         },
     },
     created: function () {
-        this.calcData();
+        this.calcData(true);
     },
     mounted() {
         var that = this;
@@ -132,6 +130,11 @@ var vm = new Vue({
                 }
             }
             if (that.desk.medias.toString() != tmpDesk.medias.toString()) {
+                if (!that.desk.medias || that.desk.medias.length <= 0) {
+                    proxy.ipc.send('ipc_repeat', 'ipc_wall_showtip', true, '媒体组为空');
+                } else {
+                    proxy.ipc.send('ipc_repeat', 'ipc_wall_showtip', false);
+                }
                 that.calcData();
             }
             that.calcParams();

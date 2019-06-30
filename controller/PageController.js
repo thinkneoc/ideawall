@@ -80,7 +80,7 @@ var vm = new Vue({
         },
     },
     created: function () {
-        this.calcData();
+        this.calcData(true);
     },
     mounted() {
         var that = this;
@@ -98,6 +98,7 @@ var vm = new Vue({
             } else {
                 console.debug('超桌面接收到 ipc 启动指令');
             }
+            proxy.ipc.send('ipc_repeat', 'ipc_wall_showtip', false);
             that.calcData();
             that.calcParams();
         });

@@ -57,7 +57,7 @@ var vm = new Vue({
         }
     },
     methods: {
-        init() {
+        initial(isf) {
             var that = this;
             if (that.desk.medias && that.desk.medias.length > 0) {
                 that.videos = [];
@@ -78,9 +78,7 @@ var vm = new Vue({
                         document.getElementById('app').appendChild(video);
                     }
                 }
-                if (that.videos.length <= 0) {
-                    top.vm.showEmptyTip(true);
-                } else {
+                if (that.videos.length > 0) {
                     $('#player-video-' + that.params.index).show();
                     that.videos[that.params.index].play();
                 }
@@ -147,7 +145,7 @@ var vm = new Vue({
         },
     },
     created: function () {
-        this.init();
+        this.initial(true);
     },
     mounted() {
         var that = this;
@@ -162,7 +160,16 @@ var vm = new Vue({
             that.display = dp;
             that.dealWithPrefs(prefs);
             if (that.desk.medias.toString() != tmpDesk.medias.toString()) {
-                that.init();
+                if (!that.desk.medias || that.desk.medias.length <= 0) {
+                    proxy.ipc.send('ipc_repeat', 'ipc_wall_showtip', true, '媒体组为空');
+                } else {
+                    proxy.ipc.send('ipc_repeat', 'ipc_wall_showtip', false);
+                }
+                try{
+                that.initial();
+                }catch(e){
+                    //... 此处try, 是无奈之举. 快速切换桌面配置的时候, 会报错, 导致异常...
+                }
             }
             that.calcParams();
             if (dp && dp.api_pause == 2) {

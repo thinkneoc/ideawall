@@ -19,10 +19,10 @@
             <div>{{proxy.appVar._appname}}</div>
         </div>
     </div>
-    <div class="wallpaper-empty" v-show="wallpaperEmpty">
+    <div class="wallpaper-empty" v-show="wallpaperTipShow" v-if="!wallpaperLoading && wallpaperTipHandler">
         <div class="wallpaper-empty-panel">
             <img src="../../assets/images/kong.png" alt="">
-            <div>{{wallaperEmptyTip}}</div>
+            <div>{{wallaperTip}}</div>
         </div>
     </div>
     <iframe id="iframe_desktop" class="iframe_wall" name="iframe_desktop" width="100%"
