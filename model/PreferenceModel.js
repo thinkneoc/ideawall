@@ -99,7 +99,7 @@ let defaults = [
         description: '',
         sort: 210,
         reboot: 1,
-        sync: 1,
+        sync: 2,
         explicit: 2,
         value: {
             val: 'random',//当前数值
@@ -114,7 +114,7 @@ let defaults = [
         description: '',
         sort: 220,
         reboot: 1,
-        sync: 1,
+        sync: 2,
         explicit: 2,
         value: {
             val: 'random',//当前数值

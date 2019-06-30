@@ -38,14 +38,27 @@ var vm = new Vue({
                 wholeAudioVolumn: {//全局音量
                     value: 1.0,
                     bindkey: 'val',
+                    change: function(_this, _pref, ov, nv){
+                        _pref.value = nv;
+                    }
                 },
-                deskAnimationOn: {//入场
+                deskAnimationOn: { //入场
                     value: '',
                     bindkey: 'val',
+                    change: function (_this, _pref, ov, nv) {
+                        if (ov == nv) return false;
+                        _pref.value = nv;
+                        _this.animation.in = (nv == 'random') ? animation.getAnimateIn() : _pref.value;
+                    }
                 },
-                deskAnimationOut: {//出场动画
+                deskAnimationOut: { //出场动画
                     value: '',
                     bindkey: 'val',
+                    change: function (_this, _pref, ov, nv) {
+                        if (ov == nv) return false;
+                        _pref.value = nv;
+                        _this.animation.ou = (nv == 'random') ? animation.getAnimateOut() : _pref.value;
+                    }
                 },
             }
         }
@@ -77,22 +90,6 @@ var vm = new Vue({
                 console.debug(that.params);
             }
         },
-        //偏好配置支撑
-        supportPrefs() {
-            //...
-            if(this.prefs_supports.deskAnimationOn.value != this.animation.in && this.animation.in == ''){
-                if (this.prefs_supports.deskAnimationOn.value == 'random') {
-                    this.prefs_supports.deskAnimationOn.value = animation.getAnimateIn();
-                }
-                this.animation.in = this.prefs_supports.deskAnimationOn.value;
-            }
-            if(this.prefs_supports.deskAnimationOut.value != this.animation.in && this.animation.out == '') {
-                if (this.prefs_supports.deskAnimationOut.value == 'random') {
-                    this.prefs_supports.deskAnimationOut.value = animation.getAnimateOut();
-                }
-                this.animation.out = this.prefs_supports.deskAnimationOut.value;
-            }
-        },
         //处理全局偏好配置项
         dealWithPrefs(prefs) {
             this.prefs = prefs;
@@ -102,11 +99,10 @@ var vm = new Vue({
                 var key = zxx.key;
                 if (this.prefs_supports.hasOwnProperty(key)) {//本地接收处有该配置项
                     if (values.hasOwnProperty(this.prefs_supports[key].bindkey)) {//配置项中有需要绑定的 key.
-                        this.prefs_supports[key].value = values[this.prefs_supports[key].bindkey];
+                        this.prefs_supports[key].change(this,  this.prefs_supports[key],  this.prefs_supports[key].value, values[this.prefs_supports[key].bindkey]);
                     }
                 }
             }
-            this.supportPrefs();
         },
     },
     created: function () {
