@@ -24,8 +24,6 @@ function init(appVar) {
 function buildDockMenu(appVar) {
     // 注册应用全局菜单
     var template = [];
-    template.push({label: 'ideawall - 创意者桌面', type: 'normal', enabled: false});
-    template.push({type: 'separator'});
     template.push({
         label: '控制面板',
         type: 'normal',
@@ -35,98 +33,6 @@ function buildDockMenu(appVar) {
         },
     });
     template.push({type: 'separator'});
-
-    try {
-        var displays = Electron.screen.getAllDisplays();
-        const deviceDeskModel = require('../../model/DeviceDeskModel')();
-        for (let x in displays) {
-            let title = '';
-            if (x == 0) {
-                title = "主屏幕";
-            } else {
-                if (displays.length > 2) {
-                    title = '扩展屏幕 ' + x;
-                } else {
-                    title = "扩展屏幕";
-                }
-            }
-            let db_display = deviceDeskModel.getDisplayById(displays[x].id);
-            if (!db_display) {
-                template.push({
-                    label: title,
-                    submenu: [{
-                        label: '新增设备',
-                        type: 'normal',
-                        enabled: false
-                    }]
-                });
-                continue;
-            }
-            var dbd_desk = deviceDeskModel.getDesk(displays[x].id);
-            if (!dbd_desk) {
-                template.push({
-                    label: title,
-                    submenu: [{
-                        label: '未启用桌面',
-                        type: 'normal',
-                        enabled: false
-                    }]
-                });
-            } else {
-                let subMenu = [];
-                var ispause = db_display.api_pause == 2 ? '播放' : '暂停';
-                var ismuted = db_display.api_muted == 2 ? '打开声音' : '静音';
-                var ishide = db_display.api_hide == 2 ? '恢复显示' : '隐藏';
-                subMenu.push({
-                    label: ispause,
-                    type: 'normal',
-                    accelerator: 'CmdOrCtrl+Option+P',
-                    click: function () {
-                        deviceDeskModel.setApi(displays[x].id, 'pause', !(db_display.api_pause == 2));
-                        try {
-                            appVar._controlwindow.webContents.send('ipc_device_wall_api', 'pause', displays[x].id, !(db_display.api_pause == 2), true);
-                        } catch (e) {
-                            //...尽职
-                        }
-                    },
-                });
-                subMenu.push({
-                    label: ismuted,
-                    type: 'normal',
-                    accelerator: 'CmdOrCtrl+Option+M',
-                    click: function () {
-                        deviceDeskModel.setApi(displays[x].id, 'muted', !(db_display.api_muted == 2));
-                        try {
-                            appVar._controlwindow.webContents.send('ipc_device_wall_api', 'muted', displays[x].id, !(db_display.api_muted == 2), true);
-                        } catch (e) {
-                            //...尽职
-                        }
-                    },
-                });
-                subMenu.push({
-                    label: ishide,
-                    type: 'normal',
-                    accelerator: 'CmdOrCtrl+Option+H',
-                    click: function () {
-                        deviceDeskModel.setApi(displays[x].id, 'hide', !(db_display.api_hide == 2));
-                        try {
-                            appVar._controlwindow.webContents.send('ipc_device_wall_api', 'hide', displays[x].id, !(db_display.api_hide == 2), true);
-                        } catch (e) {
-                            //...尽职
-                        }
-                    },
-                });
-                template.push({
-                    label: title,
-                    submenu: subMenu
-                });
-            }
-        }
-        template.push({type: 'separator'});
-    } catch (e) {
-        //... screen 模块需要在 app.onReady 之后才能调用.
-        console.error(e);
-    }
     template.push({
         label: '偏好设置',
         type: 'normal',
@@ -143,34 +49,10 @@ function buildDockMenu(appVar) {
         },
     });
     template.push({
-        label: '访问 ideawall 官网',
+        label: '资源社区',
         type: 'normal',
         click: function () {
-            Shell.openExternal(appVar._siteurl);
-        },
-    });
-    template.push({
-        label: '反馈与支持',
-        type: 'normal',
-        accelerator: 'Shift+CmdOrCtrl+B',
-        click: function () {
-            helper.getControlWindow(true, {tab: 'feedback'});
-        },
-    });
-    template.push({
-        label: '关于 ideawall',
-        type: 'normal',
-        click: function () {
-            helper.getAboutWindow();
-        },
-    });
-    template.push({type: 'separator'});
-    template.push({
-        label: '退出 ideawall',
-        type: 'normal',
-        accelerator: 'CmdOrCtrl+Q',
-        click: function () {
-            helper.exit();
+            helper.getControlWindow(true, {tab: 'resbbs'});
         },
     });
     return Menu.buildFromTemplate(template);

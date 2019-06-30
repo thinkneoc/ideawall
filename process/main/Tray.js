@@ -185,6 +185,13 @@ function buildTrayMenu(appVar, share, shareConfig) {
         },
     });
     template.push({
+        label: '资源社区',
+        type: 'normal',
+        click: function () {
+            helper.getControlWindow(true, {tab: 'resbbs'});
+        },
+    });
+    template.push({
         label: '访问 ideawall 官网',
         type: 'normal',
         click: function () {
