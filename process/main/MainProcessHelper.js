@@ -57,6 +57,7 @@ function getControlWindow(isshow, paramJson) {
         controlWin.webContents.send('ipc_window_control_cgi', isshow, paramJson);
         setTimeout(() => {
             if (controlWin.isVisible()) {
+                controlWin.restore();
                 controlWin.moveTop();
             } else {
                 controlWin.show();
@@ -76,6 +77,7 @@ function getPreviewWindow(deskId, paramJson) {
         previewWin.webContents.send('ipc_window_preview_cgi', deskId, paramJson);
         setTimeout(() => {
             if (previewWin.isVisible()) {
+                previewWin.restore();
                 previewWin.moveTop();
             } else {
                 previewWin.show();
@@ -96,6 +98,7 @@ function getDeviceInfoWindow(displayId, paramJson) {
             let xy = deviceInfoWindow.calcPosition();
             deviceInfoWin.setPosition(xy.x, xy.y);
             if (deviceInfoWin.isVisible()) {
+                deviceInfoWin.restore();
                 deviceInfoWin.moveTop();
             } else {
                 deviceInfoWin.show();
@@ -116,6 +119,7 @@ function getReadmeWindow(deskId, paramJson) {
             let xy = ReadmeWindow.calcPosition();
             ReadmeWin.setPosition(xy.x, xy.y);
             if (ReadmeWin.isVisible()) {
+                ReadmeWin.restore();
                 ReadmeWin.moveTop();
             } else {
                 ReadmeWin.show();
@@ -134,6 +138,7 @@ function getAboutWindow(paramJson) {
         AboutWin.webContents.send('ipc_window_about_cgi', paramJson);
         setTimeout(() => {
             if (AboutWin.isVisible()) {
+                AboutWin.restore();
                 AboutWin.moveTop();
             } else {
                 AboutWin.show();
@@ -154,6 +159,7 @@ function getJsonEditorWindow(json) {
             let xy = JsonEditorWindow.calcPosition();
             JsonEditorWin.setPosition(xy.x, xy.y);
             if (JsonEditorWin.isVisible()) {
+                JsonEditorWin.restore();
                 JsonEditorWin.moveTop();
             } else {
                 JsonEditorWin.show();

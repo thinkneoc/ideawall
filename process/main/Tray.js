@@ -50,7 +50,9 @@ function init(appVar) {
 
     // });
     appTray.on('right-click', () => {//mac/win
-        if (appVar._platform !== 'darwin') {
+        if (appVar._platform === 'darwin') {
+            
+        }else{
             appTray.popUpContextMenu(buildTrayMenu(appVar, share, shareConfig));
         }
     });
