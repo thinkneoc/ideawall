@@ -22,6 +22,7 @@
     "dist:w64": "electron-builder --win --x64",
     "dist:mac": "export CSC_IDENTITY_AUTO_DISCOVERY=false && electron-builder --mac --x64",
     "rebuild": "cnpm rebuild -f --runtime=electron --target=5.0.4 --disturl=https://npm.taobao.org/mirrors/atom-shell --abi=72",
+    "clean": "yarn autoclean -I && yarn autoclean -F",
     "mail": "node resolver/MailResolver.js",
     "archive": "node resolver/ArchiverResolver.js",
     "uuid": "node resolver/UUIDResolver.js --serial --v1",

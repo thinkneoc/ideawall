@@ -1,6 +1,5 @@
 const Electron = require('electron');
 const App = Electron.app; // 核心应用承载模块
-const Tray = Electron.Tray; // 系统托盘模块
 const Menu = Electron.Menu; // 菜单模块
 const MenuItem = Electron.MenuItem; // 菜单项模块
 const Shell = Electron.shell;
@@ -15,55 +14,14 @@ const config = require('../../core/Config');//引入全局配置组件
 
 const helper = require('./MainProcessHelper');
 
-const relative = '../../';
-
-let appTray;
-
-
-/**
- * 设置系统托盘
- */
 function init(appVar) {
-    const share = require('../../third/Share')(appVar);
-    let shareConfig = {
-        url: appVar._siteurl,
-        source: 'ideawall - 创意者桌面',
-        title: 'ideawall - 创意者桌面. 重新定义桌面, 极致就是艺术.', // 标题，默认读取 document.title 或者 <meta name="title" content="share.js" />
-        description: '我给你推荐了一个超酷的动态桌面壁纸软件, 快来试试吧~~ ',
-        image: 'http://m.cdn.ideanote.16inet.com/blue-min-pretty.png', // 图片, 默认取网页中第一个img标签
-    };
-
-    appTray = new Tray(path.join(appVar._staticpath, 'logo/black-min@3x.png'));
-    appTray.setToolTip('ideawall - 创意者桌面');//设置鼠标指针在托盘图标上悬停时显示的文本
-    // appTray.setContextMenu(buildTrayMenu(appVar, share, shareConfig));//设置内容菜单, 这个的菜单一旦生成, 无法更改. 所以, 改用点击弹出上下文菜单的方式.
-    // appTray.setTitle('创意者桌面');//在 macOS 中，设置显示在状态栏中托盘图标旁边的标题 (支持ANSI色彩), 一般用于制作状态栏歌词
-    appTray.setPressedImage(path.join(appVar._staticpath, 'logo/white-min@3x.png'));//在 macOS 中，设置image作为托盘图标被按下时显示的图标
-    appTray.on('click', () => {//mac/win/linux
-        if (appVar._platform === 'darwin') {
-            appTray.popUpContextMenu(buildTrayMenu(appVar, share, shareConfig));
-        } else {
-            helper.getControlWindow(true);
-        }
-    });
-    // appTray.on('double-click', () => {//mac/win
-
-    // });
-    appTray.on('right-click', () => {//mac/win
-        if (appVar._platform !== 'darwin') {
-            appTray.popUpContextMenu(buildTrayMenu(appVar, share, shareConfig));
-        }
-    });
-    appTray.on('drop-files', () => {//mac
-
-    });
-    appTray.on('drop-text', () => {//mac
-
-    });
-
-    return appTray;
+    if (process.platform === 'darwin') {
+        const dockMenu = buildDockMenu(appVar);
+        App.dock.setMenu(dockMenu);
+    }
 }
 
-function buildTrayMenu(appVar, share, shareConfig) {
+function buildDockMenu(appVar) {
     // 注册应用全局菜单
     var template = [];
     template.push({label: 'ideawall - 创意者桌面', type: 'normal', enabled: false});
@@ -200,52 +158,6 @@ function buildTrayMenu(appVar, share, shareConfig) {
         },
     });
     template.push({
-        label: '分享',
-        submenu: [{
-            label: '分享给 QQ 好友',
-            click: function () {
-                Shell.openExternal(share.getLink('qq', shareConfig));
-            }
-        }, {
-            label: '分享到 QQ 空间',
-            click: function () {
-                Shell.openExternal(share.getLink('qzone', shareConfig));
-            }
-        }, {
-            label: '分享到 新浪微博',
-            click: function () {
-                Shell.openExternal(share.getLink('weibo', shareConfig));
-            }
-        }, {
-            label: '分享到 豆瓣',
-            click: function () {
-                Shell.openExternal(share.getLink('douban', shareConfig));
-            }
-        }, {
-            label: '分享到 Linkedin',
-            click: function () {
-                Shell.openExternal(share.getLink('linkedin', shareConfig));
-            }
-        }, {
-            type: 'separator'
-        }, {
-            label: '分享到 Facebook',
-            click: function () {
-                Shell.openExternal(share.getLink('facebook', shareConfig));
-            }
-        }, {
-            label: '分享到 Twitter',
-            click: function () {
-                Shell.openExternal(share.getLink('twitter', shareConfig));
-            }
-        }, {
-            label: '分享到 Google',
-            click: function () {
-                Shell.openExternal(share.getLink('google', shareConfig));
-            }
-        }]
-    });
-    template.push({
         label: '关于 ideawall',
         type: 'normal',
         click: function () {
@@ -263,6 +175,7 @@ function buildTrayMenu(appVar, share, shareConfig) {
     });
     return Menu.buildFromTemplate(template);
 }
+
 
 module.exports = {
     init

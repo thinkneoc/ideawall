@@ -107,15 +107,16 @@ function creat(isshow, paramJson) {
 
     // 当窗口将要关闭时触发
     xwindow.on('close', function (event) {
-        if (!appVar._lock) {
-            xwindow.hide();
-        }
-        event.preventDefault();//阻止关闭
+        // if (!global.appVar._destory) {
+        //     xwindow.hide();
+        //     event.preventDefault();//阻止关闭
+        // }
     });
 
     // 当窗口关闭时触发
     xwindow.on('closed', function (event) {
         logger.info("[Process][MainProcessHelper][_ControlWindow_.on._closed_]控制中心窗口关闭");
+        logger.info(event);
 
         //将全局xwindow置为null
         xwindow = null;

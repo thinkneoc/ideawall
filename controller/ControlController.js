@@ -30,7 +30,7 @@ var vm = new Vue({
                     title: '桌面商店',
                     icon: 'el-icon-goods',
                     link: './control/DeskStore.html',
-                    preload: true,
+                    preload: false,
                     supportBC: true,
                     needNet: true,
                     historyInit: 2,

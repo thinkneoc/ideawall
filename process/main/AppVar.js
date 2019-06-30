@@ -87,11 +87,7 @@ let appVar = {
     _version: App.getVersion(),//版本号
     _locale: App.getLocale(),//语言
     _debug: (config.get("debug")), //debug模式
-    _ready: {
-        _render: false,//渲染进程预处理工作完毕
-        _main: false,//主进程预处理工作完毕
-    }, //预备完毕[全部初始化工作, 包括渲染进程的渲染工作.]
-    _login: false, //是否需要重新登录
+    _destory: false,//同于标识是否将要销毁.
     _previewId: '',//当前正在预览的桌面 id
     _previewwindow: {},//预览窗体
     _controlwindow: {},//控制面板窗体
@@ -104,6 +100,12 @@ let appVar = {
     _primarydisplay: {},//主屏幕设备
     _displays: [],//这个是初始化会进行处理的设备集合.
     _autoLauncher: {},
+
+    _ready: {
+        _render: false,//渲染进程预处理工作完毕
+        _main: false,//主进程预处理工作完毕
+    }, //预备完毕[全部初始化工作, 包括渲染进程的渲染工作.]
+    _login: false, //是否需要重新登录
 };
 global.appVar = appVar;
 global.buffer = Buffer;

@@ -19,6 +19,7 @@ if (!gotTheLock) {
     const helper = require('./process/main/MainProcessHelper');
     const dialog = require('./process/main/Dialog');
     const tray = require('./process/main/Tray');
+    const dock = require('./process/main/Dock');
     const AppVar = require('./process/main/AppVar');
     AppVar.checkAppWorkSpace(); //工作命名空间构建
     let appVar = AppVar.getAppVar(),
@@ -37,6 +38,7 @@ if (!gotTheLock) {
         if (!appTray) {
             appTray = tray.init(appVar);
         }
+        dock.init(appVar);
         helper.getWallWindow();
         helper.getControlWindow(pref_autoOpenControl || appVar._guide);//如果是首次启动, 自动打开
         // //如果当前没有窗口被激活，则创建窗口
@@ -78,6 +80,8 @@ if (!gotTheLock) {
          */
         appTray = tray.init(appVar);
 
+        dock.init(appVar);
+
         /**
          * 启动自动更新任务
          */
@@ -90,25 +94,21 @@ if (!gotTheLock) {
 
     // 当所有窗口关闭时关闭应用程序
     app.on('window-all-closed', function () {
+        helper.exit(true);
+        app.quit();
         if (process.platform !== 'darwin') { //如果是非 mac 系统, 直接退出
-            logger.info("系统即将关闭");
-            app.quit();
+
         } //如果是 mac 系统, 关闭所有窗口就好, 等待重新唤醒.
     });
 
     //当应用程序准备退出时执行动作
+    //在 Windows 系统中，如果应用程序因系统关机/重启或用户注销而关闭，那么这个事件不会被触发。
     app.on('will-quit', () => {
-        logger.info("程序即将退出");
-        app.releaseSingleInstanceLock();//释放所有的单例锁
-        appTray.destroy(); //干掉托盘
-        appTray = null;
     });
-    //当 gpu 进程崩溃或被杀时触发。
-    app.on('gpu-process-crashed', () => {
-        logger.info("程序即将退出");
-        app.releaseSingleInstanceLock();//释放所有的单例锁
-        appTray.destroy(); //干掉托盘
-        appTray = null;
+
+    //在应用程序退出时发出
+    //在 Windows 系统中，如果应用程序因系统关机/重启或用户注销而关闭，那么这个事件不会被触发。
+    app.on('quit', () => {
     });
 
     //当应用程序激活时，通常在macOS下, win下基本见不到.
@@ -116,13 +116,9 @@ if (!gotTheLock) {
         if (!appTray) {
             appTray = tray.init(appVar);
         }
+        dock.init(appVar);
         helper.getWallWindow();
         helper.getControlWindow(pref_autoOpenControl || appVar._guide);
-        // //如果当前没有窗口被激活，则创建窗口
-        // var res = helper.getWallWindow();
-        // if (res.result || pref_autoOpenControl) { //如果壁纸窗口已经存在, 就打开控制面板窗口.
-        //     helper.getControlWindow(true);
-        // }
     });
 }
 

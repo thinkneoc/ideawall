@@ -16,7 +16,7 @@ const relative = '../../../';
 let xwindow;
 
 function creat(json) {
-    logger.info("[Process][MainProcessHelper][JsonEditorWindow]初始化桌面预览窗口");
+    logger.info("[Process][MainProcessHelper][JsonEditorWindow]初始化桌面JSON 编辑器窗口");
     let xy = calcPosition();
     // 创建浏览器窗口。
     xwindow = new Electron.BrowserWindow({
@@ -85,7 +85,7 @@ function creat(json) {
 
     // 当窗口关闭时触发
     xwindow.on('closed', function () {
-        logger.info("[Process][MainProcessHelper][_JsonEditorWindow_.on._closed_]桌面预览窗口关闭");
+        logger.info("[Process][MainProcessHelper][_JsonEditorWindow_.on._closed_]JSON 编辑器窗口关闭");
 
         //将全局xwindow置为null
         xwindow = null;

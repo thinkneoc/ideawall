@@ -21,7 +21,11 @@ var vm = new Vue({
     methods: {
         //发送通信消息
         postMessage(data) {//data 结构为 指令+数据
-            $('iframe#iframe_store')[0].contentWindow.postMessage(data, this.origin);
+            try {
+                $('iframe#iframe_store')[0].contentWindow.postMessage(data, this.origin);
+            } catch (e) {
+                //...
+            }
         },
         //接收通信消息
         getMessage(rs) {
@@ -110,16 +114,16 @@ var vm = new Vue({
         });
         proxy.ipc.on('ipc_render_control_deskstore_refresh', (event, cmd) => {
             that.loading = true;
-            xiframe.attr('src', this.nowURL);
+            $$.dealIframe(xiframe, this.nowURL);
         });
         proxy.ipc.on('ipc_render_control_deskstore_home', (event, cmd) => {
             that.loading = true;
-            xiframe.attr('src', proxy.appVar._storeurl);
+            $$.dealIframe(xiframe, proxy.appVar._storeurl);
         });
         proxy.ipc.on('ipc_render_control_deskstore_changeurl', (event, url) => {
             that.loading = true;
             this.nowURL = url;
-            xiframe.attr('src', url);
+            $$.dealIframe(xiframe, url);
         });
         top.vm.netLoading('deskstore', () => {
             this.loading = true;

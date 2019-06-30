@@ -170,7 +170,7 @@ function getJsonEditorWindow(json) {
  * 关闭所有的窗口
  */
 function closeAllWindows() {
-    controlWin.setClosable(true);
+    logger.info("关闭所有窗口");
     var allWindows = BrowserWindow.getAllWindows();
     allWindows.forEach((win) => {
         win.close();
@@ -182,6 +182,19 @@ function closeAllWindows() {
     previewWin = null;
     controlWin = null;
     wallWins = [];
+}
+
+/**
+ * 真实退出
+ */
+function exit(nocloseAllw) {
+    logger.info("程序即将退出");
+    controlWin.setClosable(true);
+    AppVar.setAppVar({_destory: true});
+    !nocloseAllw ? closeAllWindows() : '';
+    App.releaseSingleInstanceLock();//释放所有的单例锁
+    appTray.destroy(); //干掉托盘
+    appTray = null;
 }
 
 const ipcMain = require('electron').ipcMain;//ipcMain进程对象
@@ -256,4 +269,5 @@ module.exports = {
     getAboutWindow,
     getJsonEditorWindow,
     closeAllWindows,
+    exit,
 };
