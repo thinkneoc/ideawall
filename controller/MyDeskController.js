@@ -22,6 +22,7 @@ var vm = new Vue({
                 info: true,
             },
             firstTime: true,
+            deviceAni: 'animated fadeInLeftBig',
             cardStyle: {
                 width: 200,
                 height: 142,
@@ -225,6 +226,9 @@ var vm = new Vue({
             var that = this;
             var pref_deviceSnapscreenTTL = preferenceModel.getByKey("deviceSnapscreenTTL");
             deviceDeskModel.initial(this.cardStyle, (result, rIds, first) => {
+                if(!that.firstTime){
+                    that.deviceAni = 'animated flipInY';
+                }
                 that.displays = result;
                 that.displayIds = rIds;
                 console.debug(that.displayIds);
@@ -244,9 +248,8 @@ var vm = new Vue({
                     setTimeout(() => {
                         that.loadingDevices = false;
                         that.loadingControl = false;
-                        that.firstTime = false;
                         top.vm.loadingControl = false;
-                    }, 2000);
+                    }, 1500);
                 }
             }, pref_deviceSnapscreenTTL, true, onlyone);
         }
@@ -256,15 +259,16 @@ var vm = new Vue({
         this.tag = this.tags[0];
         this.dealWithLdsData(localDeskModel.initial().selectAll());
         this.snapscreen(true);
-        proxy.appVar._controlwindow.on('focus', (e) => {
-            $('.zxx-device').remove();
+        proxy.appVar._controlwindow.on('show', (e) => {
             that.loadingDevices = true;
             that.snapscreen();
         });
-        proxy.appVar._controlwindow.on('blur', (e) => {
+        proxy.appVar._controlwindow.on('hide', (e) => {
+            that.firstTime = false;
             deviceDeskModel.closeSnapscreen();
         });
         proxy.ipc.on('ipc_render_snapscreen_stop', function (event) {
+            that.firstTime = false;
             deviceDeskModel.closeSnapscreen();
         });
     },

@@ -12,14 +12,14 @@
 </head>
 
 <body style="overflow:hidden;">
-<div id="app" v-cloak :style="proxy.appVar._platform !== 'darwin'?'background:#fff;':''">
+<div id="app" v-cloak :style="proxy.appVar._platform !== 'darwin'?'background:rgb(244, 244, 244);':''">
     <div class="zxx-about-container">
         <div class="zxx-about-left">
             <img src="../../static/logo/blue-min-pretty_2.png" alt="">
         </div>
         <div class="zxx-about-right">
             <h1 class="topic">ideawall - 创意者桌面</h1>
-            <p class="version">Version 1.0.0 (Build 2019.06.22)</p>
+            <p class="version">Version {{proxy.appVar._version_show</p>
 
             <p>Privacy Policy: {{proxy.appVar._siteurl}}privacy</p>
             <p>Terms of Use: {{proxy.appVar._siteurl}}terms</p>

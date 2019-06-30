@@ -1,6 +1,7 @@
 {
     "appname": "ideawall",
     "debug": true,
+    "publish": "2019.07.01",
     "database": {
         "encrypt": false
     },

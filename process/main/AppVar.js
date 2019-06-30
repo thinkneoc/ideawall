@@ -85,6 +85,7 @@ let appVar = {
     _platform: os.platform(), //可能的值: 'aix','darwin','freebsd','linux','openbsd','sunos','win32', 建议通过上面的判定系统类型. 得到的结果类似于process.platform
     _name: App.getName(),//应用名称
     _version: App.getVersion(),//版本号
+    _version_show:  App.getVersion() + '  (Build '+ config.get('publish') + ')',//用于展示的版本信息
     _locale: App.getLocale(),//语言
     _debug: (config.get("debug")), //debug模式
     _destory: false,//同于标识是否将要销毁.
