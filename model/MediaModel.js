@@ -48,6 +48,14 @@ function MediaModel(appVar) {
         return false;
     };
 
+    this.isExist = function(deskId, filename, filepath){
+        return this.dao.isExist(deskId, filename, filepath);
+    }
+
+    this.addsByDeskId = function(deskId, medias){
+        return  this.dao.addsByDeskId(deskId, medias);
+    };
+
     this.getsByDeskId = function (deskId) {
         return this.dao.getsByDeskId(deskId);
     };
@@ -58,8 +66,8 @@ function MediaModel(appVar) {
         this.syncUpdate();
     };
 
-    this.deleteByDeskId = function (deskId, filename, filepath) {
-        this.dao.deleteByDeskId(deskId, filename, filepath);
+    this.deleteByDeskId = function (deskId, mediaId) {
+        this.dao.deleteByDeskId(deskId, mediaId);
         this.syncUpdate();
     };
 

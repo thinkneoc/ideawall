@@ -1,85 +1,90 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../../../../assets/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../../../../assets/lib/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="../../../../assets/lib/element-ui/css/element.css">
     <link rel="stylesheet" href="../../../../assets/css/animate.css">
     <link rel="stylesheet" href="../../../../assets/css/ideawall.css">
     <link rel="stylesheet" href="../../../../assets/css/form.css">
 </head>
+
 <body>
-<div id="app" v-cloak v-loading="loading">
-    <div id="form-containter">
-        <el-carousel :height="carousel.height+'px'"
-                     :type="carousel.type"
-                     :autoplay="carousel.autoplay"
-                     :loop="carousel.loop"
-                     :trigger="carousel.trigger"
-                     :indicator-position="carousel.indicatorPosition"
-                     :initialIndex="carousel.initialIndex"
-                     :interval="carousel.interval"
-                     :arrow="carousel.arrow"
-                     class="animated fadeInUp">
-            <el-carousel-item v-for="(item, index) in carousel.data" :key="index" v-html="item">
-            </el-carousel-item>
-        </el-carousel>
-        <el-form label-position="top" label-width="80px" :model="ld" size="mini" class="animated fadeInDown">
-            <el-form-item label="" size="mini">
-                <span slot="label">
-                    媒体组
-                    <el-tooltip placement="top" data-zxx-map="teach" data-tooltip-limit="onlyonline" :popper-class="window.navigator.onLine?'popper-tooltip popper-only-online':'popper-tooltip'">
-                        <div slot="content">
-                            媒体组是将要被桌面项使用的多媒体文件源, 为<br/>不影响加载速度, 我们暂时只支持了本地资源.<br/>
-                            通常情况下, 没有配置媒体组的桌面在为设备启<br/>用后是不会有任何效果的.<br/><br/>
-                            你需要注意以下几点: <br/>
-                            1. 幻桌仅支持图片媒体传入; <br/>
-                            2. 视桌仅支持视频媒体传入; <br/>
-                            3. 超桌可以接受任何类型的媒体, 所以, 它不支持<br/>在上面的 banner 中预览, 但通常情况下, 超桌不<br/>会支持媒体组传入. <br/>
+    <div id="app" v-cloak v-loading="loading">
+        <div id="form-containter">
+            <el-carousel :height="carousel.height+'px'" :type="carousel.type" :autoplay="carousel.autoplay"
+                :loop="carousel.loop" :trigger="carousel.trigger" :indicator-position="carousel.indicatorPosition"
+                :initialIndex="carousel.initialIndex" :interval="carousel.interval" :arrow="carousel.arrow"
+                class="animated fadeInUp">
+                <el-carousel-item v-for="(item, index) in carousel.data" :key="index" v-html="item">
+                </el-carousel-item>
+            </el-carousel>
+            <el-form label-position="top" label-width="80px" :model="ld" size="mini" class="animated fadeInDown">
+                <el-form-item label="" size="mini">
+                    <span slot="label">
+                        媒体组
+                        <el-tooltip placement="top" data-zxx-map="teach" data-tooltip-limit="onlyonline"
+                            :popper-class="window.navigator.onLine?'popper-tooltip popper-only-online':'popper-tooltip'">
+                            <div slot="content">
+                                媒体组是将要被桌面项使用的多媒体文件源, 为<br />不影响加载速度, 我们暂时只支持了本地资源.<br />
+                                通常情况下, 没有配置媒体组的桌面在为设备启<br />用后是不会有任何效果的.<br /><br />
+                                你需要注意以下几点: <br />
+                                1. 幻桌仅支持图片媒体传入; <br />
+                                2. 视桌仅支持视频媒体传入; <br />
+                                3. 超桌可以接受任何类型的媒体, 所以, 它不支持<br />在上面的 banner 中预览, 但通常情况下, 超桌不<br />会支持媒体组传入. <br />
+                            </div>
+                            <el-button type="text" icon="el-icon-question"></el-button>
+                        </el-tooltip>
+                    </span>
+                    <el-button size="mini" class="ld-readme-btn" style="margin-bottom: 32px;margin-top:30px;"
+                        type="text" :disabled="true" v-if="ld.switch_media == 1">
+                        该{{localDeskModel.getDeskTypeName(ld.type).name}}暂不支持媒体组配置传入
+                    </el-button>
+                    <el-upload v-else class="upload-demo" drag multiple action="" :on-preview="handlePreview"
+                        :on-remove="handleRemove" :on-exceed="handleExceed" :on-change="handleChange"
+                        :file-list="mediaUpload.data" :accept="mediaUpload.accepts[ld.type]" :limit="mediaUpload.limit"
+                        :auto-upload="false" :show-file-list="false" :list-type="mediaUpload.listType">
+                        <i :class="'zxx-form-file-select ' + ((ld.type==='picture')?'el-icon-picture':(ld.type==='video'?'el-icon-video-camera-solid':(ld.type==='page'?'el-icon-s-marketing':'el-icon-s-release')))"></i>
+                        <div class="el-upload__text">
+                            拖拽{{((ld.type==='picture')?'图片':(ld.type==='video'?'视频':'媒体'))}}文件到此处，或<em>点击选择</em>
                         </div>
-                        <el-button type="text" icon="el-icon-question"></el-button>
-                    </el-tooltip>
-                </span>
-                <el-button size="mini" class="ld-readme-btn" style="margin-bottom: 32px;margin-top:30px;"
-                           type="text" :disabled="true"
-                           v-if="ld.switch_media == 1">
-                    该{{localDeskModel.getDeskTypeName(ld.type).name}}暂不支持媒体组配置传入
-                </el-button>
-                <el-upload
-                        v-else
-                        class="upload-demo"
-                        drag
-                        multiple
-                        action=""
-                        :on-preview="handlePreview"
-                        :on-remove="handleRemove"
-                        :on-exceed="handleExceed"
-                        :on-change="handleChange"
-                        :file-list="mediaUpload.data"
-                        :accept="mediaUpload.accepts[ld.type]"
-                        :limit="mediaUpload.limit"
-                        :auto-upload="false"
-                        :list-type="mediaUpload.listType">
-                    <i :class="'zxx-form-file-select ' + ((ld.type==='picture')?'el-icon-picture':(ld.type==='video'?'el-icon-video-camera-solid':(ld.type==='page'?'el-icon-s-marketing':'el-icon-s-release')))"></i>
-                    <div class="el-upload__text">拖拽{{((ld.type==='picture')?'图片':(ld.type==='video'?'视频':'媒体'))}}文件到此处，或<em>点击选择</em>
-                    </div>
-                    <div class="el-upload__tip" slot="tip" v-if="mediaUpload.data && mediaUpload.data.length > 0">
-                        <span style="float:left;padding-left: 1px;">
-                            共 {{mediaUpload.data.length}} 项
-                        </span>
-                        <a href="javascript:void(0)" @click="clearMedias"
-                           style="color: #606266;font-style: normal;text-decoration: none;padding-right: 1px;">
-                            <span>
-                                <i class="el-icon-delete"></i>
-                                清空
+                        <div class="el-upload__tip" slot="tip" v-if="ld.medias && ld.medias.length > 0">
+                            <span style="float:left;padding-left: 1px;">
+                                共 {{ld.medias.length}} 项
                             </span>
-                        </a>
+                            <a href="javascript:void(0)" @click="clearMedias"
+                                style="color: #606266;font-style: normal;text-decoration: none;padding-right: 1px;">
+                                <span>
+                                    <i class="el-icon-delete"></i>
+                                    清空
+                                </span>
+                            </a>
+                        </div>
+                    </el-upload>
+                    <div>
+                        <ul class="el-upload-list el-upload-list--text">
+                            <li tabindex="0" 
+                            class="el-upload-list__item is-success" 
+                            v-for="(item, index) in ld.medias"
+                            :title="mediaModel.isLocalMediaEffect(item.filepath)?'':'无法索引本地文件, 可能已移动或删除'">
+                                <a class="el-upload-list__item-name">
+                                    <i :class="((ld.type==='picture')?'el-icon-picture':(ld.type==='video'?'el-icon-video-camera-solid':(ld.type==='page'?'el-icon-document':'el-icon-s-release')))"></i>
+                                    <span :style="mediaModel.isLocalMediaEffect(item.filepath)?'':'text-decoration:line-through;'">
+                                        {{item.filename}}
+                                    </span>
+                                </a>
+                                <label class="el-upload-list__item-status-label">
+                                    <i :class="'el-icon-upload-success '+(mediaModel.isLocalMediaEffect(item.filepath)?'el-icon-circle-check':'zxx-error el-icon-warning-outline')"></i>
+                                </label>
+                                <i :onclick="'vm.delMedia(\''+item.id+'\')'" class="el-icon-close" :data-id="item.id"></i>
+                            </li>
+                        </ul>
                     </div>
-                </el-upload>
-            </el-form-item>
-        </el-form>
+                </el-form-item>
+            </el-form>
+        </div>
     </div>
-</div>
 </body>
 <script src="../../../../core/Proxy.js"></script>
 <script src="../../../../assets/js/jquery.min.js"></script>
@@ -88,4 +93,5 @@
 <script src="../../../../util/AvatarUtil.js"></script>
 <script src="../../../../controller/MediaConfigController.js"></script>
 <script src="../../../../assets/js/zxx.min.js"></script>
+
 </html>

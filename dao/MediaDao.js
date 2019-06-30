@@ -27,11 +27,35 @@ function MediaDao(model) {
     };
 
     /**
+     * 指定桌面的某媒体是否存在
+     */
+    this.isExist = function(deskId, filename, filepath){
+        return this._self.exist({
+            ld_id: deskId+'',
+            filename: filename,
+            filepath: filepath,
+        })
+    };
+
+    /**
+     * 新增媒体资源
+     */
+    this.addsByDeskId = function(deskId, medias){
+        return this._self.batchInsert(medias);
+    };
+
+    /**
      * 通过桌面 id 获取媒体组数据
      * @param ld_id
      */
     this.getsByDeskId = function (ld_id) {
-        return this._self.select({ld_id: ld_id + ''});
+        return this._self.execSelect("select * from "
+        + Model.tbname(model)
+        + " where "
+        + Model.fieldname(model, 'ld_id')
+        + " == " + ld_id + ''
+        + " order by " + Model.fieldname(model, 'date_add') 
+        + " desc");
     };
 
     /**
@@ -50,11 +74,10 @@ function MediaDao(model) {
     /**
      * 删除单个媒体数据
      * @param ld_id
-     * @param filename
      * @param filepath
      */
-    this.deleteByDeskId = function (ld_id, filename, filepath) {
-        return this._self.delete({ld_id: ld_id + '', filename: filename, filepath: filepath});
+    this.deleteByDeskId = function (ld_id, mediaId) {
+        return this._self.delete({ld_id: ld_id + '', id: mediaId+''});
     };
 
     /**

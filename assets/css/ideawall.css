@@ -687,3 +687,18 @@ template {
 .popper-only-online {
     visibility: hidden;
 }
+
+.el-upload-list__item .el-icon-upload-success{
+    color: #67C23A;
+    font-size: 15px;
+}
+
+.el-upload-list__item .el-icon-close{
+    font-size: 15px;
+    line-height: 14px;
+}
+
+.zxx-error { 
+    color: #F56C6C !important;
+    font-size: 15px;
+}
