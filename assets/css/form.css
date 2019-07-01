@@ -154,7 +154,7 @@ html, body, #app {
 }
 
 .zxx-apply-panel{
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: calc(100% - 20px);
@@ -180,7 +180,7 @@ html, body, #app {
 }
 
 .zxx-setting-panel-bg{
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: calc(100% - 20px);
@@ -194,7 +194,7 @@ html, body, #app {
 }
 
 .zxx-setting-panel{
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: calc(100% - 20px);

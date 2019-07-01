@@ -45,25 +45,41 @@ var vm = new Vue({
             redrawSign: false,
             showTitle: false,
             showSetting: false,
+            showEditTip: {},
         };
     },
     methods: {
         showTit() {
             var that = this;
-            this.showTitle = true;
-            setTimeout(() => {
-                // $('.showTitle').fadeOut(500, function () {
-                //     that.showTitle = false;
-                //     that.showSet();
-                // });
-            }, 3000);
-        },
-        showSet() {
-            if (!deviceDeskModel.primaryDisplayHasDesk(this.ld.id)) {
+            var stasdPref = preferenceModel.getByKey('dontshowTip_nowEdit');
+            stasdPref.value = JSON.parse(stasdPref.value);
+            this.showEditTip = stasdPref;
+            if (!this.showEditTip.value.val) {
+                this.showTitle = true;
+                if (!deviceDeskModel.primaryDisplayHasDesk(this.ld.id)) {
+                    setTimeout(() => {
+                        $('.showTitle').slideUp(500, function () {
+                            that.showTitle = false;
+                            that.showSet();
+                        });
+                    }, 3000);
+                } else {
+                    setTimeout(() => {
+                        $('.showTitle').slideUp(500, function () {
+                            that.showTitle = false;
+                        });
+                    }, 5000);
+                }
+            } else {
                 setTimeout(() => {
-                    this.showSetting = true;
+                    that.showSet();
                 }, 1000);
             }
+        },
+        showSet() {
+            setTimeout(() => {
+                this.showSetting = true;
+            }, 1000);
         },
         preview() {
             var link = localDeskModel.getIndexPath(this.ld);
@@ -74,11 +90,14 @@ var vm = new Vue({
             proxy.ipc.send('ipc_window_open', 'preview', this.ld.id, {link: encodeURI(encodeURI(link))});
         },
         setting() {
+            var that = this;
             top.vm.showLoadingMaster();
             deviceDeskModel.setsDesk([proxy.appVar._primarydisplay.id], this.ld.id);
             proxy.ipc.send('ipc_repeat', 'ipc_render_control_mydesk_update', this.ld.id, proxy.appVar._primarydisplay.id);
             setTimeout(() => {
-                this.showSetting = false;
+                $('.showSetting').slideUp(500, function () {
+                    that.showSetting = false;
+                });
             }, 1000);
             var stasdPref = preferenceModel.getByKey('dontshowTipAfter_useDesk');
             stasdPref.value = JSON.parse(stasdPref.value);
@@ -90,6 +109,10 @@ var vm = new Vue({
                     }
                 }, false, ['知道了', '不再提醒']);
             }
+        },
+        hideEditTip() {
+            this.showEditTip.value.val = true;
+            preferenceModel.updateById(this.showEditTip);
         },
         //构建走马灯
         buildCarousel(data, isqz) {

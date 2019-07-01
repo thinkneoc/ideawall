@@ -13,14 +13,19 @@
 <body>
     <div id="app" v-cloak v-loading="loading">
         <div class="showTitle zxx-setting-panel-bg animated fadeInDown" v-if="showTitle"></div>
-        <div class="zxx-setting-panel-bg animated fadeInDown" v-if="showSetting"></div>
+        <div class="showSetting zxx-setting-panel-bg animated fadeInDown" v-if="showSetting"></div>
         <div class="showTitle zxx-setting-panel animated fadeInDown" v-if="showTitle">
             <div class="zxx-setting-desc">
                 正在编辑 "{{ld.name}}"
             </div>
+            <div class="zxx-setting-btns">
+                <el-button size="mini" class="zxx-setting-btn" type="primary" @click="hideEditTip">
+                    不再提醒
+                </el-button>
+            </div>
             <div style="clear:both;"></div>
         </div>
-        <div class="zxx-setting-panel animated fadeInDown" v-if="showSetting">
+        <div class="showSetting zxx-setting-panel animated fadeInDown" v-if="showSetting">
             <div class="zxx-setting-desc">
                 预览或为主屏幕 "启用" TA?
             </div>

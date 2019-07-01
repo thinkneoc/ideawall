@@ -146,6 +146,17 @@ let defaults = [
     {
         type: 'implicit',
         formitem: '',
+        key: 'dontshowTip_nowEdit',
+        name: '不再提醒正在编辑的桌面提示',
+        description: '',
+        explicit: 1,
+        value: {
+            val: false,
+        },
+    },
+    {
+        type: 'implicit',
+        formitem: '',
         key: 'dontshowTipAfter_changePref',
         name: '偏好设置变更后不再提醒重启提示消息',
         description: '',
