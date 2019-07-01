@@ -256,6 +256,8 @@ function clearAppWorkSpace() {
     Fs.delDir(appVar._apath.dir.log);
 }
 
+
+
 /**
  * 清除标识文件以开始引导动画
  */

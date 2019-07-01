@@ -154,28 +154,31 @@ var vm = new Vue({
                         proxy.ipc.send('ipc_repeat', 'ipc_render_snapscreen_stop');
                         setTimeout(() => {
                             //2.关闭壁纸窗口
-                            $('.zxx-pre-repair-tip').css('color', '#F56C6C').text('正在銷毀桌面壁纸层...');
+                            $('.zxx-pre-repair-tip').css('color', '#F56C6C').text('正在销毁桌面壁纸层...');
                             for (var x in proxy.appVar._wallwindows) {
                                 var win = proxy.appVar._wallwindows[x].window;
                                 win.close();
                             }
                             setTimeout(() => {
-                                $('.zxx-pre-repair-tip').css('color', '#F56C6C').text('正在清空本地持久化数据和缓存...');
+                                $('.zxx-pre-repair-tip').css('color', '#F56C6C').text('正在清空本地日志和缓存...');
                                 setTimeout(() => {
-                                    //3.清空工作空间数据和缓存. [windows下被占用的话无法删除.]
-                                    preferenceModel.clearDatabase();//清空数据库
                                     proxy.ipc.send('ipc_clean');//清空缓存数据[日志等]
-                                    $('.zxx-pre-repair-tip').css('color', '#F56C6C').text('修复完毕, 最后还有几件小事, 请稍后...');
+                                    $('.zxx-pre-repair-tip').css('color', '#F56C6C').text('正在清空本地持久化用户数据...');
                                     setTimeout(() => {
-                                        // that.btnLoading.repair.bol = false;
-                                        proxy.ipc.send('ipc_lock', false);
-                                        $('.zxx-pre-repair-tip').css('color', '#F56C6C').text('正在请求重新启动 ideawall...');
-                                        that.reboot();
-                                        //重启之后, 控制面板就是解锁的, 不需要再进行处理.
-                                        return true;
+                                        //3.清空工作空间数据和缓存. [windows下被占用的话无法删除.]
+                                        preferenceModel.clearDatabase();//清空数据库
+                                        $('.zxx-pre-repair-tip').css('color', '#F56C6C').text('修复完毕, 最后还有几件小事, 请稍后...');
+                                        setTimeout(() => {
+                                            // that.btnLoading.repair.bol = false;
+                                            proxy.ipc.send('ipc_lock', false);
+                                            $('.zxx-pre-repair-tip').css('color', '#F56C6C').text('正在解锁控制面板并请求重新启动 ideawall...');
+                                            that.reboot();
+                                            //重启之后, 控制面板就是解锁的, 不需要再进行处理.
+                                            return true;
+                                        }, 4000);
                                     }, 4000);
-                                }, 4000);
-                            }, 3000);
+                                }, 3000);
+                            }, 4000);
                         }, 2000);
                     } else {
                         that.btnLoading.repair.bol = false;
