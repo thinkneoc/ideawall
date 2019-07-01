@@ -137,9 +137,10 @@ var vm = new Vue({
             top.vm.loadingTab = false;
             //把本地的桌面项索引发送过去, 方便判定处理.
             that.postMessage({
-                cmd: 'pready',
+                cmd: 'hello',
+                version: proxy.appVar._version,
                 data: localDeskModel.initial().selectAll(),
-            })
+            });
         });
     }
 });

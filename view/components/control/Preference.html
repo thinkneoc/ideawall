@@ -107,16 +107,15 @@
                 </el-alert>
                 <div :class="'animated '+ animation.preview"
                      style="width: 100%;text-align:center;z-index: 777;position: absolute;top: 100px;">
-                    <img src="../../../static/logo/blue-min-pretty_2.png" alt=""
-                         style="width: 150px;height:150px;">
+                    <img src="../../../assets/images/comp.png" alt=""
+                         style="width: 120px;height:120px;">
                 </div>
-                <el-form ref="form" :model="preferences" style="margin-top:210px;">
+                <el-form ref="form" :model="preferences" style="margin-top:180px;">
                     <el-form-item>
                         <span slot="label">桌面源入场动画</span>
                         <div class="zxx-show-animate-panel">
                             <el-radio-group v-model="animation.in" size="mini"
                                             @change="(nval)=>{vm.previewAnimate('in');vm.doSetPreference(false, 'deskAnimationOn', nval)}">
-                                <el-radio label="random" border style="margin-left:10px;">随机入场</el-radio>
                                 <el-radio label="random" border style="margin-left:10px;">随机入场</el-radio>
 
                                 <br/>

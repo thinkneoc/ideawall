@@ -57,6 +57,10 @@ var vm = new Vue({
         xiframe.load(function () {
             that.loading = false;
             top.vm.loadingTab = false;
+            that.postMessage({
+                cmd: 'hello',
+                version: proxy.appVar._version,
+            });
         });
     }
 });

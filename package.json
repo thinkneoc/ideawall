@@ -52,6 +52,7 @@
     "asarUnpack": [],
     "nsis": {
       "artifactName": "${name}_${version}_${os}${arch}.${ext}",
+      "uninstallDisplayName": "${name}_${version}_${os}${arch}.${ext}",
       "shortcutName": "ideawall",
       "allowElevation": true,
       "runAfterFinish": true,
@@ -63,9 +64,9 @@
       "perMachine": false,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "installerIcon": "static/icon/ideawall.ico",
-      "uninstallerIcon": "static/icon/ideawall.ico",
-      "installerHeaderIcon": "static/icon/ideawall.ico"
+      "installerIcon": "static/icon/512.ico",
+      "uninstallerIcon": "static/icon/512.ico",
+      "installerHeaderIcon": "static/icon/512.ico"
     },
     "linux": {
       "target": [
@@ -73,11 +74,11 @@
         "appImage",
         "deb"
       ],
-      "icon": "static/icon/ideawall.ico"
+      "icon": "static/icon/512.ico"
     },
     "win": {
       "target": "nsis",
-      "icon": "static/icon/ideawall.ico"
+      "icon": "static/icon/512.ico"
     },
     "dmg": {
       "contents": [
@@ -95,7 +96,7 @@
       ]
     },
     "mac": {
-      "icon": "static/icon/ideawall.icns"
+      "icon": "static/icon/512.icns"
     },
     "publish": [
       {
@@ -108,10 +109,6 @@
     "node": ">= 6.0.0"
   },
   "devDependencies": {
-    "electron": "^5.0.4",
-    "electron-rebuild": "^1.8.5",
-    "electron-packager": "^14.0.0",
-    "electron-builder": "^20.44.4"
   },
   "dependencies": {
     "archiver": "^3.0.0",

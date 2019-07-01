@@ -29,8 +29,8 @@ let appVar = {
     _preloadscript: path.join(__dirname, relative + 'core/Proxy.js'),
     _viewpath: path.join(__dirname, relative + 'view'),//视图目录
     _staticpath: path.join(__dirname, relative + 'static'),//静态资源目录
-    _logo: path.join(__dirname, relative + 'static/logo/blue-min-300_2@2x.png'),//LOGO
-    _icon: path.join(__dirname, relative + 'static/' + (os.platform() === 'darwin'?'logo/black-min@3x.png':'logo/blue-min-300_2@2x.png')),
+    _logo: path.join(__dirname, relative + 'static/logo.png'),//LOGO
+    _icon: path.join(__dirname, relative + 'static/' + (os.platform() === 'darwin'?'logo.png':'logo.png')),
     _lock: false,
     _guide: false,
     _sqllog: false && config.get("debug"),

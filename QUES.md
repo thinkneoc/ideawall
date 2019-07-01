@@ -39,6 +39,30 @@ electron-rebuild -d=http://npm.taobao.org/mirrors/atom-shell -f -w $module_with_
 1.build添加配置: "compression": "maximum", 高压缩模式(耗时较长)
 2.删除devDependencies依赖. 
 
+# Win下打包细节
+部分文件无法下载: 下载以下7z文件到指定目录解压.
+macOS: ~/Library/Caches/electron-builder
+Linux: ~/.cache/electron-builder
+windows: %LOCALAPPDATA%\electron-builder\cache
+
+├── AppImage
+│   └── AppImage-17-06-17-mac
+├── AppImage-packages
+│   └── 10.03.17
+├── Squirrel.Windows
+│   └── Squirrel.Windows-1.6.0.0
+├── fpm
+│   └── fpm-1.8.1-20150715-2.2.2
+├── linux-tools
+│   └── linux-tools-mac-10.12
+├── nsis
+│   └── nsis-3.0.1.13
+│   └── nsis-resources-3.1.0
+├── winCodeSign
+│   └── winCodeSign-1.9.0
+└── wine
+    └── wine-2.0.1-mac-10.12
+
 
 # 集成 Webpack
 - 添加依赖
