@@ -30,7 +30,7 @@
                     <span slot="label"><i :class="item.icon"></i> {{item.title}}</span>
                     <iframe :id="'iframe_'+item.name" class="J_iframe active"
                             :name="'iframe_'+item.name"
-                            width="100%" :data-nopreload="!item.preload"
+                            width="100%" :data-nopreload="!item.preload" :data-lazy="item.lazy"
                             :data-src="proxy.link(item.link)" frameborder="0" scrolling="no"></iframe>
                 </el-tab-pane>
             </el-tabs>

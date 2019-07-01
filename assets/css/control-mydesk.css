@@ -8,7 +8,7 @@
 }
 
 .zxx-desk-info-container {
-    width: 455px;
+    width: 312px;
     border-left: 1px solid #eee;
     padding-top: 5px;
 }
@@ -182,4 +182,16 @@
 
 .project-shadow {
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+}
+
+.zxx-desk-info-container .el-tabs{
+    width: 312px;
+}
+
+.zxx-desk-info-container .el-tabs__item{
+    padding: 0 10px;
+}
+
+.zxx-desk-info-container .el-tabs__nav-next, .zxx-desk-info-container .el-tabs__nav-prev{
+    line-height: 30px;
 }

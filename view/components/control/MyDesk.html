@@ -205,9 +205,9 @@
                 </el-tab-pane>
                 <el-tab-pane label="用户评论" name="comment" style="background: rgb(245,246,250);"
                              v-loading="loadingDesk.comment">
-                    <iframe class="iframe_wall iframe_wall_config" name="iframe_highconfig" data-key="highconfig"
+                    <iframe class="iframe_wall iframe_wall_config" name="iframe_comment" data-key="comment"
                             width="100%" data-nopreload="true"
-                            :data-src="proxy.link('./mydesk/HighConfig.html?fk=[ID]')" frameborder="0"
+                            :data-src="proxy.link('./mydesk/Comment.html?fk=[ID]')" frameborder="0"
                             scrolling="no"></iframe>
                 </el-tab-pane>
                 <el-tab-pane label="详细信息" name="info" style="background: rgb(245,246,250);"

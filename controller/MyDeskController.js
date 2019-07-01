@@ -20,6 +20,7 @@ var vm = new Vue({
                 config: true,
                 highconfig: true,
                 info: true,
+                comment: true,
             },
             firstTime: true,
             deviceAni: 'animated fadeInLeftBig',

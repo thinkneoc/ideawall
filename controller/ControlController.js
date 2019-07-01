@@ -34,6 +34,7 @@ var vm = new Vue({
                     supportBC: true,
                     needNet: true,
                     historyInit: 2,
+                    lazy: 1500,//预懒加载, 仅 preload 为 true 时有效, 可填时间, 单位 ms. 填 true 默认 1s. 禁用填 false 或不填.
                     action: {
                         refresh: function (cmd) {
                             proxy.ipc.send('ipc_repeat', 'ipc_render_control_deskstore_refresh');
@@ -52,6 +53,7 @@ var vm = new Vue({
                     supportBC: true,
                     needNet: true,
                     historyInit: 2,
+                    lazy: 3000,
                     style: 'background:rgb(244,244,244);',
                     action: {
                         refresh: function (cmd) {
@@ -68,6 +70,7 @@ var vm = new Vue({
                     icon: 'el-icon-setting',
                     link: './control/Preference.html',
                     preload: true,
+                    lazy: true,
                 },
                 'feedback': {
                     name: 'feedback',
@@ -76,6 +79,7 @@ var vm = new Vue({
                     link: './control/Feedback.html',
                     preload: true,
                     needCoords: true,
+                    lazy: true,
                 },
             },
             imodal: {//全局模态框, 用于呈现不适合新开窗体的内联页面层.
