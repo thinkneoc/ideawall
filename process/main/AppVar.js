@@ -30,7 +30,7 @@ let appVar = {
     _viewpath: path.join(__dirname, relative + 'view'),//视图目录
     _staticpath: path.join(__dirname, relative + 'static'),//静态资源目录
     _logo: path.join(__dirname, relative + 'static/logo.png'),//LOGO
-    _icon: path.join(__dirname, relative + 'static/' + (os.platform() === 'darwin'?'logo.png':'logo.png')),
+    _icon: path.join(__dirname, relative + 'static/' + (os.platform() === 'darwin'?'tray/100x100@5x.png':'tray/100x100@5x.png')),
     _lock: false,
     _guide: false,
     _sqllog: false && config.get("debug"),
