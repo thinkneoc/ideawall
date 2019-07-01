@@ -30,7 +30,7 @@ var vm = new Vue({
                     title: '桌面商店',
                     icon: 'el-icon-goods',
                     link: './control/DeskStore.html',
-                    preload: false,
+                    preload: true,
                     supportBC: true,
                     needNet: true,
                     historyInit: 2,
@@ -262,6 +262,11 @@ var vm = new Vue({
             var ihtml = '<div id="dragWin-div" class="dragwin-dblclick window-drag" style="z-index:20990909;position:absolute;width:100%;top:0;left:0;pointer-events: none;height:' + height + ';"></div>';//
             $(panelId).prepend(ihtml);
         },
+        doctorReport(cmd, name, url){
+            if(this.tabs[cmd]){
+                this.tabs[cmd].repreload = true;
+            }
+        },
         handleClick(tab, event, force, realforce) {
             console.log(tab);
             var aTab = this.tabs[tab.name];
@@ -271,12 +276,20 @@ var vm = new Vue({
             }
             this.activeTab = tab.name;
             var ifa = $('#iframe_' + aTab.name);
-            var netbrokenUrl = '../errors/netbroken.html';
+            console.debug(ifa.attr('src'));
+            var netbrokenUrl = 'errors/netbroken.html';
+            //首次加载的, 但是是netbroken页面, 需要重新刷新一下, 否则游戏功能会有点问题
+            if(aTab.preload && aTab.repreload && !ifa.attr('data-repreload')){
+                this.loadingTab = true;
+                ifa.attr('src', aTab.link);
+                ifa.attr('data-repreload', 'true');
+                return;
+            }
             //网络支持判定
             if (aTab.needNet && this.netstatus === 'offline' && (ifa.attr('src') + '').indexOf(netbrokenUrl) === -1) {
                 console.log('netbroken');
                 this.loadingTab = true;
-                ifa.attr('src', netbrokenUrl);
+                ifa.attr('src', '../' + netbrokenUrl);
                 return;
             }
             //浏览器控制栏支持判定
