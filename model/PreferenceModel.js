@@ -40,7 +40,7 @@ let defaults = [
         reboot: 1,
         explicit: 2,
         value: {
-            enable: false,
+            enable: true,
         },
     },
     {
