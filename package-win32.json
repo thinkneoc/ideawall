@@ -10,6 +10,7 @@
     "init": "node init.js --f",
     "start": "electron .",
     "debug": "electron . --debug",
+    "clean": "yarn autoclean -I && yarn autoclean -F",
     "postinstall": "electron-builder install-app-deps",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
