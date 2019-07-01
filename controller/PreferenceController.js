@@ -27,6 +27,12 @@ var vm = new Vue({
                     text: '正在修复...',
                     htext: '执行修复',
                 },
+                clearCache: {
+                    bol: false,
+                    showDesc: false,
+                    text: '正在清理...',
+                    htext: '清理容器缓存',
+                },
             },
             menuInfoTab: 'common',
             animation: {
@@ -185,6 +191,16 @@ var vm = new Vue({
                     }
                 });
             }
+        },
+        //清理缓存
+        clearCache() {
+            this.btnLoading.clearCache.bol = true;
+            proxy.ipc.send('ipc_clean', 'onlyCache');
+            setTimeout(()=>{
+                this.btnLoading.clearCache.htext = '清理完毕';
+                this.btnLoading.clearCache.bol = false;
+                this.btnLoading.clearCache.showDesc = true;
+            }, 6000);
         },
         //前往官网
         gotoOffical() {

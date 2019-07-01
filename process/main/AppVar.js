@@ -30,7 +30,7 @@ let appVar = {
     _viewpath: path.join(__dirname, relative + 'view'),//视图目录
     _staticpath: path.join(__dirname, relative + 'static'),//静态资源目录
     _logo: path.join(__dirname, relative + 'static/logo.png'),//LOGO
-    _icon: path.join(__dirname, relative + 'static/' + (os.platform() === 'darwin'?'tray/100x100@5x.png':'tray/100x100@5x.png')),
+    _icon: path.join(__dirname, relative + 'static/' + (os.platform() === 'darwin' ? 'tray/100x100@5x.png' : 'tray/100x100@5x.png')),
     _lock: false,
     _guide: false,
     _sqllog: false && config.get("debug"),
@@ -87,7 +87,7 @@ let appVar = {
     _platform: os.platform(), //可能的值: 'aix','darwin','freebsd','linux','openbsd','sunos','win32', 建议通过上面的判定系统类型. 得到的结果类似于process.platform
     _name: App.getName(),//应用名称
     _version: App.getVersion(),//版本号
-    _version_show:  App.getVersion() + '  (Build '+ config.get('publish') + ')',//用于展示的版本信息
+    _version_show: App.getVersion() + '  (Build ' + config.get('publish') + ')',//用于展示的版本信息
     _locale: App.getLocale(),//语言
     _debug: (config.get("debug")), //debug模式
     _destory: false,//同于标识是否将要销毁.
@@ -124,9 +124,9 @@ ipcMain.on('change-appVar', function (event, newAppVar) {
     }
 });
 
-ipcMain.on('ipc_clean', function (event) {
+ipcMain.on('ipc_clean', function (event, param) {
     try {
-        clearAppWorkSpace();
+        clearAppWorkSpace(param);
     } catch (e) {
         console.error(e);
     }
@@ -247,15 +247,21 @@ function checkAppWorkSpace(callback) {
 /**
  * 清空可以删除的文件.
  */
-function clearAppWorkSpace() {
-    //1.清除快照
-    Fs.delDir(appVar._apath.dir.snapscreen);
-    //2.清除缓存
-    Fs.delDir(appVar._apath.dir.cache);
-    //3.清除日志文件
-    Fs.delDir(appVar._apath.dir.log);
+function clearAppWorkSpace(param) {
+    if (param === 'onlyCache') {
+        //1.清除快照
+        Fs.delDir(appVar._apath.dir.snapscreen);
+        //2.清除缓存
+        Fs.delDir(appVar._apath.dir.cache);
+    } else if (param === 'onlyLog') {
+        //3.清除日志文件
+        Fs.delDir(appVar._apath.dir.log);
+    } else {
+        Fs.delDir(appVar._apath.dir.snapscreen);
+        Fs.delDir(appVar._apath.dir.cache);
+        Fs.delDir(appVar._apath.dir.log);
+    }
 }
-
 
 
 /**
