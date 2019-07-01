@@ -99,6 +99,16 @@ function DeviceDeskDao(model) {
     };
 
     /**
+     * 判断主屏幕是否启用了 TA
+     *
+     * @param ld_id
+     * @returns {*}
+     */
+    this.primaryDisplayHasDesk = function (ld_id) {
+        return this._self.exist({ld_id: ld_id + '', screen_title: '主屏幕'});
+    };
+
+    /**
      * 获取所有配置了桌面的设备信息
      */
     this.getDisplaysHasDesk = function () {

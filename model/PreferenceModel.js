@@ -135,6 +135,17 @@ let defaults = [
     {
         type: 'implicit',
         formitem: '',
+        key: 'dontshowTipAfter_useDesk',
+        name: '启用主屏幕桌面后不再提醒快捷键提示消息',
+        description: '',
+        explicit: 1,
+        value: {
+            val: false,
+        },
+    },
+    {
+        type: 'implicit',
+        formitem: '',
         key: 'dontshowTipAfter_changePref',
         name: '偏好设置变更后不再提醒重启提示消息',
         description: '',

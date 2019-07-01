@@ -2,8 +2,10 @@ const baseController = proxy.require('../controller/BaseController');
 const http = proxy.require('../core/Http');
 const logger = proxy.require('../core/Logger');
 const datetime = proxy.require('../core/Datetime')();
-const localDeskModel = proxy.require('../model/LocalDeskModel')();
-const mediaModel = proxy.require('../model/MediaModel')();
+const localDeskModel = proxy.require('../model/LocalDeskModel')(proxy.appVar);
+const deviceDeskModel = proxy.require('../model/DeviceDeskModel')(proxy.appVar);
+const mediaModel = proxy.require('../model/MediaModel')(proxy.appVar);
+const preferenceModel = proxy.require('../model/PreferenceModel')(proxy.appVar);
 const lang = proxy.require('../core/Lang')();
 
 var vm = new Vue({
@@ -41,9 +43,54 @@ var vm = new Vue({
                 data: [], //文件列表
             },
             redrawSign: false,
+            showTitle: false,
+            showSetting: false,
         };
     },
     methods: {
+        showTit() {
+            var that = this;
+            this.showTitle = true;
+            setTimeout(() => {
+                // $('.showTitle').fadeOut(500, function () {
+                //     that.showTitle = false;
+                //     that.showSet();
+                // });
+            }, 3000);
+        },
+        showSet() {
+            if (!deviceDeskModel.primaryDisplayHasDesk(this.ld.id)) {
+                setTimeout(() => {
+                    this.showSetting = true;
+                }, 1000);
+            }
+        },
+        preview() {
+            var link = localDeskModel.getIndexPath(this.ld);
+            if (!link) {
+                proxy.alert('系统提示', '当前桌面源配置无效', false, 'error');
+                return;
+            }
+            proxy.ipc.send('ipc_window_open', 'preview', this.ld.id, {link: encodeURI(encodeURI(link))});
+        },
+        setting() {
+            top.vm.showLoadingMaster();
+            deviceDeskModel.setsDesk([proxy.appVar._primarydisplay.id], this.ld.id);
+            proxy.ipc.send('ipc_repeat', 'ipc_render_control_mydesk_update', this.ld.id, proxy.appVar._primarydisplay.id);
+            setTimeout(() => {
+                this.showSetting = false;
+            }, 1000);
+            var stasdPref = preferenceModel.getByKey('dontshowTipAfter_useDesk');
+            stasdPref.value = JSON.parse(stasdPref.value);
+            if (!stasdPref.value.val) {
+                proxy.alert('设置成功! ', '已为主屏幕启用! \r\nideawall 支持多显示器, 也许你可以试试在左边的桌面项和设备项上 [右键]~', (res) => {
+                    if (res === 1) {
+                        stasdPref.value.val = true;
+                        preferenceModel.updateById(stasdPref);
+                    }
+                }, false, ['知道了', '不再提醒']);
+            }
+        },
         //构建走马灯
         buildCarousel(data, isqz) {
             if (!data) {
@@ -174,7 +221,7 @@ var vm = new Vue({
             if (tList.length > 0) {
                 mediaModel.addsByDeskId(this.ld.id, tList);
                 this.dealWithLdData();
-                if(!this.redrawSign){
+                if (!this.redrawSign) {
                     proxy.ipc.send('ipc_repeat', 'ipc_render_control_mydesk_hideInitSign', this.ld.id);
                     this.redrawSign = true;
                 }
@@ -229,9 +276,11 @@ var vm = new Vue({
             proxy.refreshAppVar();
             that.lock = swicth;
         });
+
     }
 });
 
 window.onload = function () {
     vm.loading = false;
+    vm.showTit();
 };

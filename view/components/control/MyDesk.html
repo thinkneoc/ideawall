@@ -77,26 +77,26 @@
                                     <span>{{item.display_rp}}</span>
                                 </div>
                                 <span class="zxx-desk-info-type" style="margin-right:0;">
-                                <a href="javascript:void(0)"
-                                   style="color: #666;cursor: pointer;font-size: 14px;margin: 0 1px;"
-                                   v-if="loadingControl && !item.is_set_desk">
-                                    <i class="el-icon-loading"></i>
-                                </a>
-                                <a :id="'zxx-set-pause-'+item.display_id" href="javascript:void(0)" title="点击暂停"
-                                   class="zxx-device-wall-setpause"
-                                   v-show="!loadingControl && item.is_set_desk"
-                                   style="color: #666;cursor: pointer;font-size: 14px;margin: 0 1px;"
-                                   :onclick="'vm.setPause(this, \''+item.display_id+'\')'" data-switch="1">
-                                    <i class="ivu-icon ivu-icon-md-pause"></i>
-                                </a>
-                                <a :id="'zxx-set-muted-'+item.display_id" href="javascript:void(0)" title="点击静音"
-                                   class="zxx-device-wall-setmuted"
-                                   v-show="!loadingControl && item.is_set_desk"
-                                   style="color: #666;cursor: pointer;font-size: 14px;margin: 0 1px;"
-                                   :onclick="'vm.setMuted(this, \''+item.display_id+'\')'" data-switch="1">
-                                    <i class="ivu-icon ivu-icon-md-volume-up"></i>
-                                </a>
-                            </span>
+                                    <a href="javascript:void(0)"
+                                       style="color: #666;cursor: pointer;font-size: 14px;margin: 0 1px;"
+                                       v-if="loadingControl && !item.is_set_desk">
+                                        <i class="el-icon-loading"></i>
+                                    </a>
+                                    <a :id="'zxx-set-pause-'+item.display_id" href="javascript:void(0)" title="点击暂停"
+                                       class="zxx-device-wall-setpause"
+                                       v-show="!loadingControl && item.is_set_desk"
+                                       style="color: #666;cursor: pointer;font-size: 14px;margin: 0 1px;"
+                                       :onclick="'vm.setPause(this, \''+item.display_id+'\')'" data-switch="1">
+                                        <i class="ivu-icon ivu-icon-md-pause"></i>
+                                    </a>
+                                    <a :id="'zxx-set-muted-'+item.display_id" href="javascript:void(0)" title="点击静音"
+                                       class="zxx-device-wall-setmuted"
+                                       v-show="!loadingControl && item.is_set_desk"
+                                       style="color: #666;cursor: pointer;font-size: 14px;margin: 0 1px;"
+                                       :onclick="'vm.setMuted(this, \''+item.display_id+'\')'" data-switch="1">
+                                        <i class="ivu-icon ivu-icon-md-volume-up"></i>
+                                    </a>
+                                </span>
                             </div>
                         </el-card>
                     </div>
@@ -172,13 +172,13 @@
                                 <img :src="item.preview" alt=""
                                      class="iframe_wall zxx-desk-showpanel"/>
                             </div>
-                            <div style="padding: 5px;">
+                            <div class="zxx-deskx-r-panel" style="padding: 5px;">
                                 <div class="zxx-desk-info-name">{{item.name}}</div>
                                 <span class="zxx-desk-info-type">
-                                <el-tag size="mini" :type="item.typeExplain.style">
-                                    {{ item.typeExplain.name }}
-                                </el-tag>
-                            </span>
+                                    <el-tag size="mini" :type="item.typeExplain.style">
+                                        {{ item.typeExplain.name }}
+                                    </el-tag>
+                                </span>
                             </div>
                         </el-card>
                     </div>
@@ -211,7 +211,6 @@
                             scrolling="no"></iframe>
                 </el-tab-pane>
             </el-tabs>
-
         </div>
     </div>
 </div>

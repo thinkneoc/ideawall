@@ -31,6 +31,7 @@ let model = new (function () {
             // containerConfig: {},//容器配置, emmm... 就是 iframe 的参数, 可以配置比如 scolling 等参数
             params: '',//参数
             readme_path: '',//Readme Path 配定
+            feedback: '',//反馈地址
         },
     };
 });
@@ -66,6 +67,7 @@ function LocalDeskModel(appVar) {
                 init_sign: 1,
                 readme_path: '',
                 date_get: datetime.now(),
+                feedback: 'http://bbs.iw.16inet.com/forum.php?mod=viewthread&tid=4',
             },
             {
                 author: '周曦',
@@ -82,6 +84,7 @@ function LocalDeskModel(appVar) {
                 init_sign: 1,
                 readme_path: '',
                 date_get: datetime.now(),
+                feedback: 'http://bbs.iw.16inet.com/forum.php?mod=viewthread&tid=5',
             },
             {
                 author: '周曦',
@@ -98,6 +101,7 @@ function LocalDeskModel(appVar) {
                 init_sign: 1,
                 readme_path: '',
                 date_get: datetime.now(),
+                feedback: 'http://bbs.iw.16inet.com/forum.php?mod=viewthread&tid=6',
             }
         ];
         this.dao.initial(defaults);

@@ -223,7 +223,7 @@ var vm = new Vue({
             var that = this;
             var pref_deviceSnapscreenTTL = preferenceModel.getByKey("deviceSnapscreenTTL");
             deviceDeskModel.initial(this.cardStyle, (result, rIds, first) => {
-                if(!that.firstTime){
+                if (!that.firstTime) {
                     that.deviceAni = 'animated flipInY';
                 }
                 that.displays = result;
@@ -257,7 +257,7 @@ var vm = new Vue({
         this.dealWithLdsData(localDeskModel.initial().selectAll());
         this.snapscreen(true);
         proxy.appVar._controlwindow.on('show', (e) => {
-            if(deviceDeskModel.snapscreenNum === 0){
+            if (deviceDeskModel.snapscreenNum === 0) {
                 that.loadingDevices = true;
                 that.snapscreen();
             }
@@ -314,12 +314,18 @@ var vm = new Vue({
         //重绘某桌面项和所有设备项
         proxy.ipc.on('ipc_render_control_mydesk_hideInitSign', function (event, deskId) {
             setTimeout(() => {
-                for(var x in that.lds){
-                    if(that.lds[x].id+'' == deskId + ''){
+                for (var x in that.lds) {
+                    if (that.lds[x].id + '' == deskId + '') {
                         that.lds[x].init_sign = 2;
                         break;
                     }
                 }
+            }, 500);
+        });
+        //更新桌面和设备关系标记
+        proxy.ipc.on('ipc_render_control_mydesk_update', function (event, desk_id, display_id) {
+            setTimeout(() => {
+                that.updateDeskAndDisplay(desk_id, display_id);
             }, 500);
         });
     }

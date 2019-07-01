@@ -13,6 +13,7 @@ var vm = new Vue({
             lock: proxy.lock,
             formKey: T.p('fk'),//用于标识表单的索引键, 这里是localwall的 id
             animationLevel: 3,
+            ld_entity: {},
             ld_id: 0,//id
             ld: {//数据实体
                 name: {
@@ -112,9 +113,10 @@ var vm = new Vue({
                     }
                 }
             }
+            this.ld_entity = data;
             this.ld_id = data.id;
             this.ld.medias.value = this.ld.medias.format(mediaModel.getsByDeskId(this.ld_id));
-        }
+        },
     },
     created: function () {
         console.debug('fk: ' + this.formKey);

@@ -19,6 +19,7 @@ const initscript = '' +
     '  "ld_switch_source" integer(1) DEFAULT 1,\n' +
     '  "ld_params" text(1000) DEFAULT \'\',\n' +
     '  "ld_readme_path" text(500),\n' +
+    '  "ld_feedback" text(500),\n' +
     '  CONSTRAINT "ld_key_id" UNIQUE ("ld_id" COLLATE NOCASE ASC) ON CONFLICT IGNORE\n' +
     ');';
 

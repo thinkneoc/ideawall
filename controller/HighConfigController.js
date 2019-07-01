@@ -71,6 +71,13 @@ var vm = new Vue({
                 proxy.alert('系统提示', '当前桌面尚未提供配置说明文件!', false, 'error');
             }
         },
+        showFeedback() {
+            if (this.ld_backUp.feedback && (this.ld_backUp.feedback + '').trim() !== '' && this.ld_backUp.feedback.indexOf('http') === 0) {
+                $$.gotoBbs(this.ld_backUp.feedback);
+            } else {
+                proxy.alert('系统提示', '目标地址非法!');
+            }
+        },
         //接入Json编辑器
         gotoJSONEditor(key) {
             var that = this;

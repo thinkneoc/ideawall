@@ -16,14 +16,13 @@
         </div>
         <div class="zxx-apply-btns">
             <el-button size="mini" type="primary" :loading="loadingApply" onclick="vm.apply()">
-                <i class="el-icon-s-promotion"></i>
+                <i class="el-icon-s-platform"></i>
                 应用
             </el-button>
         </div>
         <div style="clear:both;"></div>
     </div>
     <div id="form-containter" class="animated fadeIn">
-
         <el-form label-position="top" label-width="80px" :model="ld" size="mini">
             <el-form-item label="" size="mini">
                 <span slot="label">
@@ -37,7 +36,7 @@
                 </span>
                 <el-button size="mini" class="ld-readme-btn"
                            :type="loadingReadme?'text':(readmePath?'':'text')"
-                           :icon="readmePath?'el-icon-s-promotion':''"
+                           :icon="readmePath?'el-icon-s-order':''"
                            :disabled="loadingReadme?false:(readmePath?false:true)"
                            :loading="loadingReadme"
                            onclick="vm.showReadme()">
@@ -110,11 +109,20 @@
                         <el-button type="text" icon="el-icon-question"></el-button>
                     </el-tooltip>
                 </span>
-                <el-input id="ldParams" class="disable-style" type="textarea" :rows="ld.switch_source == 2?'11':'13'"
+                <el-input id="ldParams" class="disable-style" type="textarea" :rows="8"
                           value=""
                           :disabled="true"></el-input>
             </el-form-item>
         </el-form>
+        <div v-if="ld_backUp.feedback && (ld_backUp.feedback + '').trim() != ''" style="padding:10px;">
+            <el-button size="mini" class="ld-gotobbs-btn"
+                       type="primary"
+                       icon="el-icon-s-promotion"
+                       :disabled="!ld_backUp.feedback || (ld_backUp.feedback + '').trim() == ''"
+                       onclick="vm.showFeedback()">
+                社区反馈帖
+            </el-button>
+        </div>
     </div>
 </div>
 </body>

@@ -124,6 +124,10 @@ function DeviceDeskModel(appVar) {
         return false;
     };
 
+    this.primaryDisplayHasDesk = function(deskId){
+        return this.dao.primaryDisplayHasDesk(deskId);
+    };
+
     this.getDesk = function (display_id) {
         var deskId = this.isDesk(display_id);
         if (deskId && deskId !== 0 && deskId != null) {

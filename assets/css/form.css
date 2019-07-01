@@ -75,7 +75,7 @@ html, body, #app {
     padding: 0 10px;
 }
 
-.ld-readme-btn, .ld-source-radio-group, .ld-source-radio-group label span {
+.ld-readme-btn, .ld-gotobbs-btn, .ld-source-radio-group, .ld-source-radio-group label span {
     width: 100%;
 }
 
@@ -164,7 +164,7 @@ html, body, #app {
     background: #fff;
     border-top: 1px solid #eee;
     z-index: 10000;
-    box-shadow: rgb(221, 216, 218) 1px -1px 0px 0px;
+    box-shadow: rgb(221, 216, 218) 1px -1px 5px 0px;
 }
 
 .zxx-apply-desc{
@@ -177,4 +177,55 @@ html, body, #app {
 .zxx-apply-btns{
     float: right;
     text-align: center;
+}
+
+.zxx-setting-panel-bg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 20px);
+    height: 25px;
+    line-height: 25px;
+    padding: 5px 10px;
+    background: #000;
+    filter: opacity(40%);
+    z-index: 10000;
+    box-shadow: rgb(221, 216, 218) 1px -1px 5px 0px;
+}
+
+.zxx-setting-panel{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 20px);
+    height: 25px;
+    line-height: 25px;
+    padding: 5px 10px;
+    background: transparent;
+    z-index: 10001;
+}
+
+.zxx-setting-desc{
+    float: left;
+    text-align: left;
+    color: #fff;
+    font-size: 12px;
+    width: 190px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.zxx-setting-btns{
+    float: right;
+    text-align: center;
+}
+
+.zxx-setting-btn{
+    padding: 5px 10px;
+    font-size: 10px;
+}
+
+.zxx-setting-btn+.zxx-setting-btn{
+    margin-left: 2px;
 }
