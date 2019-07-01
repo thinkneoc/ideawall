@@ -52,7 +52,7 @@
     "asarUnpack": [],
     "nsis": {
       "artifactName": "${name}_${version}_${os}${arch}.${ext}",
-      "uninstallDisplayName": "${name}_${version}_${os}${arch}.${ext}",
+      "uninstallDisplayName": "ideawall 创意者桌面 version ${version}",
       "shortcutName": "ideawall",
       "allowElevation": true,
       "runAfterFinish": true,
