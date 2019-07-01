@@ -12,6 +12,7 @@ var vm = new Vue({
             lock: proxy.lock,
             loadingReadme: true,
             loadingApply: false,
+            loadingFeedback: false,
             showApply: false,
             iSettingOnDevicce: false,
             formKey: T.p('fk'),//用于标识表单的索引键, 这里是localwall的 id
@@ -72,11 +73,15 @@ var vm = new Vue({
             }
         },
         showFeedback() {
-            if (this.ld_backUp.feedback && (this.ld_backUp.feedback + '').trim() !== '' && this.ld_backUp.feedback.indexOf('http') === 0) {
-                $$.gotoBbs(this.ld_backUp.feedback);
-            } else {
-                proxy.alert('系统提示', '目标地址非法!');
-            }
+            this.loadingFeedback = true;
+            setTimeout(() => {
+                if (this.ld_backUp.feedback && (this.ld_backUp.feedback + '').trim() !== '' && this.ld_backUp.feedback.indexOf('http') === 0) {
+                    $$.gotoBbs(this.ld_backUp.feedback);
+                } else {
+                    proxy.alert('系统提示', '目标地址非法!');
+                }
+                this.loadingFeedback = false;
+            }, 1000);
         },
         //接入Json编辑器
         gotoJSONEditor(key) {
@@ -132,7 +137,7 @@ var vm = new Vue({
                         params: JSON.parse(JSON.stringify(this.ld.params)),//阻止引用指针
                     }, true);
                     this.ld_backUp = JSON.parse(JSON.stringify(this.ld));//阻止引用
-                    if(!this.redrawSign){
+                    if (!this.redrawSign) {
                         proxy.ipc.send('ipc_repeat', 'ipc_render_control_mydesk_hideInitSign', this.ld.id);
                         this.redrawSign = true;
                     }

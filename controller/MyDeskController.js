@@ -105,6 +105,7 @@ var vm = new Vue({
                 proxy.appVar._jsoneditorwindow.close();
             } catch (e) {
             }
+            this.deskInfoTab = 'config';//右边的配置重新移回来
             $('.iframe_wall_config').each(function () {
                 var src = $(this).attr('data-src');
                 var key = $(this).attr('data-key');
@@ -411,6 +412,7 @@ var autoContextMenu = {
             click: function () {
                 deviceDeskModel.removeDesk(display_id);
                 vm.updateDeskAndDisplay(desk_id, display_id);
+                proxy.ipc.send('ipc_repeat', 'ipc_render_control_mydesk_nowedit_set', desk_id, display_id);
             },
         });
         menuItems.push({
@@ -467,6 +469,7 @@ var autoContextMenu = {
                                 return x.display_id
                             })], desk_id);
                             vm.updateDeskAndDisplay(desk_id);
+                            proxy.ipc.send('ipc_repeat', 'ipc_render_control_mydesk_nowedit_set', desk_id, 'all');
                             if (!stasdPref.value.val) {
                                 proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  \r\n(再按一次可以恢复窗口哦~)', (res) => {
                                     if (res === 1) {
@@ -487,6 +490,7 @@ var autoContextMenu = {
                                 top.vm.showLoadingMaster();
                                 deviceDeskModel.setsDesk([zxx.display_id], desk_id);
                                 vm.updateDeskAndDisplay(desk_id, zxx.display_id);
+                                proxy.ipc.send('ipc_repeat', 'ipc_render_control_mydesk_nowedit_set', desk_id, zxx.display_id);
                                 if (!stasdPref.value.val) {
                                     proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  \r\n(再按一次可以恢复窗口哦~)', (res) => {
                                         if (res === 1) {
@@ -529,6 +533,7 @@ var autoContextMenu = {
                         top.vm.showLoadingMaster();
                         deviceDeskModel.setsDesk([zxx.display_id], desk_id);
                         vm.updateDeskAndDisplay(desk_id, zxx.display_id);
+                        proxy.ipc.send('ipc_repeat', 'ipc_render_control_mydesk_nowedit_set', vm.ld.id, zxx.display_id);
                         if (!stasdPref.value.val) {
                             proxy.alert('设置成功! ', '' + proxy.osname + '系统使用 "' + gotoDesktopKey + '" 快捷键以快速显示桌面查看效果~  \r\n(再按一次可以恢复窗口哦~)', (res) => {
                                 if (res === 1) {

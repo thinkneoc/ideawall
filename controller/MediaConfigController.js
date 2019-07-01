@@ -60,7 +60,7 @@ var vm = new Vue({
                     setTimeout(() => {
                         $('.showTitle').slideUp(500, function () {
                             that.showTitle = false;
-                            that.showSet();
+                            that.showSet(true);
                         });
                     }, 3000);
                 } else {
@@ -72,14 +72,20 @@ var vm = new Vue({
                 }
             } else {
                 setTimeout(() => {
-                    that.showSet();
+                    that.showSet(true);
                 }, 1000);
             }
         },
-        showSet() {
-            setTimeout(() => {
-                this.showSetting = true;
-            }, 1000);
+        showSet(flag) {
+            if (flag || !deviceDeskModel.primaryDisplayHasDesk(this.ld.id)) {
+                setTimeout(() => {
+                    this.showSetting = true;
+                }, 1000);
+            } else {
+                setTimeout(() => {
+                    this.showSetting = false;
+                }, 1000);
+            }
         },
         preview() {
             var link = localDeskModel.getIndexPath(this.ld);
@@ -92,23 +98,25 @@ var vm = new Vue({
         setting() {
             var that = this;
             top.vm.showLoadingMaster();
-            deviceDeskModel.setsDesk([proxy.appVar._primarydisplay.id], this.ld.id);
-            proxy.ipc.send('ipc_repeat', 'ipc_render_control_mydesk_update', this.ld.id, proxy.appVar._primarydisplay.id);
             setTimeout(() => {
-                $('.showSetting').slideUp(500, function () {
-                    that.showSetting = false;
-                });
-            }, 1000);
-            var stasdPref = preferenceModel.getByKey('dontshowTipAfter_useDesk');
-            stasdPref.value = JSON.parse(stasdPref.value);
-            if (!stasdPref.value.val) {
-                proxy.alert('设置成功! ', '已为主屏幕启用! \r\nideawall 支持多显示器, 也许你可以试试在左边的桌面项和设备项上 [右键]~', (res) => {
-                    if (res === 1) {
-                        stasdPref.value.val = true;
-                        preferenceModel.updateById(stasdPref);
-                    }
-                }, false, ['知道了', '不再提醒']);
-            }
+                deviceDeskModel.setsDesk([proxy.appVar._primarydisplay.id], this.ld.id);
+                proxy.ipc.send('ipc_repeat', 'ipc_render_control_mydesk_update', this.ld.id, proxy.appVar._primarydisplay.id);
+                setTimeout(() => {
+                    $('.showSetting').slideUp(500, function () {
+                        that.showSetting = false;
+                    });
+                }, 1000);
+                var stasdPref = preferenceModel.getByKey('dontshowTipAfter_useDesk');
+                stasdPref.value = JSON.parse(stasdPref.value);
+                if (!stasdPref.value.val) {
+                    proxy.alert('设置成功! ', '已为主屏幕启用! \r\nideawall 支持多显示器, 也许你可以试试在左边的桌面项和设备项上 [右键]~', (res) => {
+                        if (res === 1) {
+                            stasdPref.value.val = true;
+                            preferenceModel.updateById(stasdPref);
+                        }
+                    }, false, ['知道了', '不再提醒']);
+                }
+            }, 800);
         },
         hideEditTip() {
             this.showEditTip.value.val = true;
@@ -299,7 +307,11 @@ var vm = new Vue({
             proxy.refreshAppVar();
             that.lock = swicth;
         });
-
+        proxy.ipc.on('ipc_render_control_mydesk_nowedit_set', function (event, ld_id, display_id) {
+            if (ld_id + '' == that.ld.id + '' && (display_id === 'all' || display_id + '' == proxy.appVar._primarydisplay.id + '')) {
+                that.showSet();
+            }
+        });
     }
 });
 

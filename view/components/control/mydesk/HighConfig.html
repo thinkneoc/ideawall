@@ -117,6 +117,7 @@
         <div v-if="ld_backUp.feedback && (ld_backUp.feedback + '').trim() != ''" style="padding:10px;">
             <el-button size="mini" class="ld-gotobbs-btn"
                        type="primary"
+                       :loading="loadingFeedback"
                        icon="el-icon-s-promotion"
                        :disabled="!ld_backUp.feedback || (ld_backUp.feedback + '').trim() == ''"
                        onclick="vm.showFeedback()">
