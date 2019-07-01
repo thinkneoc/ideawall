@@ -534,11 +534,3 @@ $(function () {
         }
     }
 });
-
-window.addEventListener('online', function () {
-    vm.isOnline();
-});
-
-window.addEventListener('offline', function () {
-    vm.isOffline();
-});
