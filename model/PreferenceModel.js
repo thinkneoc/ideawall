@@ -142,6 +142,17 @@ let defaults = [
         value: {
             val: false,
         },
+    },
+    {
+        type: 'implicit',
+        formitem: '',
+        key: 'dontshowTipAfter_guideTip',
+        name: '引导提示关闭后不再提醒提示',
+        description: '',
+        explicit: 1,
+        value: {
+            val: false,
+        },
     }
 ];
 

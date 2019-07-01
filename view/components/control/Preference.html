@@ -97,22 +97,21 @@
                 </el-form>
             </el-tab-pane>
             <el-tab-pane :disabled="lock" label="动画" name="animation">
-                <el-alert title="温馨提示" style="text-align:left;"
-                          type="warning" show-icon>
-                    <div slot>
-                        桌面源入场动画可以实时预览变更效果, 但出场动画仅在设备桌面发生 <strong>[关键性的同步动作]</strong> 时才会触发.
-                        举个栗子, 你可以尝试对已启用桌面的目标设备 <strong>[右键 => 取消启用]</strong> 桌面以查看离场变更效果~
-                        或者你还可以试试点击右上角全局工具栏的隐藏按钮(但它并不能查看入场效果)。
-                    </div>
-                </el-alert>
                 <div :class="'animated '+ animation.preview"
-                     style="width: 100%;text-align:center;z-index: 777;position: absolute;top: 100px;">
+                     style="width: 100%;text-align:center;z-index: 777;position: absolute;top: 10px;">
                     <img src="../../../static/tray/200x200.png" alt=""
                          style="width: 120px;height:120px;">
                 </div>
-                <el-form ref="form" :model="preferences" style="margin-top:180px;">
+                <el-form ref="form" :model="preferences" style="margin-top:150px;">
                     <el-form-item>
-                        <span slot="label">桌面源入场动画</span>
+                        <span slot="label">桌面源入场动画
+                            <el-tooltip placement="top">
+                                <div slot="content">
+                                    入场动画可以实时预览变更效果
+                                </div>
+                                <el-button type="text" icon="el-icon-question"></el-button>
+                            </el-tooltip>
+                        </span>
                         <div class="zxx-show-animate-panel">
                             <el-radio-group v-model="animation.in" size="mini"
                                             @change="(nval)=>{vm.previewAnimate('in');vm.doSetPreference(false, 'deskAnimationOn', nval)}">
@@ -155,7 +154,14 @@
                         </div>
                     </el-form-item>
                     <el-form-item style="margin-top: 20px;">
-                        <span slot="label">桌面源离场动画</span>
+                        <span slot="label">桌面源离场动画
+                            <el-tooltip placement="top">
+                                <div slot="content">
+                                    离场动画仅在设备桌面发生 <strong>[关键性的同步动作]</strong> <br/>时才会触发.
+                                </div>
+                                <el-button type="text" icon="el-icon-question"></el-button>
+                            </el-tooltip>
+                        </span>
                         <div class="zxx-show-animate-panel">
                             <el-radio-group v-model="animation.out" size="mini"
                                             @change="(nval)=>{vm.previewAnimate('out');vm.doSetPreference(false, 'deskAnimationOut', nval)}">
