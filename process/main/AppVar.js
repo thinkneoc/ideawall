@@ -236,6 +236,9 @@ function checkAppWorkSpace(callback) {
     //清空下载文件夹
     Fs.delDir(appVar._apath.dir.download);
 
+    //重写缓存路径
+    App.setPath('userData', appVar._apath.dir.cache);
+
     if (typeof callback === 'function') {
         callback();
     }
