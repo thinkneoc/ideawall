@@ -6,7 +6,6 @@ var vm = new Vue({
     el: '#app',
     data: function () {
         return {
-            loading: true,
             formKey: T.p('fk'),
             origin: proxy.appVar._commenturl,
         }
@@ -25,6 +24,7 @@ var vm = new Vue({
     created: function () {
     },
     mounted() {
+        console.debug('正在加载评论页面~');
         var that = this;
         var xiframe = $('iframe#iframe_comment');
         top.vm.netLoading('mydesk', () => {
@@ -33,8 +33,7 @@ var vm = new Vue({
             this.$Loading.finish();
         });
         xiframe.load(function () {
-            that.loading = false;
-            top.vm.loadingTab = false;
+            parent.vm.loadingDeskConfig = false;
             that.postMessage({
                 cmd: 'hello',
                 version: proxy.appVar._version,
@@ -42,7 +41,3 @@ var vm = new Vue({
         });
     }
 });
-
-window.onload = function(){
-    vm.loading = false;
-};

@@ -16,12 +16,7 @@ var vm = new Vue({
             loadingControl: true,
             loadingDevices: true,
             loadingDesks: true,
-            loadingDesk: {
-                config: true,
-                highconfig: true,
-                info: true,
-                comment: true,
-            },
+            loadingDeskConfig: true,
             firstTime: true,
             deviceAni: 'animated fadeInLeftBig',
             cardStyle: {
@@ -45,14 +40,21 @@ var vm = new Vue({
     },
     methods: {
         handleDesktopCommand(command) {
-            // this.$message('click on item ' + command);
             this.tag = this.tags.filter((item) => {
                 return item.id === command;
             })[0];
             console.debug(this.tag);
         },
         handleInfoTabClick(tab, event) {
-            console.log(tab, event);
+            console.debug(tab);
+            var that = this;
+            that.deskInfoTab = tab.name;
+            var xiframe = $('.iframe_wall_config[data-key="' + tab.name + '"]');
+            if (xiframe.attr('data-lazyload') + '' == 'true' && xiframe.attr('data-lazyloaded') + '' != 'true') {
+                that.loadingDeskConfig = true;
+                xiframe.attr('data-lazyloaded', 'true');
+                xiframe.attr('src', xiframe.attr('data-src'));
+            }
         },
         genPreview(name, color, setColor) {
             console.debug(name);
@@ -87,13 +89,18 @@ var vm = new Vue({
         //打开目标桌面配置页
         configDesk(id, index) {
             var that = this;
-            console.debug(id);
+            var preInfoTab = that.deskInfoTab;
+            console.debug(id + ' ' + this.ld.id + ' ' + preInfoTab);
             if (!id || (id + '').trim() === '' || id === 'undefined' || id === 'false') {
+                that.deskInfoTab = 'config';
                 return;
             }
             if (this.ld.id + '' == id + '') {
+                that.deskInfoTab = 'config';
                 return;
             }
+            that.loadingDeskConfig = true;
+            $('.iframe_wall_config[data-key="config"]').removeAttr('src');
             var ldData = this.lds[index];
             if (!ldData || !index || id != ldData.id) {
                 ldData = this.lds.filter((item) => {
@@ -106,16 +113,18 @@ var vm = new Vue({
                 proxy.appVar._jsoneditorwindow.close();
             } catch (e) {
             }
+            that.deskInfoTab = 'config';
             $('.iframe_wall_config').each(function () {
                 var src = $(this).attr('data-src');
                 var key = $(this).attr('data-key');
-                that.loadingDesk[key] = true;
-                src = src.replace('[ID]', id);
-                $(this).attr('src', src);
-                $(this).load(function () {
-                    that.deskInfoTab = 'config';//右边的配置重新移回来
-                    that.loadingDesk[key] = false;
-                })
+                var lazyload = $(this).attr('data-lazyload');
+                if (lazyload + '' == 'true') {
+                    $(this).removeAttr('src');
+                    $(this).attr('data-src', src.replace('[ID]', id));
+                    $(this).attr('data-lazyloaded', 'false');
+                } else {
+                    $(this).attr('src', src.replace('[ID]', id));
+                }
             });
         },
         //更新 desk 和 display 状态数据
@@ -194,7 +203,6 @@ var vm = new Vue({
                     if (res) {
                         nowSwitch = res + '';
                     }
-                    console.debug('啦啦啦' + nowSwitch);
                     if (nowSwitch + '' == '1') {
                         $(e).children('i').removeClass('ivu-icon-md-pause').addClass('ivu-icon-md-play');
                         $(e).attr('data-switch', 2).attr('title', '点击播放');
@@ -351,9 +359,9 @@ $(function () {
 });
 
 window.onload = function () {
-    // setTimeout(()=>{
+    setTimeout(() => {
         vm.initConfigDesk();//因为模板中使用了 vm 变量, 所以, 在 mounted 或 created 中调用会报错.
-    // }, 500);
+    }, 800);
     vm.loading = false;
     top.vm.loadingTab = false;
 };

@@ -8,7 +8,6 @@ var vm = new Vue({
     el: '#app',
     data: function () {
         return {
-            loading: true,
             lock: proxy.lock,
             loadingReadme: true,
             loadingApply: false,
@@ -176,7 +175,3 @@ var vm = new Vue({
         });
     }
 });
-
-window.onload = function () {
-    vm.loading = false;
-};

@@ -12,7 +12,6 @@ var vm = new Vue({
     el: '#app',
     data: function () {
         return {
-            loading: true,
             lock: proxy.lock,
             formKey: T.p('fk'), //用于标识表单的索引键, 这里是localwall的 id
             orignLd: {},
@@ -316,6 +315,6 @@ var vm = new Vue({
 });
 
 window.onload = function () {
-    vm.loading = false;
     vm.showTit();
+    parent.vm.loadingDeskConfig = false;
 };

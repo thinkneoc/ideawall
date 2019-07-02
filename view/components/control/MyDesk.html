@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../../../assets/css/control-mydesk.css">
 </head>
 <body>
-<div id="app" v-cloak>
+<div id="app" v-cloak v-loading="loading">
     <div style="display:flex;height:100%;width:100%;">
         <div class="zxx-desk-list-container">
             <div id="my-device">
@@ -187,37 +187,39 @@
             </div>
             <el-backtop target=".zxx-desk-list-container" visibility-height="20" right="330" bottom="30"></el-backtop>
         </div>
-        <div class="zxx-desk-info-container animated fadeInRightBig" v-loading="loading">
+        <div class="zxx-desk-info-container animated fadeInRightBig">
             <el-tabs v-model="deskInfoTab" :stretch="false" @tab-click="handleInfoTabClick">
-                <el-tab-pane label="媒体配置" name="config" style="background: rgb(245,246,250);"
-                             v-loading="loadingDesk.config">
-                    <iframe class="iframe_wall iframe_wall_config" name="iframe_config" data-key="config" width="100%"
+                <el-tab-pane label="媒体配置" name="config" style="background: #fff;">
+                    <iframe class="iframe_wall iframe_wall_config animated fadeIn" id="iframe_config" name="iframe_config"
+                            data-key="config" width="100%" :style="deskInfoTab!='config'?'visibility:hidden;':'visibility:visible;'"
                             data-nopreload="true"
                             :data-src="proxy.link('./mydesk/MediaConfig.html?fk=[ID]')" frameborder="0"
                             scrolling="no"></iframe>
                 </el-tab-pane>
-                <el-tab-pane label="高级配置" name="highconfig" style="background: rgb(245,246,250);"
-                             v-loading="loadingDesk.highconfig">
-                    <iframe class="iframe_wall iframe_wall_config" name="iframe_highconfig" data-key="highconfig"
+                <el-tab-pane label="高级配置" name="highconfig" style="background: #fff;">
+                    <iframe class="iframe_wall iframe_wall_config animated fadeIn" id="iframe_highconfig" name="iframe_highconfig"
+                            data-key="highconfig" :style="deskInfoTab!='highconfig'?'visibility:hidden;':'visibility:visible;'"
                             width="100%" data-nopreload="true"
                             :data-src="proxy.link('./mydesk/HighConfig.html?fk=[ID]')" frameborder="0"
                             scrolling="no"></iframe>
                 </el-tab-pane>
-                <el-tab-pane label="用户评论" name="comment" style="background: rgb(245,246,250);"
-                             v-loading="loadingDesk.comment">
-                    <iframe class="iframe_wall iframe_wall_config" name="iframe_comment" data-key="comment"
+                <el-tab-pane label="用户评论" name="comment" style="background: #fff;">
+                    <iframe class="iframe_wall iframe_wall_config animated fadeIn" id="iframe_comment" name="iframe_comment"
+                            data-key="comment" :style="deskInfoTab!='comment'?'visibility:hidden;':'visibility:visible;'"
                             width="100%" data-nopreload="true"
+                            data-lazyload="true"
                             :data-src="proxy.link('./mydesk/Comment.html?fk=[ID]')" frameborder="0"
                             scrolling="no"></iframe>
                 </el-tab-pane>
-                <el-tab-pane label="详细信息" name="info" style="background: rgb(245,246,250);"
-                             v-loading="loadingDesk.info">
-                    <iframe class="iframe_wall iframe_wall_config" name="iframe_info" data-key="info" width="100%"
+                <el-tab-pane label="详细信息" name="info" style="background: #fff;">
+                    <iframe class="iframe_wall iframe_wall_config animated fadeIn" id="iframe_info" name="iframe_info" data-key="info"
+                            width="100%" :style="deskInfoTab!='info'?'visibility:hidden;':'visibility:visible;'"
                             data-nopreload="true"
                             :data-src="proxy.link('./mydesk/Info.html?fk=[ID]')" frameborder="0"
                             scrolling="no"></iframe>
                 </el-tab-pane>
             </el-tabs>
+            <div class="zxx-desk-info-container-loading" v-loading="loadingDeskConfig"></div>
         </div>
     </div>
 </div>

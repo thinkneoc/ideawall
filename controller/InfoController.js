@@ -9,7 +9,6 @@ var vm = new Vue({
     el: '#app',
     data: function () {
         return {
-            loading: true,
             formKey: T.p('fk'),//用于标识表单的索引键, 这里是localwall的 id
             animationLevel: 3,
             ld_entity: {},
@@ -125,7 +124,3 @@ var vm = new Vue({
         var that = this;
     }
 });
-
-window.onload = function () {
-    vm.loading = false;
-};
