@@ -108,15 +108,17 @@
                 </el-form>
             </el-tab-pane>
             <el-tab-pane :disabled="lock" label="动画" name="animation">
-                <div :class="'animated '+ animation.preview"
-                     style="width: 100%;text-align:center;z-index: 777;position: absolute;top: 10px;">
-                    <img src="../../../static/tray/200x200.png" alt=""
-                         style="width: 120px;height:120px;">
+                <div style="text-align:left;z-index: 777;position: fixed;top: 100px;left:125px;pointer-events: none;">
+                    <img src="../../../assets/images/imac.png" alt=""
+                         style="width: 350px;">
+                    <div style="position:absolute;top: 15px;left: 15px;width: 320px;height: 180px;text-align: center;padding-top: 25px;">
+                        <img src="../../../static/logo/logo-blue_128.png" alt="" :class="'animated '+ animation.preview">
+                    </div>
                 </div>
-                <el-form ref="form" :model="preferences" style="margin-top:150px;">
+                <el-form class="desktop-animation-panel" ref="form" :model="preferences" style="margin-right: 20px;">
                     <el-form-item>
                         <span slot="label">桌面源入场动画
-                            <el-tooltip placement="top">
+                            <el-tooltip placement="right">
                                 <div slot="content">
                                     入场动画可以实时预览变更效果
                                 </div>
@@ -126,9 +128,6 @@
                         <div class="zxx-show-animate-panel">
                             <el-radio-group v-model="animation.in" size="mini"
                                             @change="(nval)=>{vm.previewAnimate('in');vm.doSetPreference(false, 'deskAnimationOn', nval)}">
-                                <el-radio label="random" border style="margin-left:10px;">随机入场</el-radio>
-
-                                <br/>
                                 <el-radio label="bounceIn" border style="margin-left:10px;">弹跳入场</el-radio>
                                 <el-radio label="fadeIn" border style="margin-left:10px;">淡定入场</el-radio>
                                 <el-radio label="rotateIn" border style="margin-left:10px;">旋转入场</el-radio>
@@ -161,12 +160,13 @@
                                 <br/>
                                 <el-radio label="flipInX" border style="margin-left:10px;">水平翻入</el-radio>
                                 <el-radio label="flipInY" border>垂直翻入</el-radio>
+                                <el-radio label="random" border style="margin-left:10px;">随机入场</el-radio>
                             </el-radio-group>
                         </div>
                     </el-form-item>
                     <el-form-item style="margin-top: 20px;">
                         <span slot="label">桌面源离场动画
-                            <el-tooltip placement="top">
+                            <el-tooltip placement="right">
                                 <div slot="content">
                                     离场动画仅在设备桌面发生 <strong>[关键性的同步动作]</strong> <br/>时才会触发.
                                 </div>
@@ -176,9 +176,6 @@
                         <div class="zxx-show-animate-panel">
                             <el-radio-group v-model="animation.out" size="mini"
                                             @change="(nval)=>{vm.previewAnimate('out');vm.doSetPreference(false, 'deskAnimationOut', nval)}">
-                                <el-radio label="random" border style="margin-left:10px;">随机离场</el-radio>
-
-                                <br/>
                                 <el-radio label="bounceOut" border style="margin-left:10px;">弹跳离场</el-radio>
                                 <el-radio label="fadeOut" border>淡定离场</el-radio>
                                 <el-radio label="rotateOut" border>旋转离场</el-radio>
@@ -212,6 +209,7 @@
                                 <el-radio label="flipOutX" border style="margin-left:10px;">水平翻出</el-radio>
                                 <el-radio label="flipOutY" border>垂直翻出</el-radio>
                                 <el-radio label="hinge" border>垂死挣扎</el-radio>
+                                <el-radio label="random" border style="margin-left:10px;">随机离场</el-radio>
                             </el-radio-group>
                         </div>
                     </el-form-item>

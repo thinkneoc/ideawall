@@ -33,6 +33,17 @@
     text-align: left;
 }
 
+.desktop-animation-panel{
+    padding-right: 0;
+    float: right;
+}
+
+.desktop-animation-panel.el-form .el-form-item .el-form-item__content{
+    margin-left: 10px;
+    text-align: left;
+    margin-top: 35px;
+}
+
 .zxx-form-item-desc {
     margin-left: 10px;
     color: #888;
@@ -53,7 +64,6 @@
 }
 
 .zxx-show-animate-panel {
-    padding-top: 7px;
 }
 
 .zxx-show-animate-panel .el-radio {
