@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../assets/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../../assets/css/animate.css">
+    <link rel="stylesheet" href="../../assets/css/ideawall.css">
+    <link rel="stylesheet" href="../../assets/css/control.css">
+    <style>
+        .zxx-builder-container {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        .zxx-builder-container img {
+            width: 300px;
+            margin-top: 80px;
+        }
+
+        .zxx-builder-container .tip {
+            position: absolute;
+            top: 270px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body style="overflow:hidden;">
+<div id="app" v-cloak :style="bg">
+    <div class="zxx-builder-container" :style="bg">
+        <img class="animated fadeIn" :src="'../../assets/images/building/'+random+'.gif'">
+        <div class="tip">
+            <span>此页建设维护中...</span>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../../core/Proxy.js"></script>
+<script src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/js/vue.min.js"></script>
+<script src="../../assets/js/zxx.min.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                random: (Math.floor(Math.random() * 4) + 1),
+                bg: undefined,
+            };
+        },
+        methods: {
+            getBg() {
+                if (this.random === 3) {
+                    this.bg = 'background:rgb(242,242,242);';
+                } else if (this.random === 4) {
+                    this.bg = 'background:rgb(136,209,212);';
+                } else {
+                    this.bg = 'background:rgb(255,255,255);';
+                }
+            }
+        },
+        created: function () {
+            this.getBg();
+        },
+        mounted() {
+        }
+    });
+</script>
+</html>

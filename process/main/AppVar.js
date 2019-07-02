@@ -22,6 +22,7 @@ let appVar = {
     _updateurl: 'http://' + 'update.' + host + '/',
     _storeurl: 'http://' + 'store.' + host + '/',
     _bbsurl: 'http://' + 'bbs.' + host + '/',
+    _commenturl: 'http://' + 'comment.' + host + '/',
     _updateavaava: false,//是否有可用更新.
     _censusscript: 'http://tajs.qq.com/stats?sId=66445930',//统计分析脚本URL
     _dirname: __dirname, //应用目录

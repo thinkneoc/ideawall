@@ -7,7 +7,7 @@ var vm = new Vue({
     data: function () {
         return {
             loading: true,
-            lock: proxy.lock,
+            formKey: T.p('fk'),
         }
     },
     methods: {
@@ -19,11 +19,19 @@ var vm = new Vue({
     },
     mounted() {
         var that = this;
-        proxy.ipc.on('ipc_lock_req', function (event, swicth) {
-            proxy.lock = swicth;
-            proxy.appVar._lock = swicth;
-            proxy.refreshAppVar();
-            that.lock = swicth;
+        var xiframe = $('iframe#iframe_comment');
+        top.vm.netLoading('resbbs', () => {
+            this.$Loading.start();
+        }, () => {
+            this.$Loading.finish();
+        });
+        xiframe.load(function () {
+            that.loading = false;
+            top.vm.loadingTab = false;
+            that.postMessage({
+                cmd: 'hello',
+                version: proxy.appVar._version,
+            });
         });
     }
 });

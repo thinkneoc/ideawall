@@ -106,7 +106,6 @@ var vm = new Vue({
                 proxy.appVar._jsoneditorwindow.close();
             } catch (e) {
             }
-            this.deskInfoTab = 'config';//右边的配置重新移回来
             $('.iframe_wall_config').each(function () {
                 var src = $(this).attr('data-src');
                 var key = $(this).attr('data-key');
@@ -114,6 +113,7 @@ var vm = new Vue({
                 src = src.replace('[ID]', id);
                 $(this).attr('src', src);
                 $(this).load(function () {
+                    that.deskInfoTab = 'config';//右边的配置重新移回来
                     that.loadingDesk[key] = false;
                 })
             });
@@ -351,7 +351,9 @@ $(function () {
 });
 
 window.onload = function () {
-    vm.initConfigDesk();//因为模板中使用了 vm 变量, 所以, 在 mounted 或 created 中调用会报错.
+    setTimeout(()=>{
+        vm.initConfigDesk();//因为模板中使用了 vm 变量, 所以, 在 mounted 或 created 中调用会报错.
+    }, 500);
     vm.loading = false;
     top.vm.loadingTab = false;
 };

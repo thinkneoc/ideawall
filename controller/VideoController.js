@@ -8,7 +8,6 @@ var vm = new Vue({
     data: function () {
         return {
             loading: true,
-            lock: proxy.lock,
             preview: T.p('preview'),
             display: {},
             videos: [],
@@ -179,12 +178,6 @@ var vm = new Vue({
                 console.debug('视桌面接收到 ipc 启动指令');
                 that.play();
             }
-        });
-        proxy.ipc.on('ipc_lock_req', function (event, swicth) {
-            proxy.lock = swicth;
-            proxy.appVar._lock = swicth;
-            proxy.refreshAppVar();
-            that.lock = swicth;
         });
     }
 });

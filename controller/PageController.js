@@ -7,7 +7,6 @@ var vm = new Vue({
     data: function () {
         return {
             loading: true,
-            lock: proxy.lock,
             preview: T.p('preview'),
             desk: {},
             source_type: '', //超桌源
@@ -101,12 +100,6 @@ var vm = new Vue({
             proxy.ipc.send('ipc_repeat', 'ipc_wall_showtip', false);
             that.calcData();
             that.calcParams();
-        });
-        proxy.ipc.on('ipc_lock_req', function (event, swicth) {
-            proxy.lock = swicth;
-            proxy.appVar._lock = swicth;
-            proxy.refreshAppVar();
-            that.lock = swicth;
         });
     }
 });

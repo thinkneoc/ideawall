@@ -8,7 +8,6 @@ var vm = new Vue({
     data: function () {
         return {
             loading: true,
-            lock: proxy.lock,
             origin: proxy.appVar._bbsurl,
             nowURL: proxy.appVar._bbsurl,
         }
@@ -30,12 +29,6 @@ var vm = new Vue({
     mounted() {
         var that = this;
         var xiframe = $('iframe#iframe_bbs');
-        proxy.ipc.on('ipc_lock_req', (event, swicth) => {
-            proxy.lock = swicth;
-            proxy.appVar._lock = swicth;
-            proxy.refreshAppVar();
-            this.lock = swicth;
-        });
         proxy.ipc.on('ipc_render_control_resbbs_refresh', (event, cmd) => {
             that.loading = true;
             xiframe.attr('src', this.nowURL);

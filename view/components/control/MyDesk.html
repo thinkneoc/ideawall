@@ -188,7 +188,7 @@
             <el-backtop target=".zxx-desk-list-container" visibility-height="20" right="330" bottom="30"></el-backtop>
         </div>
         <div class="zxx-desk-info-container animated fadeInRightBig" v-loading="loading">
-            <el-tabs v-model="deskInfoTab" stretch="true" @tab-click="handleInfoTabClick">
+            <el-tabs v-model="deskInfoTab" :stretch="false" @tab-click="handleInfoTabClick">
                 <el-tab-pane label="媒体配置" name="config" style="background: rgb(245,246,250);"
                              v-loading="loadingDesk.config">
                     <iframe class="iframe_wall iframe_wall_config" name="iframe_config" data-key="config" width="100%"

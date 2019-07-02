@@ -11,7 +11,6 @@ var vm = new Vue({
     el: '#app',
     data: function () {
         return {
-            lock: proxy.lock,
             wallpaperLoading: false,
             wallpaperTipHandler: false,
             wallpaperTipShow: false,
@@ -191,12 +190,6 @@ var vm = new Vue({
         proxy.ipc.on('ipc_wall_update_forward', function (event) {
             console.debug('ipc_wall_update_forward');
             that.setWallpaper(false);
-        });
-        proxy.ipc.on('ipc_lock_req', function (event, swicth) {
-            proxy.lock = swicth;
-            proxy.appVar._lock = swicth;
-            proxy.refreshAppVar();
-            that.lock = swicth;
         });
         proxy.ipc.on('ipc_wall_showtip', function (event, bol, txt) {
             that.showTip(bol, txt);
