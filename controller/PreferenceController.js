@@ -31,7 +31,7 @@ var vm = new Vue({
                     bol: false,
                     showDesc: false,
                     text: '正在清理...',
-                    htext: '清理容器缓存',
+                    htext: '清理缓存',
                 },
             },
             menuInfoTab: 'common',

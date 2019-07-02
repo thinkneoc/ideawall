@@ -351,9 +351,9 @@ $(function () {
 });
 
 window.onload = function () {
-    setTimeout(()=>{
+    // setTimeout(()=>{
         vm.initConfigDesk();//因为模板中使用了 vm 变量, 所以, 在 mounted 或 created 中调用会报错.
-    }, 500);
+    // }, 500);
     vm.loading = false;
     top.vm.loadingTab = false;
 };

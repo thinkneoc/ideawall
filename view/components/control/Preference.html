@@ -65,6 +65,7 @@
                     <el-form-item>
                         <span slot="label">系统修复</span>
                         <el-button size="mini" type="danger" @click="repair" :loading="btnLoading.repair.bol" plain>
+                            <i class="el-icon-mouse" v-if="!btnLoading.repair.bol"></i>
                             {{btnLoading.repair.bol?btnLoading.repair.text:btnLoading.repair.htext}}
                         </el-button>
                         <div class="zxx-form-item-desc-newline zxx-pre-repair-tip">
@@ -74,6 +75,7 @@
                     <el-form-item>
                         <span slot="label">缓存</span>
                         <el-button size="mini" type="" @click="clearCache" :loading="btnLoading.clearCache.bol">
+                            <i class="el-icon-delete" v-if="!btnLoading.clearCache.bol"></i>
                             {{btnLoading.clearCache.bol?btnLoading.clearCache.text:btnLoading.clearCache.htext}}
                         </el-button>
                         <div class="zxx-form-item-desc" v-show="btnLoading.clearCache.showDesc">

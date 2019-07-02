@@ -31,6 +31,7 @@ var vm = new Vue({
         getMessage(rs) {
             var data = rs.data;
             this.nowURL = data.location;
+            this.postMessage('呵呵哒~');
             if (data.command === 'deskstore.download' && data.data.url && data.data.file && data.data.xname && data.data.info) {
                 if (localDeskModel.isExist()) {
                     proxy.alert('系统提示', '此桌面已存在! 安装失败!', false, 'error');

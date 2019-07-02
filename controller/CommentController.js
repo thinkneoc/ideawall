@@ -8,11 +8,18 @@ var vm = new Vue({
         return {
             loading: true,
             formKey: T.p('fk'),
+            origin: proxy.appVar._commenturl,
         }
     },
     methods: {
-        handleInfoTabClick(){
-
+        //发送通信消息
+        postMessage(data) {//data 结构为 指令+数据
+            $('iframe#iframe_comment')[0].contentWindow.postMessage(data, this.origin);
+        },
+        //接收通信消息
+        getMessage(rs) {
+            var data = rs.data;
+            this.postMessage('呵呵哒~');
         }
     },
     created: function () {
@@ -20,7 +27,7 @@ var vm = new Vue({
     mounted() {
         var that = this;
         var xiframe = $('iframe#iframe_comment');
-        top.vm.netLoading('resbbs', () => {
+        top.vm.netLoading('mydesk', () => {
             this.$Loading.start();
         }, () => {
             this.$Loading.finish();
