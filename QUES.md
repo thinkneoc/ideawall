@@ -37,7 +37,7 @@ electron-rebuild -d=http://npm.taobao.org/mirrors/atom-shell -f -w $module_with_
 
 # 打包细节
 1.build添加配置: "compression": "maximum", 高压缩模式(耗时较长)
-2.删除devDependencies依赖. 
+2.删除devDependencies依赖. => 错了, 这个不能删, 开发的时候不能删. 打包的时候直接删掉node_modules. 打包会自动下载.
 
 # Win下打包细节
 部分文件无法下载: 下载以下7z文件到指定目录解压.

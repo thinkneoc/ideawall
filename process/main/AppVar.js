@@ -31,7 +31,7 @@ let appVar = {
     _viewpath: path.join(__dirname, relative + 'view'),//视图目录
     _staticpath: path.join(__dirname, relative + 'static'),//静态资源目录
     _logo: path.join(__dirname, relative + 'static/logo/logo-blue.png'),//LOGO
-    _icon: path.join(__dirname, relative + 'static/' + (os.platform() === 'darwin' ? 'logo/logo-blue_64@3x.png' : 'logo/logo-blue_64@4x.png')),
+    _icon: path.join(__dirname, relative + 'static/' + (os.platform() === 'darwin' ? 'logo/logo-blue_64@3x.png' : 'logo/logo-blue_64@3x.png')),
     _lock: false,
     _guide: false,
     _updatelog: 'http://bbs.iw.16inet.com/forum.php?mod=viewthread&tid=7',//更新日志地址

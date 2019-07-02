@@ -36,6 +36,7 @@
   ],
   "build": {
     "compression": "maximum",
+    "electronVersion": "5.0.4",
     "electronDownload": {
       "mirror": "https://npm.taobao.org/mirrors/electron/"
     },
