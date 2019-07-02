@@ -72,7 +72,10 @@ windows: %LOCALAPPDATA%\electron-builder\cache
 "electron-builder": "^20.44.4"
 
 
-# 集成 Webpack
+
+
+
+# 集成 Webpack [弃用]
 - 添加依赖
     ```
     "devDependencies": {
