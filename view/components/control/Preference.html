@@ -88,6 +88,9 @@
                             <i class="el-icon-cloudy" v-if="!btnLoading.checkUpdate.bol"></i>
                             {{btnLoading.checkUpdate.bol?btnLoading.checkUpdate.text:btnLoading.checkUpdate.htext}}
                         </el-button>
+                        <el-button size="mini" type="" @click="openUpdateLog" :loading="btnLoading.openUpdatelog.bol">
+                            {{btnLoading.openUpdatelog.bol?btnLoading.openUpdatelog.text:btnLoading.openUpdatelog.htext}}
+                        </el-button>
                         <el-button size="mini" @click="reboot" :loading="btnLoading.reboot.bol">
                             <i class="el-icon-refresh-left" v-if="!btnLoading.reboot.bol"></i>
                             {{btnLoading.reboot.bol?btnLoading.reboot.text:btnLoading.reboot.htext}}
@@ -103,9 +106,6 @@
                         <span slot="label">关于</span>
                         <el-button size="mini" type="" @click="openAbout">
                             关于 ideawall
-                        </el-button>
-                        <el-button size="mini" type="" @click="openUpdateLog" :loading="btnLoading.openUpdatelog.bol">
-                            {{btnLoading.openUpdatelog.bol?btnLoading.openUpdatelog.text:btnLoading.openUpdatelog.htext}}
                         </el-button>
                     </el-form-item>
                 </el-form>
