@@ -5,7 +5,7 @@ html, body {
     padding: 0;
     /*使用系统字体.*/
     font: caption !important;
-    font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;
     height: 100% !important;
     user-select: none !important;
     -webkit-user-select: none !important;
@@ -668,7 +668,7 @@ template {
     float: right;
 }
 
-.zxx-dialog-info-btns button:last-child{
+.zxx-dialog-info-btns button:last-child {
     float: left;
 }
 
@@ -688,19 +688,52 @@ template {
     visibility: hidden;
 }
 
-.el-upload-list__item .el-icon-upload-success{
+.el-upload-list__item .el-icon-upload-success {
     color: #67C23A;
     font-size: 15px;
     line-height: 1.5;
 }
 
-.el-upload-list__item .el-icon-close{
+.el-upload-list__item .el-icon-close {
     font-size: 15px;
     line-height: 14px;
 }
 
-.zxx-error { 
+.zxx-error {
     color: #F56C6C !important;
     font-size: 15px;
     line-height: 1.5;
+}
+
+.zxx-sx-1 {
+    animation-delay: 1s;
+}
+
+.zxx-sx-2 {
+    animation-delay: 2s;
+}
+
+.zxx-sx-3 {
+    animation-delay: 3s;
+
+}
+
+.zxx-sx-4 {
+    animation-delay: 4s;
+}
+
+.zxx-sx-5 {
+    animation-delay: 5s;
+}
+
+.zxx-sx-6 {
+    animation-delay: 6s;
+}
+
+.zxx-sx-7 {
+    animation-delay: 7s;
+}
+
+.zxx-sx-8 {
+    animation-delay: 8s;
 }

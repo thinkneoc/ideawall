@@ -34,71 +34,54 @@
                             :data-src="proxy.link(item.link)" frameborder="0" scrolling="no"></iframe>
                 </el-tab-pane>
             </el-tabs>
-            <div class="zxx-controls animated fadeInRight" :style="proxy.appVar._platform === 'darwin'?'':'top:17px;'">
-                <template v-if="(broswerControl || proxy.debug) && netstatus === 'online' && !loadingControl">
-                    <a href="javascript:void(0)" title="后退" class="animated fadeInRight broswer-btn"
+            <div v-if="loadingControl" class="zxx-controls animated slideInRight"
+                 :style="proxy.appVar._platform === 'darwin'?'':'top:17px;'">
+                <a href="javascript:void(0)" class="zxx-control-btn zxx-control-loading"
+                   :style="lock?'right:40px;':'right: 0px;'">
+                    <i class="el-icon-loading"></i>
+                </a>
+            </div>
+            <div v-show="!loadingControl" class="zxx-real-controls zxx-controls animated slideInRight"
+                 :style="(proxy.appVar._platform === 'darwin'?'':'top:17px;') + ''">
+                <template v-if="(broswerControl || proxy.debug) && netstatus === 'online'">
+                    <a href="javascript:void(0)" title="后退" class="animated slideInRight broswer-btn"
                        :disabled="lock" onclick="vm.iframeAction('goback')">
                         <i class="ivu-icon ivu-icon-md-arrow-back"></i>
                     </a>
-                    <a href="javascript:void(0)" title="前进" class="animated fadeInRight broswer-btn"
+                    <a href="javascript:void(0)" title="前进" class="animated slideInRight broswer-btn"
                        :disabled="lock" onclick="vm.iframeAction('goforward')">
                         <i class="ivu-icon ivu-icon-md-arrow-forward"></i>
                     </a>
-                    <a href="javascript:void(0)" title="刷新" class="animated fadeInRight broswer-btn"
+                    <a href="javascript:void(0)" title="刷新" class="animated slideInRight broswer-btn"
                        :disabled="lock" onclick="vm.iframeAction('refresh')">
                         <i class="ivu-icon ivu-icon-md-refresh"></i>
                     </a>
-                    <a href="javascript:void(0)" title="主页" class="animated fadeInRight broswer-btn"
+                    <a href="javascript:void(0)" title="主页" class="animated slideInRight broswer-btn"
                        :disabled="lock" onclick="vm.iframeAction('home')">
                         <i class="ivu-icon ivu-icon-md-home"></i>
                     </a>
-                    |
+                    <span class="animated fadeIn">|</span>
                 </template>
-                <a href="javascript:void(0)" class="zxx-control-btn zxx-control-loading"
-                   v-if="loadingControl" :style="lock?'right:40px;':'right: 0px;'">
-                    <i class="el-icon-loading"></i>
-                </a>
                 <a id="zxx-set-alleye" href="javascript:void(0)" title="点击全部隐藏"
-                   class="animated fadeInRight zxx-control-btn"
-                   v-show="!loadingControl" :disabled="lock"
+                   class="animated slideInRight zxx-control-btn"
+                   :disabled="lock"
                    @click="setAllHide" data-switch="1"><i class="ivu-icon ivu-icon-md-eye"></i></a>
                 <a id="zxx-set-allpause" href="javascript:void(0)" title="点击全部暂停"
-                   class="animated fadeInRight zxx-control-btn"
-                   v-show="!loadingControl" :disabled="lock"
+                   class="animated slideInRight zxx-control-btn"
+                   :disabled="lock"
                    @click="setAllPause" data-switch="1"><i class="ivu-icon ivu-icon-md-pause"></i></a>
                 <a id="zxx-set-allmuted" href="javascript:void(0)" title="点击全部静音"
-                   class="animated fadeInRight zxx-control-btn"
-                   v-show="!loadingControl" style="margin-right:7px;" :disabled="lock"
+                   class="animated slideInRight zxx-control-btn"
+                   style="margin-right:7px;" :disabled="lock"
                    @click="setAllMuted" data-switch="1"><i class="ivu-icon ivu-icon-md-volume-up"></i></a>
                 <template v-if="lock">
                     |
-                    <a href="javascript:void(0)" title="控制面板已被锁定" class="animated fadeInRight lock-btn"
+                    <a href="javascript:void(0)" title="控制面板已被锁定" class="animated slideInRight lock-btn"
                        :disabled="!lock"
                        onclick="proxy.alert('系统提示', '控制面板已被锁定')">
                         <i class="ivu-icon ivu-icon-md-lock"></i>
                     </a>
                 </template>
-                <!--                <template v-if="proxy.appVar._platform !== 'darwin'">-->
-                <!--                    |-->
-                <!--                    <a href="javascript:void(0)" class="win-control-osbtn"-->
-                <!--                       onclick="proxy.appVar._controlwindow.minimize()">-->
-                <!--                        <i class="el-icon-minus"></i>-->
-                <!--                    </a>-->
-                <!--                    <a href="javascript:void(0)" class="win-control-osbtn"-->
-                <!--                       v-if="!winMaxsize"-->
-                <!--                       onclick="proxy.appVar._controlwindow.maximize();vm.winMaxsize=true;">-->
-                <!--                        <i class="el-icon-full-screen"></i>-->
-                <!--                    </a>-->
-                <!--                    <a href="javascript:void(0)" class="win-control-osbtn"-->
-                <!--                       v-if="winMaxsize"-->
-                <!--                       onclick="proxy.appVar._controlwindow.unmaximize();vm.winMaxsize=false;">-->
-                <!--                        <i class="el-icon-copy-document"></i>-->
-                <!--                    </a>-->
-                <!--                    <a href="javascript:void(0)" class="win-control-osbtn"-->
-                <!--                       onclick="proxy.appVar._controlwindow.close()">-->
-                <!--                        <i class="el-icon-close"></i>-->
-                <!--                    </a>-->
-                <!--                </template>-->
             </div>
         </el-container>
 

@@ -6,11 +6,11 @@ html, body, #app, .el-container, .el-tabs, .el-tabs__content, .el-tab-pane, .el-
     background: transparent;
 }
 
-.control-hide{
-    display:none !important;
+.control-hide {
+    display: none !important;
 }
 
-.win-control-osbtns{
+.win-control-osbtns {
     position: absolute;
     top: 0;
     right: 6px;
@@ -21,27 +21,27 @@ html, body, #app, .el-container, .el-tabs, .el-tabs__content, .el-tab-pane, .el-
     line-height: 30px;
 }
 
-.lock-btn{
+.lock-btn {
     margin-right: 7px;
     margin-left: 5px;
     color: #F56C6C;
     font-size: 19px;
 }
 
-.broswer-btn{
+.broswer-btn {
     margin-right: 7px;
     margin-left: 5px;
     color: #666 !important;
     font-size: 19px;
 }
 
-.win-control-osbtn{
-    color:#000;
+.win-control-osbtn {
+    color: #000;
     margin: 0 3px;
 }
 
 /*windows的透明就是完全透明了~ 这里处理一下*/
-.win-control-bg{
+.win-control-bg {
     position: absolute;
     top: 0;
     left: 0;
@@ -49,23 +49,23 @@ html, body, #app, .el-container, .el-tabs, .el-tabs__content, .el-tab-pane, .el-
     height: 100%;
     z-index: 1;
     /*background: #fff;*/
-    background: rgb(229,228,228);
+    background: rgb(229, 228, 228);
 }
 
-.win-control-upbg{
+.win-control-upbg {
     position: absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: 2;
 }
 
-html, body{
+html, body {
     overflow-x: hidden;
 }
 
-.ivu-modal-mask, .ivu-modal-content{
+.ivu-modal-mask, .ivu-modal-content {
     background-color: none;
     background: transparent;
 }
@@ -93,7 +93,7 @@ html, body{
     height: 100%;
 }
 
-.el-tabs__content{
+.el-tabs__content {
     height: calc(100% - 35px);
 }
 
@@ -145,6 +145,9 @@ html, body{
     /*-webkit-app-region: no-drag;*/
 }
 
+.zxx-real-controls {
+}
+
 .zxx-control-btn {
     color: #666 !important;
     font-size: 19px;
@@ -152,7 +155,7 @@ html, body{
     margin: 0 5px;
 }
 
-.zxx-control-loading{
+.zxx-control-loading {
     position: absolute;
     top: 3px;
 }
