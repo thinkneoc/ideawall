@@ -62,6 +62,14 @@ windows: %LOCALAPPDATA%\electron-builder\cache
 │   └── winCodeSign-1.9.0
 └── wine
     └── wine-2.0.1-mac-10.12
+    
+    
+#减小安装包大小
+删掉 dev 依赖:
+"electron": "^5.0.4",
+"electron-rebuild": "^1.8.5",
+"electron-packager": "^14.0.0",
+"electron-builder": "^20.44.4"
 
 
 # 集成 Webpack
