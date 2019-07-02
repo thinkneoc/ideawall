@@ -34,6 +34,7 @@ let appVar = {
     _icon: path.join(__dirname, relative + 'static/' + (os.platform() === 'darwin' ? 'logo/logo-blue_64@4x.png' : 'logo/logo-blue_64@4x.png')),
     _lock: false,
     _guide: false,
+    _updatelog: 'http://bbs.iw.16inet.com/forum.php?mod=viewthread&tid=7',//更新日志地址
     _sqllog: false && config.get("debug"),
     _dbath: workspace + "/data/iw.db",//本地数据库
     _apath: {

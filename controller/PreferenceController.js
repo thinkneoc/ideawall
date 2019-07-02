@@ -33,6 +33,11 @@ var vm = new Vue({
                     text: '正在清理...',
                     htext: '清理缓存',
                 },
+                openUpdatelog: {
+                    bol: false,
+                    text: '正在调起...',
+                    htext: '版本介绍',
+                },
             },
             menuInfoTab: 'common',
             animation: {
@@ -196,7 +201,7 @@ var vm = new Vue({
         clearCache() {
             this.btnLoading.clearCache.bol = true;
             proxy.ipc.send('ipc_clean', 'onlyCache');
-            setTimeout(()=>{
+            setTimeout(() => {
                 this.btnLoading.clearCache.htext = '清理完毕';
                 this.btnLoading.clearCache.bol = false;
                 this.btnLoading.clearCache.showDesc = true;
@@ -205,6 +210,18 @@ var vm = new Vue({
         //前往官网
         gotoOffical() {
             proxy.openExternal(proxy.appVar._siteurl);
+        },
+        //查看版本介绍
+        openUpdateLog() {
+            this.btnLoading.openUpdatelog.bol = true;
+            setTimeout(() => {
+                if (proxy.appVar._updatelog && (proxy.appVar._updatelog + '').trim() !== '' && proxy.appVar._updatelog.indexOf('http') === 0) {
+                    $$.gotoBbs(proxy.appVar._updatelog);
+                } else {
+                    proxy.alert('系统提示', '调起失败! 请升级至最新版本或联系我们~');
+                }
+                this.btnLoading.openUpdatelog.bol = false;
+            }, 1000);
         },
         //关于
         openAbout() {

@@ -3,6 +3,7 @@ const http = proxy.require('../core/Http');
 const logger = proxy.require('../core/Logger');
 const uuid = proxy.require('../core/UUID')();
 let agent = proxy.require('../core/Agent');
+const preferenceModel = proxy.require('../model/PreferenceModel')(proxy.appVar);
 
 var vm = new Vue({
     el: '#app',
@@ -266,8 +267,8 @@ var vm = new Vue({
             var ihtml = '<div id="dragWin-div" class="dragwin-dblclick window-drag" style="z-index:20990909;position:absolute;width:100%;top:0;left:0;pointer-events: none;height:' + height + ';"></div>';//
             $(panelId).prepend(ihtml);
         },
-        doctorReport(cmd, name, url){
-            if(this.tabs[cmd]){
+        doctorReport(cmd, name, url) {
+            if (this.tabs[cmd]) {
                 this.tabs[cmd].repreload = true;
             }
         },
@@ -283,7 +284,7 @@ var vm = new Vue({
             console.debug(ifa.attr('src'));
             var netbrokenUrl = 'errors/netbroken.html';
             //首次加载的, 但是是netbroken页面, 需要重新刷新一下, 否则游戏功能会有点问题
-            if(aTab.preload && aTab.repreload && !ifa.attr('data-repreload')){
+            if (aTab.preload && aTab.repreload && !ifa.attr('data-repreload')) {
                 this.loadingTab = true;
                 ifa.attr('src', aTab.link);
                 ifa.attr('data-repreload', 'true');
@@ -464,6 +465,28 @@ window.onload = function () {
         proxy.alert('ideawall 更新提醒', '检测到全新版本, 点击前往下载', (response) => {
             if (response === 0) proxy.openExternal(proxy.appVar._updatepageurl);
         }, 'info', ['前往下载']);
+    }
+    //更新日志
+    if (proxy.appVar._guide) {
+        var stasdPref = preferenceModel.getByKey('dontshowTipAfter_guideTip');
+        stasdPref.value = JSON.parse(stasdPref.value);
+        if (!stasdPref.value.val) {
+            proxy.alert('系统提示 ', '我们检测到你安装了一个新的版本, 是否查看当前版本更新日志', (res) => {
+                if (res === 0) {
+                    if (proxy.appVar._updatelog && (proxy.appVar._updatelog + '').trim() !== '' && proxy.appVar._updatelog.indexOf('http') === 0) {
+                        $$.gotoBbs(proxy.appVar._updatelog);
+                    } else {
+                        proxy.alert('系统提示', '调起失败! 请升级至最新版本或联系我们~');
+                    }
+                    stasdPref.value.val = true;
+                    preferenceModel.updateById(stasdPref);
+                }
+                if (res === 2) {
+                    stasdPref.value.val = true;
+                    preferenceModel.updateById(stasdPref);
+                }
+            }, false, ['好的', '下次再说', '不再提醒']);
+        }
     }
 };
 

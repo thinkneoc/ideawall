@@ -104,6 +104,9 @@
                         <el-button size="mini" type="" @click="openAbout">
                             关于 ideawall
                         </el-button>
+                        <el-button size="mini" type="" @click="openUpdateLog" :loading="btnLoading.openUpdatelog.bol">
+                            {{btnLoading.openUpdatelog.bol?btnLoading.openUpdatelog.text:btnLoading.openUpdatelog.htext}}
+                        </el-button>
                     </el-form-item>
                 </el-form>
             </el-tab-pane>

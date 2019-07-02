@@ -107,15 +107,15 @@ var vm = new Vue({
         },
         submitFB: function () {
             if (this.description === '') {
-                proxy.alert('提交失败', '请填写反馈详情信息');
+                proxy.alert('提交失败', '请填写反馈详情信息', false, 'warning');
                 return;
             }
             if (this.submitSign) {
-                proxy.alert('提交失败', '您已提交反馈报告成功, 请勿重复提交!');
+                proxy.alert('提交失败', '您已提交反馈报告成功, 请勿重复提交!', false, 'warning');
                 return;
             }
             if (top.vm.netstatus === 'offline') {
-                proxy.alert('无法提交', '您当前尚未连接到互联网!');
+                proxy.alert('无法提交', '您当前尚未连接到互联网!', false, 'warning');
                 return;
             }
             top.vm.showLoadingMaster();

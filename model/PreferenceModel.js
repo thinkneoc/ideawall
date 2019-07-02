@@ -169,7 +169,7 @@ let defaults = [
         type: 'implicit',
         formitem: '',
         key: 'dontshowTipAfter_guideTip',
-        name: '引导提示关闭后不再提醒提示',
+        name: '引导模块开关',
         description: '',
         explicit: 1,
         value: {
