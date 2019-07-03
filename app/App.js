@@ -73,7 +73,6 @@ if (!gotTheLock) {
          * 初始化壁纸层窗口
          */
         helper.getWallWindow();
-        helper.getProtectorWindow();
         helper.getControlWindow(pref_autoOpenControl || appVar._guide); //防止启动的时候资源占用超负荷, 暂时不启用.
 
         /**
