@@ -14,6 +14,7 @@ const AppVar = require('./AppVar');
 let appVar = AppVar.getAppVar();
 
 const wallWindow = require('./window/WallWindow');
+const protectorWindow = require('./window/ProtectorWindow');
 const controlWindow = require('./window/ControlWindow');
 const previewWindow = require('./window/PreviewWindow');
 const deviceInfoWindow = require('./window/DeviceInfoWindow');
@@ -29,8 +30,44 @@ const JsonEditorWindow = require('./window/JsonEditorWindow');
 
 // 为了保证一个对全局windows对象的引用，就必须在方法体外声明变量
 // 否则当方法执行完成时就会被JavaScript的垃圾回收机制清理
-let wallWins = [],
+let wallWins = [], protectorWins = [],
     controlWin, previewWin, browserWin, deviceInfoWin, ReadmeWin, AboutWin, JsonEditorWin;
+
+/**
+ * 返回全局protectorWindow对象
+ */
+function getProtectorWindow(paramJson) {
+    var res = true;
+    if (protectorWins.length > 0) {
+        for (var x in protectorWins) {
+            var window = protectorWins[x];
+            try {
+                window.show();
+            } catch (e) {
+                protectorWins[x] = protectorWindow.creat(x, paramJson);
+                protectorWins[x].webContents.on('new-window', (event, url, frameName, disposition, options) => {
+                    event.preventDefault();
+                    console.log(url);
+                    event.newGuest = getBrowserWindow(url).win;
+                });
+            }
+        }
+    } else {
+        protectorWins = protectorWindow.creat(paramJson);
+        for (var x in protectorWins) {
+            protectorWins[x].webContents.on('new-window', (event, url, frameName, disposition, options) => {
+                event.preventDefault();
+                console.log(url);
+                event.newGuest = getBrowserWindow(url).win;
+            });
+        }
+        res = false;
+    }
+    return {
+        result: res,
+        win: protectorWins
+    };
+}
 
 /**
  * 返回全局wallWindow对象
@@ -318,6 +355,7 @@ ipcMain.on('ipc_update_check', function (event) {
 
 module.exports = {
     getWallWindow,
+    getProtectorWindow,
     getControlWindow,
     getPreviewWindow,
     getDeviceInfoWindow,

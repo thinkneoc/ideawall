@@ -103,7 +103,8 @@ let appVar = {
     _readmewindow: {},//Readme窗体
     _aboutwindow: {},//About 窗体
     _jsoneditorwindow: {},//JsonEditor 窗体
-    _wallwindows: {},//设备 id 与 桌面窗体 的一一对应集合.
+    _wallwindows: {},//桌面窗体集合, 设备 id 与 桌面窗体 的一一对应集合.
+    _protectorwindows: {},//屏保窗体集合, 设备 id 与 屏保窗体 的一一对应集合.
     _primarydisplay: {},//主屏幕设备
     _displays: [],//这个是初始化会进行处理的设备集合.
     _autoLauncher: {},

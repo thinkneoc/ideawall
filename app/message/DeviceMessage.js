@@ -37,7 +37,7 @@ function DeviceMessage() {
                 if (!dp) {
                     return this.syncUpdate();//有可能数组中的元素为 undefined
                 }
-                appVar._wallwindows[dp.display_id].window.webContents.send('ipc_wall_update_forward');
+                appVar._wallwindows[parseInt(dp.display_id)].window.webContents.send('ipc_wall_update_forward');
             }
         }
         // }, 500);

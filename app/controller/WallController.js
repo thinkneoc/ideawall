@@ -168,7 +168,7 @@ var vm = new Vue({
         setMuted(display) {
             if (display) {
                 // try {//若没有音频, 会报错.
-                proxy.appVar._wallwindows[display.display_id].window.webContents.setAudioMuted((display.api_muted === 2));
+                proxy.appVar._wallwindows[parseInt(display.display_id)].window.webContents.setAudioMuted((display.api_muted === 2));
                 // }catch(e){
                 //     //...
                 // }
