@@ -80,6 +80,7 @@ windows: %LOCALAPPDATA%\electron-builder\cache
 5.看一下 node_modules 那些包太大, 适当性删减. [MAC] du -sc ./app/node_modules/* | sort -nr  (-h 是显示 M,K 单位, 但会后面的排序指令.)
 6.目前包排名: sqlite3 -> 20M, lodash -> 4.8M, unirest-> 1.3M
 7.如果异常, 试试删掉两个node_modules, 然后重新cnpm install.
+8.使用 yarn run dist 打包.
 
 
 
