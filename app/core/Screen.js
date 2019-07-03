@@ -26,8 +26,7 @@ var _Screen = function () {
     /**
      * 初始化控制器
      */
-    this.init = function () {
-    };
+    this.init = function () {};
 
     /**
      * 判断快照的屏幕是否在初始化的监视器设备中, 用于监测是否需要重启生效.
@@ -79,8 +78,8 @@ var _Screen = function () {
             return item.id + '' == display_id + '';
         })[0];
         if (!display && !displays) {
-            displays = Screen.getAllDisplays();//没找到, 就重新匹配一次, 不用管其他地方的有没有改变, 管不了.
-            this.getDisplay(display_id, displays);//递归一次
+            displays = Screen.getAllDisplays(); //没找到, 就重新匹配一次, 不用管其他地方的有没有改变, 管不了.
+            this.getDisplay(display_id, displays); //递归一次
         }
         return display;
     };
@@ -163,33 +162,27 @@ var _Screen = function () {
      *
      * @param displays
      */
-    this.calcPackDisplay_win = function (displays) {
+    this.calcPackDisplay_win = function (zxx) {
         var _primarydisplay = appVar._primarydisplay;
         var _alldisplays = appVar._displays;
-        var res = {};//为方便获取和加强并发, 采用id:obj键值对的解构.
         var sx = 2;
-        for (var x in displays) {
-            var zxx = displays[x];
-            var newzxx = {};
-            //主屏幕鉴定
-            if (compareDisplay(zxx, _primarydisplay)) {
-                newzxx = _primarydisplay;
-                newzxx.name = 'Entire Screen';//Entire Screen | Screen 1
-                res[zxx.id] = newzxx;
-                continue;
-            }
+        var newzxx = {};
+        //主屏幕鉴定
+        if (compareDisplay(zxx, _primarydisplay)) {
+            newzxx = _primarydisplay;
+            newzxx.name = 'Entire Screen'; //Entire Screen | Screen 1
+        }else{
             for (var y in _alldisplays) {
                 var zyy = _alldisplays[y];
-                if (compareDisplay(zxx, zyy) && zyy.id !== _primarydisplay.id) {
+                if (compareDisplay(zxx, zyy)) {
                     newzxx = zyy;
                     newzxx.name = 'Screen ' + sx;
                     sx++;
-                    res[zxx.id] = newzxx;
                     break;
                 }
             }
         }
-        return res;
+        return newzxx;
 
         /**
          * 比较两个监视器对象是否符合
@@ -198,7 +191,7 @@ var _Screen = function () {
          * @returns {boolean}
          */
         function compareDisplay(dp1, dp2) {
-            return (dp1.width === dp2.bounds.width && dp1.height === dp2.bounds.height && dp1.top === dp2.bounds.y && dp1.left === dp2.bounds.x);
+            return (dp1.width == dp2.bounds.width && dp1.height == dp2.bounds.height && dp1.top == dp2.bounds.y && dp1.left == dp2.bounds.x);
         }
     };
 
@@ -211,39 +204,36 @@ var _Screen = function () {
         const screenshot = require('screenshot-desktop');
         let result = [];
         let rIds = [];
-        console.debug(appVar._primarydisplay);
-        console.debug(appVar._wallwindows);
         screenshot.listDisplays().then((displays) => {
             // displays: [{ id, name }, { id, name }]
-            let rdisplays = target.calcPackDisplay_win(displays);
-            console.debug(displays);
-            console.debug(rdisplays);
             for (let x in displays) {
                 let zxx = displays[x];
-                let zyy = rdisplays[zxx.id];
-                console.debug(zxx);
-                console.debug(zyy);
                 screenshot({
                     screen: zxx.id,
                 }).then((img) => {
-                    var dataurl = 'data:image/jpg;base64,' + img.toString('base64');
-                    let display = target.getDisplay(zyy.id);
-                    var obj = {
-                        id: zyy.id,
-                        display_id: zyy.id,
-                        display: display,
-                        name: zyy.name,
-                        title: target.calcScreenTitle(zyy.name),
-                        display_rp: target.calcScreenRp(false, display),
-                        thumbnail: null,
-                        stream: dataurl,
-                    };
-                    if (zyy.id == appVar._primarydisplay.id) {
-                        result.unshift(obj);//主屏幕放在前面
-                    } else {
-                        result.push(obj);
+                    let zyy = target.calcPackDisplay_win(zxx);
+                    if(zyy.id){
+                        console.debug(zxx);
+                        console.debug(zyy);
+                        var dataurl = 'data:image/jpg;base64,' + img.toString('base64');
+                        let display = target.getDisplay(zyy.id);
+                        var obj = {
+                            id: zyy.id,
+                            display_id: zyy.id,
+                            display: display,
+                            name: zyy.name,
+                            title: target.calcScreenTitle(zyy.name),
+                            display_rp: target.calcScreenRp(false, display),
+                            thumbnail: null,
+                            stream: dataurl,
+                        };
+                        if (zyy.id == appVar._primarydisplay.id) {
+                            result.unshift(obj); //主屏幕放在前面
+                        } else {
+                            result.push(obj);
+                        }
+                        rIds.push(zyy.id);
                     }
-                    rIds.push(zyy.id);
                 }).catch((err) => {
                     // ...
                     logger.error(err);
@@ -265,13 +255,16 @@ var _Screen = function () {
      * @param callback
      */
     this.snapscreen = function (thumbSize, callback) { // savePath: 保存路径(含文件名), openOnComplete: 完成后是否打开
+        //每一次進來都刷新監視器記錄
+        appVar._primarydisplay = Screen.getPrimaryDisplay();
+        appVar._displays = Screen.getAllDisplays();
         if (appVar._platform !== 'darwin') {
             return this.snapscreen_win(thumbSize, callback);
             // return DesktopCapturer.getSources();
         }
 
         var target = this;
-        const screenSize = Screen.getPrimaryDisplay().workAreaSize; //获取主显示器尺寸;
+        const screenSize = appVar._primarydisplay.workAreaSize; //获取主显示器尺寸;
         const maxDimension = Math.max(screenSize.width, screenSize.height); //尺寸大小预处理
         thumbSize = thumbSize ? thumbSize : {
             width: maxDimension * window.devicePixelRatio,

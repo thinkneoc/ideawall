@@ -12,6 +12,7 @@
     "debug": "electron . --debug",
     "postinstall": "electron-builder install-app-deps",
     "clean": "yarn autoclean -I && yarn autoclean -F",
+    "build": "npm run rebuild && npm run dist",
     "dist": "electron-builder",
     "dist:dir": "electron-builder --dir",
     "dist:all": "electron-builder --platform=all",
