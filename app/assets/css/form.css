@@ -219,6 +219,8 @@ html, body, #app {
 .zxx-setting-btns{
     float: right;
     text-align: center;
+    padding-top: 2px;
+    display: inline-flex;
 }
 
 .zxx-setting-btn{

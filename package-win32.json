@@ -46,7 +46,7 @@
     "productName": "ideawall",
     "copyright": "16inet.com",
     "directories": {
-      "output": "dist"
+      "output": "build/win32/"
     },
     "files": [
       "**"

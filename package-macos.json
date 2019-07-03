@@ -44,7 +44,7 @@
     "productName": "ideawall",
     "copyright": "16inet.com",
     "directories": {
-      "output": "dist"
+      "output": "build/mac/"
     },
     "files": [
       "**"
@@ -65,9 +65,9 @@
       "perMachine": false,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "installerIcon": "app/static/icon/512.ico",
-      "uninstallerIcon": "app/static/icon/512.ico",
-      "installerHeaderIcon": "app/static/icon/512.ico"
+      "installerIcon": "app/static/icon/256.ico",
+      "uninstallerIcon": "app/static/icon/256.ico",
+      "installerHeaderIcon": "app/static/icon/256.ico"
     },
     "linux": {
       "target": [
@@ -75,11 +75,11 @@
         "appImage",
         "deb"
       ],
-      "icon": "app/static/icon/512.ico"
+      "icon": "app/static/icon/256.ico"
     },
     "win": {
       "target": "nsis",
-      "icon": "app/static/icon/512.ico"
+      "icon": "app/static/icon/256.ico"
     },
     "dmg": {
       "contents": [
@@ -97,7 +97,7 @@
       ]
     },
     "mac": {
-      "icon": "app/static/icon/512.icns"
+      "icon": "app/static/icon/256.icns"
     },
     "publish": [
       {
