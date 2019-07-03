@@ -21,22 +21,33 @@ function getArguments() {
 }
 
 const packageWin32 = path.join(__dirname, './package-win32.json');
+const packageWin32App = path.join(__dirname, './package-win32-app.json');
 const packageMacos = path.join(__dirname, './package-macos.json');
+const packageMacosApp = path.join(__dirname, './package-macos-app.json');
 const targetPackage = path.join(__dirname, './package.json');
-let readStream;
+const targetPackageApp = path.join(__dirname, './app/package.json');
+
+let readStream, readStreamApp;
 getArguments();
 
 if (process.platform !== 'darwin') {
-    if (!fs.existsSync(targetPackage) || processArguments['f']) {
+    if (!fs.existsSync(targetPackage) || !fs.existsSync(targetPackageApp) || processArguments['f']) {
         readStream = fs.createReadStream(packageWin32);
+        readStreamApp = fs.createReadStream(packageWin32App);
     }
 } else {
-    if (!fs.existsSync(targetPackage)|| processArguments['f']) {
+    if (!fs.existsSync(targetPackage) || !fs.existsSync(targetPackageApp) || processArguments['f']) {
         readStream = fs.createReadStream(packageMacos);
+        readStreamApp = fs.createReadStream(packageMacosApp);
     }
 }
 
 if (readStream) {
     var writeStream = fs.createWriteStream(targetPackage);
     readStream.pipe(writeStream);
+}
+
+if (readStreamApp) {
+    var writeStreamApp = fs.createWriteStream(targetPackageApp);
+    readStreamApp.pipe(writeStreamApp);
 }

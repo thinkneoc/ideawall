@@ -10,8 +10,8 @@
     "init": "node init.js --f",
     "start": "electron .",
     "debug": "electron . --debug",
-    "clean": "yarn autoclean -I && yarn autoclean -F",
     "postinstall": "electron-builder install-app-deps",
+    "clean": "yarn autoclean -I && yarn autoclean -F",
     "dist": "electron-builder",
     "dist:dir": "electron-builder --dir",
     "dist:all": "electron-builder --platform=all",
@@ -115,21 +115,6 @@
     "electron-builder": "^20.44.4"
   },
   "dependencies": {
-    "archiver": "^3.0.0",
-    "async": "^2.6.1",
-    "auto-launch": "^5.0.5",
-    "better-sqlite3": "^5.4.0",
-    "electron-updater": "^4.0.12",
-    "electron-wallpaper": "^0.0.3",
-    "mousetrap": "^1.6.3",
-    "log4js": "^3.0.6",
-    "nodemailer": "^6.2.1",
-    "nodemailer-smtp-transport": "^2.7.4",
-    "screenshot-desktop": "^1.8.0",
-    "unirest": "^0.5.1",
-    "request": "^2.87.0",
-    "unzip": "^0.1.11",
-    "uuid": "^3.3.2"
   },
   "__npminstall_done": false
 }
