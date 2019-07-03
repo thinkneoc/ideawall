@@ -76,9 +76,10 @@ windows: %LOCALAPPDATA%\electron-builder\cache
 1../package.json 仅保留devDependencies
 2../app/package.json 仅保留dependencies, 最终分发目录仅为 ./app, 所以, 其他的 README.md 等不需要分发的文件应该放在 app 外围.
 3.cnpm install 安装开发环境依赖
-4.cd app => cnpm install 安装生产环境依赖 => npm run rebuild 自定义构建 => npm run debug 测试执行.
+4.cd app => cnpm install 安装生产环境依赖 => npm run rebuild 自定义构建 => cd .. => npm run debug 测试执行.
 5.看一下 node_modules 那些包太大, 适当性删减. [MAC] du -sc ./app/node_modules/* | sort -nr  (-h 是显示 M,K 单位, 但会后面的排序指令.)
 6.目前包排名: sqlite3 -> 20M, lodash -> 4.8M, unirest-> 1.3M
+7.如果异常, 试试删掉两个node_modules, 然后重新cnpm install.
 
 
 
