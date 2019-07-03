@@ -113,6 +113,7 @@
     "electron-rebuild": "^1.8.5",
     "electron-packager": "^14.0.0",
     "electron-builder": "^20.44.4",
+    "electron-prebuilt": "^1.4.13"
   },
   "dependencies": {
   },
