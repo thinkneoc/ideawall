@@ -1,39 +1,20 @@
 {
   "name": "ideawall",
   "author": "周曦 <1747128171@qq.com>",
-  "version": "1.1.7",
+  "version": "1.2.0",
   "description": "ideawall - 创意者桌面 [MacOs 版]",
   "private": true,
   "license": "",
   "main": "App.js",
   "scripts": {
-    "init": "node init.js --f",
     "start": "electron .",
     "debug": "electron . --debug",
     "clean": "yarn autoclean -I && yarn autoclean -F",
-    "postinstall": "electron-builder install-app-deps",
-    "dist": "electron-builder",
-    "dist:dir": "electron-builder --dir",
-    "dist:all": "electron-builder --platform=all",
-    "dist:l": "electron-builder --linux --ia32 --x64",
-    "dist:l32": "electron-builder --linux --ia32",
-    "dist:l64": "electron-builder --linux --x64",
-    "dist:w": "electron-builder --win --ia32 --x64",
-    "dist:w32": "electron-builder --win --ia32",
-    "dist:w64": "electron-builder --win --x64",
-    "dist:mac": "export CSC_IDENTITY_AUTO_DISCOVERY=false && electron-builder --mac --x64",
-    "rebuild": "cnpm rebuild -f --runtime=electron --target=5.0.4 --disturl=https://npm.taobao.org/mirrors/atom-shell --abi=72",
     "mail": "node resolver/MailResolver.js",
     "archive": "node resolver/ArchiverResolver.js",
     "uuid": "node resolver/UUIDResolver.js --serial --v1",
     "test": "node test/test.js"
   },
-  "keywords": [
-    "ideawall",
-    "electron",
-    "wall",
-    "desktop"
-  ],
   "build": {
     "compression": "maximum",
     "electronDownload": {
@@ -109,10 +90,6 @@
     "node": ">= 6.0.0"
   },
   "devDependencies": {
-    "electron": "^5.0.4",
-    "electron-rebuild": "^1.8.5",
-    "electron-packager": "^14.0.0",
-    "electron-builder": "^20.44.4"
   },
   "dependencies": {
     "electron-updater": "^4.0.12",

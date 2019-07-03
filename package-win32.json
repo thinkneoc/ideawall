@@ -12,8 +12,8 @@
     "debug": "electron . --debug",
     "clean": "yarn autoclean -I && yarn autoclean -F",
     "postinstall": "electron-builder install-app-deps",
-    "pack": "electron-builder --dir",
     "dist": "electron-builder",
+    "dist:dir": "electron-builder --dir",
     "dist:all": "electron-builder --platform=all",
     "dist:l": "electron-builder --linux --ia32 --x64",
     "dist:l32": "electron-builder --linux --ia32",
@@ -36,7 +36,6 @@
   ],
   "build": {
     "compression": "maximum",
-    "electronVersion": "5.0.4",
     "electronDownload": {
       "mirror": "https://npm.taobao.org/mirrors/electron/"
     },
@@ -110,7 +109,10 @@
     "node": ">= 6.0.0"
   },
   "devDependencies": {
-
+    "electron": "^5.0.4",
+    "electron-rebuild": "^1.8.5",
+    "electron-packager": "^14.0.0",
+    "electron-builder": "^20.44.4"
   },
   "dependencies": {
     "archiver": "^3.0.0",

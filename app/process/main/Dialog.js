@@ -13,7 +13,9 @@ let appVar = global.appVar;
  * @returns {*}
  */
 function getWindow(windowKey) {
-    return global.appVar[windowKey]
+    if(windowKey) {
+        return global.appVar[windowKey]
+    }
 }
 
 
@@ -23,7 +25,7 @@ function getWindow(windowKey) {
 ipc.on('dialog.showMessageBox', function (event, winKey, responseIpcCmd, type, buttons, defaultId, title, message, detail, icon, cancelId, noLink) {
     logger.info('[Core][Dialog][dialog.showMessageBox] ' + winKey + ' - ' + responseIpcCmd + ' - ' + type);
     logger.info('[Core][Dialog][dialog.showMessageBox] ' + message + ' - ' + detail);
-    Dialog.showMessageBox(getWindow(winKey), {
+    var args = {
         type: type,//String - 可以是 "none", "info", "error", "question" 或 "warning". 在 Windows, "question" 与 "info" 展示图标相同, 除非你使用 "icon" 参数.
         buttons: buttons,// Array - buttons 内容，数组.
         defaultId: defaultId,//Integer - 在message box 对话框打开的时候，设置默认button选中，值为在 buttons 数组中的button索引.
@@ -33,12 +35,23 @@ ipc.on('dialog.showMessageBox', function (event, winKey, responseIpcCmd, type, b
         icon: icon?icon:(appVar._icon),//NativeImage
         cancelId: cancelId,//Integer - 当用户关闭对话框的时候，不是通过点击对话框的button，就返回值.默认值为对应 "cancel" 或 "no" 标签button 的索引值, 或者如果没有这种button，就返回0. 在 OS X 和 Windows 上， "Cancel" button 的索引值将一直是 cancelId, 不管之前是不是特别指出的.
         noLink: noLink//Boolean - 在 Windows ，Electron 将尝试识别哪个button 是普通 button (如 "Cancel" 或 "Yes"), 然后再对话框中以链接命令(command links)方式展现其它的 button . 这能让对话框展示得很炫酷.如果你不喜欢这种效果，你可以设置 noLink 为 true.
-    }, function (response) {
-        if (responseIpcCmd && responseIpcCmd != '') {
-            event.sender.send(responseIpcCmd, response);
-        }
-        event.returnValue = response;
-    });
+    };
+    var win = getWindow(winKey);
+    if(win) {
+        Dialog.showMessageBox(win, args, function (response) {
+            if (responseIpcCmd && responseIpcCmd != '') {
+                event.sender.send(responseIpcCmd, response);
+            }
+            event.returnValue = response;
+        });
+    }else{
+        Dialog.showMessageBox(args, function (response) {
+            if (responseIpcCmd && responseIpcCmd != '') {
+                event.sender.send(responseIpcCmd, response);
+            }
+            event.returnValue = response;
+        });
+    }
 });
 
 /**

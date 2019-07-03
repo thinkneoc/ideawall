@@ -98,7 +98,7 @@ function createOne(display, paramJson) {
         pathname: path.join(__dirname, relative + "./view/components/Wall.html"),//把设备 id传过去, 方便处理.
         protocol: 'file:',
         slashes: true
-    }) + "?windowId=" + xwindow.id + "&displayId=" + display.id + lang.json2UrlParams(paramJson));
+    }) + "?windowKey=_wallwindow&windowId=" + xwindow.id + "&displayId=" + display.id + lang.json2UrlParams(paramJson));
 
     // 引入主入口界面
     if (appVar._debug) {

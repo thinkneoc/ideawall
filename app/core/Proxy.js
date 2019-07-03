@@ -394,6 +394,7 @@ var url4Browser = function (name) {
 T.p = url4Browser;
 T.windowId = top.T.p('windowId');//windowId 肯定在最上层.  ==> windowId 获取的 window 不一定准确. 因为 windowId 实际是数组索引.
 T.windowKey = top.T.p('windowKey');
+console.log('windows: ' + T.windowId + ' ' + T.windowKey);
 
 //动态引入js文件.
 var zxxinclude = function (path, where, charset) {
