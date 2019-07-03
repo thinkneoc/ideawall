@@ -19,6 +19,7 @@ const previewWindow = require('./window/PreviewWindow');
 const deviceInfoWindow = require('./window/DeviceInfoWindow');
 const ReadmeWindow = require('./window/ReadmeWindow');
 const AboutWindow = require('./window/AboutWindow');
+const XBrowserWindow = require('./window/XBrowserWindow');
 const JsonEditorWindow = require('./window/JsonEditorWindow');
 
 //系统静态文件目录
@@ -29,7 +30,7 @@ const JsonEditorWindow = require('./window/JsonEditorWindow');
 // 为了保证一个对全局windows对象的引用，就必须在方法体外声明变量
 // 否则当方法执行完成时就会被JavaScript的垃圾回收机制清理
 let wallWins = [],
-    controlWin, previewWin, deviceInfoWin, ReadmeWin, AboutWin, JsonEditorWin;
+    controlWin, previewWin, browserWin, deviceInfoWin, ReadmeWin, AboutWin, JsonEditorWin;
 
 /**
  * 返回全局wallWindow对象
@@ -43,10 +44,22 @@ function getWallWindow(paramJson) {
                 window.show();
             } catch (e) {
                 wallWins[x] = wallWindow.creat(x, paramJson);
+                wallWins[x].webContents.on('new-window', (event, url, frameName, disposition, options) => {
+                    event.preventDefault();
+                    console.log(url);
+                    event.newGuest = getBrowserWindow(url).win;
+                });
             }
         }
     } else {
         wallWins = wallWindow.creat(paramJson);
+        for (var x in wallWins) {
+            wallWins[x].webContents.on('new-window', (event, url, frameName, disposition, options) => {
+                event.preventDefault();
+                console.log(url);
+                event.newGuest = getBrowserWindow(url).win;
+            });
+        }
         res = false;
     }
     return {
@@ -64,12 +77,39 @@ function getControlWindow(isshow, paramJson) {
         }, 300);
     } catch (e) {
         controlWin = controlWindow.creat(isshow, paramJson);
+        controlWin.webContents.on('new-window', (event, url, frameName, disposition, options) => {
+            event.preventDefault();
+            console.log(url);
+            event.newGuest = getBrowserWindow(url).win;
+        });
         getWallWindow(); //如果是手动停止了, 那么这里需要判定一下桌面壁纸层是否启动.
         res = false;
     }
     return {
         result: res,
         win: controlWin
+    };
+}
+
+function getBrowserWindow(link, paramJson) {
+    var res = true;
+    try {
+        browserWin.webContents.send('ipc_window_browser_cgi', link, paramJson);
+        setTimeout(() => {
+            browserWin.show();
+        }, 300);
+    } catch (e) {
+        browserWin = XBrowserWindow.creat(link, paramJson);
+        browserWin.webContents.on('new-window', (event, url, frameName, disposition, options) => {
+            event.preventDefault();
+            console.log(url);
+            event.newGuest = getBrowserWindow(url).win;
+        });
+        res = false;
+    }
+    return {
+        result: res,
+        win: browserWin
     };
 }
 
@@ -82,6 +122,11 @@ function getPreviewWindow(deskId, paramJson) {
         }, 300);
     } catch (e) {
         previewWin = previewWindow.creat(deskId, paramJson);
+        previewWin.webContents.on('new-window', (event, url, frameName, disposition, options) => {
+            event.preventDefault();
+            console.log(url);
+            event.newGuest = getBrowserWindow(url).win;
+        });
         res = false;
     }
     return {
@@ -101,6 +146,11 @@ function getDeviceInfoWindow(displayId, paramJson) {
         }, 300);
     } catch (e) {
         deviceInfoWin = deviceInfoWindow.creat(displayId, paramJson);
+        deviceInfoWin.webContents.on('new-window', (event, url, frameName, disposition, options) => {
+            event.preventDefault();
+            console.log(url);
+            event.newGuest = getBrowserWindow(url).win;
+        });
         res = false;
     }
     return {
@@ -120,6 +170,11 @@ function getReadmeWindow(deskId, paramJson) {
         }, 300);
     } catch (e) {
         ReadmeWin = ReadmeWindow.creat(deskId, paramJson);
+        ReadmeWin.webContents.on('new-window', (event, url, frameName, disposition, options) => {
+            event.preventDefault();
+            console.log(url);
+            event.newGuest = getBrowserWindow(url).win;
+        });
         res = false;
     }
     return {
@@ -137,6 +192,11 @@ function getAboutWindow(paramJson) {
         }, 300);
     } catch (e) {
         AboutWin = AboutWindow.creat(paramJson);
+        AboutWin.webContents.on('new-window', (event, url, frameName, disposition, options) => {
+            event.preventDefault();
+            console.log(url);
+            event.newGuest = getBrowserWindow(url).win;
+        });
         res = false;
     }
     return {
@@ -156,6 +216,11 @@ function getJsonEditorWindow(json) {
         }, 300);
     } catch (e) {
         JsonEditorWin = JsonEditorWindow.creat(json);
+        JsonEditorWin.webContents.on('new-window', (event, url, frameName, disposition, options) => {
+            event.preventDefault();
+            console.log(url);
+            event.newGuest = getBrowserWindow(url).win;
+        });
         res = false;
     }
     return {
@@ -180,6 +245,7 @@ function closeAllWindows() {
     deviceInfoWin = null;
     previewWin = null;
     controlWin = null;
+    browserWin = null;
     wallWins = [];
 }
 
@@ -221,6 +287,8 @@ ipcMain.on('ipc_window_open', function (event, winKey, data, paramJson) {
         getAboutWindow(paramJson);
     } else if (winKey === 'control') {
         getControlWindow(data, paramJson);
+    } else if (winKey === 'browser') {
+        getBrowserWindow(data, paramJson);
     }
 });
 
@@ -255,6 +323,7 @@ module.exports = {
     getDeviceInfoWindow,
     getReadmeWindow,
     getAboutWindow,
+    getBrowserWindow,
     getJsonEditorWindow,
     closeAllWindows,
 };

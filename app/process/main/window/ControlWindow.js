@@ -31,13 +31,13 @@ function creat(isshow, paramJson) {
         height: 600,
         minWidth: 998,
         minHeight: 600,
-        maxWidth: appVar._platform === 'darwin' ? undefined : 998,
-        maxHeight: appVar._platform === 'darwin' ? undefined : 600,
+        maxWidth: 998,
+        maxHeight: 600,
         title: appVar._platform === 'darwin' ? undefined :'',
-        resizable: true,
+        resizable: false,
         movable: true,
         minimizable: true,
-        maximizable: true,
+        maximizable: false,
         opacity: 1.0,//设置窗口初始的不透明度, 介于 0.0 (完全透明) 和 1.0 (完全不透明) 之间。仅支持 Windows 和 macOS 。
         darkTheme: false,//强制窗口使用 dark 主题, 只在一些拥有 GTK+3 桌面环境上有效. 默认值为 false.
         acceptFirstMouse: true,//是否允许单击web view来激活窗口
@@ -88,22 +88,6 @@ function creat(isshow, paramJson) {
         });
     }
 
-    xwindow.webContents.on('new-window', (event, url, frameName, disposition, options) => {
-        event.preventDefault();
-        console.log(options);
-        const win = new Electron.BrowserWindow(options);
-        options.show = false;
-        options.width = 955;
-        options.height = 600;
-        options.minWidth = 955;
-        options.minHeight = 600;
-        win.once('ready-to-show', () => win.show());
-        if (!options.webContents) {
-            win.loadURL(url) // existing webContents will be navigated automatically
-        }
-        event.newGuest = win
-    });
-
     xwindow.onbeforeunload = (e) => {
         console.log('I do not want to be closed')
 
@@ -135,6 +119,7 @@ function creat(isshow, paramJson) {
             appVar._deviceinfowindow.close();
             appVar._readmewindow.close();
             appVar._jsoneditorwindow.close();
+            appVar._browserwindow.close();
         } catch (e) {
             //...
         }

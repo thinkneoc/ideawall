@@ -121,6 +121,9 @@ var vm = new Vue({
             that.loading = true;
             $$.dealIframe(xiframe, proxy.appVar._storeurl);
         });
+        proxy.ipc.on('ipc_render_control_deskstore_open', (event, cmd) => {
+            proxy.ipc.send('ipc_window_open', 'browser', that.nowURL);
+        });
         proxy.ipc.on('ipc_render_control_deskstore_changeurl', (event, url) => {
             that.loading = true;
             this.nowURL = url;

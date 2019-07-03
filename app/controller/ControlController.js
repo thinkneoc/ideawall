@@ -42,7 +42,10 @@ var vm = new Vue({
                         },
                         home: function (cmd) {
                             proxy.ipc.send('ipc_repeat', 'ipc_render_control_deskstore_home');
-                        }
+                        },
+                        open: function (cmd) {
+                            proxy.ipc.send('ipc_repeat', 'ipc_render_control_deskstore_open');
+                        },
                     },
                 },
                 'resbbs': {
@@ -62,7 +65,10 @@ var vm = new Vue({
                         },
                         home: function (cmd) {
                             proxy.ipc.send('ipc_repeat', 'ipc_render_control_resbbs_home');
-                        }
+                        },
+                        open: function (cmd) {
+                            proxy.ipc.send('ipc_repeat', 'ipc_render_control_resbbs_open');
+                        },
                     },
                 },
                 'preference': {
@@ -136,6 +142,11 @@ var vm = new Vue({
                     }
                     this.loadingTab = true;
                     this.handleClick(aTab, false, true);
+                } else if (cmd === 'open') {
+                    if (aTab.action && typeof aTab.action.open === 'function') {
+                        return aTab.action.open(cmd, hashis);
+                    }
+                    proxy.alert('系统提示', '目标页面不支持新窗打开!');
                 }
             } else {
                 proxy.alert('警告', '当前标签页尚未支持 History 动作!', false, 'warning');

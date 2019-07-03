@@ -37,6 +37,9 @@ var vm = new Vue({
             that.loading = true;
             xiframe.attr('src', proxy.appVar._bbsurl);
         });
+        proxy.ipc.on('ipc_render_control_resbbs_open', (event, cmd) => {
+            proxy.ipc.send('ipc_window_open', 'browser', that.nowURL);
+        });
         proxy.ipc.on('ipc_render_control_resbbs_changeurl', (event, url) => {
             that.loading = true;
             this.nowURL = url;

@@ -98,6 +98,7 @@ let appVar = {
     _previewwindow: {},//预览窗体
     _controlwindow: {},//控制面板窗体
     _displayId: '',//当前正在查看信息的设备 id
+    _browserwindow: {},//拟浏览器窗体
     _deviceinfowindow: {},//设备信息窗体
     _readmewindow: {},//Readme窗体
     _aboutwindow: {},//About 窗体

@@ -15,24 +15,26 @@ const relative = '../../../';
 
 let xwindow;
 
-function creat(paramJson) {
-    logger.info("[Process][MainProcessHelper][AboutWindow]初始化桌面预览窗口");
+function creat(link, paramJson) {
+    logger.info("[Process][MainProcessHelper][BrowserWindow]初始化拟浏览器窗口");
 
     // 创建浏览器窗口。
     xwindow = new Electron.BrowserWindow({
-        frame: true, //隐藏原生窗口边框
+        // frame: false, //隐藏原生窗口边框
         useContentSize: true,
         zoomToPageWidth: false,//单击工具栏上的绿色信号灯按钮或单击 窗口>缩放 菜单项时的行为, 仅macOS中有效. 如果为 true, 窗口将放大到网页的本身宽度, false 将使其缩放到屏幕的宽度。 这也会影响直接调用 maximize() 时的行为。 默认值为 false.
         backgroundColor: appVar._platform !== 'darwin'?'#FFF':'#80FFFFFF',
         show: false,//创建时候是否显示
         center: true,
-        width: 560,
-        height: 320,
-        resizable: false,
+        width: 1080,
+        height: 720,
+        minWidth: 998,
+        minHeight: 600,
+        resizable: true,
         movable: true,
-        minimizable: false,
-        maximizable: false,
-        title: '',
+        minimizable: true,
+        maximizable: true,
+        title: 'ideawall 浏览器',
         // alwaysOnTop: true,
         opacity: 1.0,//设置窗口初始的不透明度, 介于 0.0 (完全透明) 和 1.0 (完全不透明) 之间。仅支持 Windows 和 macOS 。
         darkTheme: false,//强制窗口使用 dark 主题, 只在一些拥有 GTK+3 桌面环境上有效. 默认值为 false.
@@ -41,7 +43,7 @@ function creat(paramJson) {
         focusable: true,//是否可聚焦
         transparent: false,//开启窗口透明
         hasShadow: true,//窗口是否有阴影。只在 OS X 上有效. 默认为 true。这个打开会造成部分盒子阴影, 体验较差.
-        skipTaskbar: true, //是否跳过在任务栏中显示窗口. 默认值为false.
+        skipTaskbar: false, //是否跳过在任务栏中显示窗口. 默认值为false.
         enableLargerThanScreen: false,//是否允许改变窗口的大小时, 大于屏幕的尺寸. 默认值为false.
         autoHideMenuBar: true,//除非点击 Alt，否则隐藏菜单栏.默认为 false。
         webPreferences: { //用于解决not allowed to load local resource的问题
@@ -61,10 +63,10 @@ function creat(paramJson) {
 
     // 旁加载应用的 index.html。
     xwindow.loadURL(url.format({
-        pathname: path.join(__dirname, relative + "./view/components/About.html"),
+        pathname: path.join(__dirname, relative + "./view/components/Browser.html"),
         protocol: 'file:',
         slashes: true
-    }) + "?windowKey=_aboutwindow&windowId=" + xwindow.id + lang.json2UrlParams(paramJson));
+    }) + "?windowKey=_browserwindow&windowId=" + xwindow.id + "&link=" + encodeURIComponent(encodeURIComponent(link)) +lang.json2UrlParams(paramJson));
 
     // 引入主入口界面
     if (appVar._debug) {
@@ -82,7 +84,7 @@ function creat(paramJson) {
 
     // 当窗口关闭时触发
     xwindow.on('closed', function () {
-        logger.info("[Process][MainProcessHelper][_AboutWindow.on._closed_]桌面预览窗口关闭");
+        logger.info("[Process][MainProcessHelper][_BrowserWindow.on._closed_]拟浏览器窗口关闭");
 
         //将全局xwindow置为null
         xwindow = null;
@@ -100,7 +102,7 @@ function creat(paramJson) {
         // }, 100);
     });
     AppVar.setAppVar({
-        _aboutwindow: xwindow,
+        _browserwindow: xwindow,
     });
     return xwindow;
 }
