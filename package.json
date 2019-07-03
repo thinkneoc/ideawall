@@ -23,10 +23,10 @@
     "dist:w64": "electron-builder --win --x64",
     "dist:mac": "export CSC_IDENTITY_AUTO_DISCOVERY=false && electron-builder --mac --x64",
     "rebuild": "cnpm rebuild -f --runtime=electron --target=5.0.4 --disturl=https://npm.taobao.org/mirrors/atom-shell --abi=72",
-    "mail": "node resolver/MailResolver.js",
-    "archive": "node resolver/ArchiverResolver.js",
-    "uuid": "node resolver/UUIDResolver.js --serial --v1",
-    "test": "node test/test.js"
+    "mail": "node app/resolver/MailResolver.js",
+    "archive": "node app/resolver/ArchiverResolver.js",
+    "uuid": "node app/resolver/UUIDResolver.js --serial --v1",
+    "test": "node app/test/test.js"
   },
   "keywords": [
     "ideawall",
@@ -64,9 +64,9 @@
       "perMachine": false,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "installerIcon": "static/icon/512.ico",
-      "uninstallerIcon": "static/icon/512.ico",
-      "installerHeaderIcon": "static/icon/512.ico"
+      "installerIcon": "app/static/icon/512.ico",
+      "uninstallerIcon": "app/static/icon/512.ico",
+      "installerHeaderIcon": "app/static/icon/512.ico"
     },
     "linux": {
       "target": [
@@ -74,11 +74,11 @@
         "appImage",
         "deb"
       ],
-      "icon": "static/icon/512.ico"
+      "icon": "app/static/icon/512.ico"
     },
     "win": {
       "target": "nsis",
-      "icon": "static/icon/512.ico"
+      "icon": "app/static/icon/512.ico"
     },
     "dmg": {
       "contents": [
@@ -96,7 +96,7 @@
       ]
     },
     "mac": {
-      "icon": "static/icon/512.icns"
+      "icon": "app/static/icon/256.icns"
     },
     "publish": [
       {
