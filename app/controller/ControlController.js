@@ -467,7 +467,7 @@ window.onload = function () {
         }, 'info', ['前往下载']);
     }
     //更新日志
-    if (proxy.appVar._guide) {
+    if (proxy.appVar._guide && !proxy.appVar._rfirst) {
         var stasdPref = preferenceModel.getByKey('dontshowTipAfter_guideTip');
         stasdPref.value = JSON.parse(stasdPref.value);
         if (!stasdPref.value.val) {

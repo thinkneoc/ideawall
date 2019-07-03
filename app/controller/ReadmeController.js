@@ -46,14 +46,14 @@ var vm = new Vue({
                         });
                     } else {
                         console.warn('当前配置桌面源非法');
-                        proxy.alert('系统提示', '当前桌面源配置无效', false, 'error');
+                        proxy.alert('系统提示', '当前桌面源配置无效', false, 'error', false, that.desk);
                     }
                 }
             } else {
                 console.warn('当前桌面尚未提供配置说明文件');
                 proxy.alert('系统提示', '当前桌面尚未提供配置说明文件!', function (res) {
 
-                }, 'error');
+                }, 'error', false, that.desk);
             }
         }
     },

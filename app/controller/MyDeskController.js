@@ -361,6 +361,15 @@ $(function () {
 window.onload = function () {
     setTimeout(() => {
         vm.initConfigDesk();//因为模板中使用了 vm 变量, 所以, 在 mounted 或 created 中调用会报错.
+
+        //如果是真正的第一次启动安装 => 自动将超桌设置为主屏幕壁纸
+        if (proxy.appVar._rfirst) {
+            proxy.alert('系统提示 ', 'Hi~ 这是你第一次使用 ideawall, 我们猜你可能需要一些引导~ (请确保你已连接网络)', (res) => {
+                if (res === 0) {
+                    $$.gotoBbs('teach');
+                }
+            }, false, ['好的', '不需要']);
+        }
     }, 800);
     vm.loading = false;
     top.vm.loadingTab = false;
@@ -392,12 +401,12 @@ var autoContextMenu = {
             click: function () {
                 var desk = localDeskModel.getDesk(desk_id);
                 if (!desk) {
-                    proxy.alert('系统提示', '桌面数据索引失败!', false, 'error');
+                    proxy.alert('系统提示', '桌面数据索引失败!', false, 'error', false, desk);
                     return;
                 }
                 var link = localDeskModel.getIndexPath(desk);
                 if (!link) {
-                    proxy.alert('系统提示', '当前桌面源配置无效', false, 'error');
+                    proxy.alert('系统提示', '当前桌面源配置无效', false, 'error', false, desk);
                     return;
                 }
                 proxy.ipc.send('ipc_window_open', 'preview', desk_id, {link: encodeURI(encodeURI(link))});
@@ -453,12 +462,12 @@ var autoContextMenu = {
             label: '预览',
             click: function () {
                 if (!desk) {
-                    proxy.alert('系统提示', '桌面数据索引失败!', false, 'error');
+                    proxy.alert('系统提示', '桌面数据索引失败!', false, 'error', false, desk);
                     return;
                 }
                 var link = localDeskModel.getIndexPath(desk);
                 if (!link) {
-                    proxy.alert('系统提示', '当前桌面源配置无效', false, 'error');
+                    proxy.alert('系统提示', '当前桌面源配置无效', false, 'error', false, desk);
                     return;
                 }
                 proxy.ipc.send('ipc_window_open', 'preview', desk_id, {link: encodeURI(encodeURI(link))});

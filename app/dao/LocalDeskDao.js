@@ -50,6 +50,8 @@ function LocalDeskDao(model) {
                 ename: zxx.ename
             })) {//未存在
                 this._self.insert(Model.field(model, zxx));
+            }else{//已存在 => 更新一些必要数据
+
             }
         }
         return this;

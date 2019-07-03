@@ -212,12 +212,13 @@ function NodeJsProxy() {
     };
 
     // 系统提示框
-    this.alert = function (message, detail, callback, type, btns) {
+    this.alert = function (message, detail, callback, type, btns, willprintObj) {
         message = message ? message : '系统提示';
         detail = detail ? detail : '消息体为空';
         type = type ? type : 'info';
         btns = btns ? btns : ['确定'];
         console.warn('Dialog::Alert::' + type + ' => [' + message + '] ' + detail);
+        willprintObj?console.debug(willprintObj):'';
         // if (this.appVar._platform !== 'darwin') {
         //     top.proxy.alertInWindows(message, detail, callback, type, btns);
         // } else {

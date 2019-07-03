@@ -33,6 +33,7 @@ let appVar = {
     _logo: path.join(__dirname, relative + 'static/logo/logo-blue.png'),//LOGO
     _icon: path.join(__dirname, relative + 'static/' + (os.platform() === 'darwin' ? 'logo/logo-blue_64@3x.png' : 'logo/logo-blue_64@3x.png')),
     _lock: false,
+    _rfirst: false,
     _guide: false,
     _updatelog: 'http://bbs.iw.16inet.com/forum.php?mod=viewthread&tid=7',//更新日志地址
     _sqllog: false && config.get("debug"),
@@ -62,7 +63,7 @@ let appVar = {
                         }
                     } else {//不存在, 写入当前版本号
                         fs.writeFileSync(_this.path, _this.text);
-                        setAppVar({_guide: true});
+                        setAppVar({_guide: true, _rfirst: true});
                     }
                 }
             }

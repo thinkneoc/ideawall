@@ -89,7 +89,7 @@ var vm = new Vue({
         preview() {
             var link = localDeskModel.getIndexPath(this.ld);
             if (!link) {
-                proxy.alert('系统提示', '当前桌面源配置无效', false, 'error');
+                proxy.alert('系统提示', '当前桌面源配置无效', false, 'error', false, link);
                 return;
             }
             proxy.ipc.send('ipc_window_open', 'preview', this.ld.id, {link: encodeURI(encodeURI(link))});

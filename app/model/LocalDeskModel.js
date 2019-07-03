@@ -3,6 +3,7 @@ const uuid = require('../core/UUID')();
 const datetime = require('../core/Datetime')();
 const Model = require('../core/Model')();
 const fs = require("fs");
+const path = require("path");
 
 const deviceMessage = require('../message/DeviceMessage')();
 
@@ -60,7 +61,7 @@ function LocalDeskModel(appVar) {
                 preview: '',
                 type: 'picture',
                 source_type: 'local',
-                source_val: appVar._viewpath + '/components/wall/Picture.html',
+                source_val: path.join(appVar._dirname, '/view/components/wall/Picture.html'),
                 params: '',
                 switch_media: 2,
                 switch_source: 1,
@@ -77,7 +78,7 @@ function LocalDeskModel(appVar) {
                 preview: '',
                 type: 'video',
                 source_type: 'local',
-                source_val: appVar._viewpath + '/components/wall/Video.html',
+                source_val: path.join(appVar._dirname, '/view/components/wall/Video.html'),
                 params: '',
                 switch_media: 2,
                 switch_source: 1,

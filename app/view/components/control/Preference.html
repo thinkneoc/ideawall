@@ -89,6 +89,7 @@
                             {{btnLoading.checkUpdate.bol?btnLoading.checkUpdate.text:btnLoading.checkUpdate.htext}}
                         </el-button>
                         <el-button size="mini" type="" @click="openUpdateLog" :loading="btnLoading.openUpdatelog.bol">
+                            <i class="el-icon-picture-outline-round" v-if="!btnLoading.openUpdatelog.bol"></i>
                             {{btnLoading.openUpdatelog.bol?btnLoading.openUpdatelog.text:btnLoading.openUpdatelog.htext}}
                         </el-button>
                         <el-button size="mini" @click="reboot" :loading="btnLoading.reboot.bol">
@@ -115,7 +116,8 @@
                     <img src="../../../assets/images/imac.png" alt=""
                          style="width: 350px;">
                     <div style="position:absolute;top: 15px;left: 15px;width: 320px;height: 180px;text-align: center;padding-top: 25px;">
-                        <img src="../../../static/logo/logo-blue_128.png" alt="" :class="'animated '+ animation.preview">
+                        <img src="../../../static/logo/logo-blue_128.png" alt=""
+                             :class="'animated '+ animation.preview">
                     </div>
                 </div>
                 <el-form class="desktop-animation-panel" ref="form" :model="preferences" style="margin-right: 20px;">
