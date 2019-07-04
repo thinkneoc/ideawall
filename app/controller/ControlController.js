@@ -530,32 +530,32 @@ $(function () {
             $('iframe').removeClass('exclude-events');
         });
 
-        //监听系统拖拽部分的双击事件
-        $(document).on('dblclick', (e) => {
-            if (moveFilter(e)) {//如果该div上的其他元素点击, 则忽略双击事件.
-                var win = proxy.appVar._controlwindow;
-                var dblAction = 'max';//max|min. //从设置中读取, 双击事件是最大化还是最小化.
-                if (dblAction === 'max') {
-                    if (proxy.appVar._platform !== 'darwin') {
-                        if (vm.winMaxsize) {
-                            win.unmaximize();//将最小化的窗口恢复为之前的状态. [restore()方法是: 将最小化的窗口恢复为之前的状态.]
-                            vm.winMaxsize = false;
-                        } else {
-                            win.maximize();//窗口最大化.
-                            vm.winMaxsize = true;
-                        }
-                    } else {
-                        if (win.isMaximized()) {//返回 boolean, 窗口是否最大化.
-                            win.restore();//win平台下使用这个恢复. 待测试.
-                        } else {
-                            win.maximize();//窗口最大化.
-                        }
-                    }
-                } else {//如果没有设置, 不响应双击事件
-                    win.minimize();//在某些平台上, 最小化的窗口将显示在Dock中.
-                }
-            }
-        });
+        // //监听系统拖拽部分的双击事件
+        // $(document).on('dblclick', (e) => {
+        //     if (moveFilter(e)) {//如果该div上的其他元素点击, 则忽略双击事件.
+        //         var win = proxy.appVar._controlwindow;
+        //         var dblAction = 'max';//max|min. //从设置中读取, 双击事件是最大化还是最小化.
+        //         if (dblAction === 'max') {
+        //             if (proxy.appVar._platform !== 'darwin') {
+        //                 if (vm.winMaxsize) {
+        //                     win.unmaximize();//将最小化的窗口恢复为之前的状态. [restore()方法是: 将最小化的窗口恢复为之前的状态.]
+        //                     vm.winMaxsize = false;
+        //                 } else {
+        //                     win.maximize();//窗口最大化.
+        //                     vm.winMaxsize = true;
+        //                 }
+        //             } else {
+        //                 if (win.isMaximized()) {//返回 boolean, 窗口是否最大化.
+        //                     win.restore();//win平台下使用这个恢复. 待测试.
+        //                 } else {
+        //                     win.maximize();//窗口最大化.
+        //                 }
+        //             }
+        //         } else {//如果没有设置, 不响应双击事件
+        //             win.minimize();//在某些平台上, 最小化的窗口将显示在Dock中.
+        //         }
+        //     }
+        // });
 
         function moveEvent(e) {
             win.setPosition(e.screenX - biasX, e.screenY - biasY);
