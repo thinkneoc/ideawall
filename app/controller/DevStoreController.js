@@ -67,6 +67,7 @@ var vm = new Vue({
                                     outPath: proxy.appVar._apath.dir.wall,//输出目录
                                 });
                                 var info = data.data.info;
+                                info.init_sign = '1';
                                 info.source_val = proxy.appVar._apath.dir.wall + '/' + info.source_val;//云端的源路径是相对路径, 没毛病
                                 info.date_get = datetime.now();//日期, 在这里生成, 也没毛病.
                                 //索引到数据库
