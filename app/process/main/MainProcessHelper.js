@@ -353,14 +353,16 @@ ipcMain.on('ipc_update_check', function (event) {
     autoUpdater.updateHandle(appVar);
 });
 
+if (appVar._platform === 'darwin') {
 //隐藏 dock
-ipcMain.on('ipc_preference_dock', function (event, nval) {
-    if (nval) {
-        App.dock.hide();
-    } else {
-        App.dock.show();
-    }
-});
+    ipcMain.on('ipc_preference_dock', function (event, nval) {
+        if (nval) {
+            App.dock.hide();
+        } else {
+            App.dock.show();
+        }
+    });
+}
 
 module.exports = {
     getWallWindow,

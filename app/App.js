@@ -63,10 +63,12 @@ if (!gotTheLock) {
         //关闭video画中画
         app.commandLine.appendSwitch('enable-picture-in-picture', 'disabled');
 
-        var pref_hidedock = preferenceModel.getByKey("hideDock");
-        pref_hidedock.value = JSON.parse(pref_hidedock.value);
-        if (pref_hidedock.value.enable) {
-            app.dock.hide();
+        if(appVar._platform === 'darwin') {
+            var pref_hidedock = preferenceModel.getByKey("hideDock");
+            pref_hidedock.value = JSON.parse(pref_hidedock.value);
+            if (pref_hidedock.value.enable) {
+                app.dock.hide();
+            }
         }
 
         /**
