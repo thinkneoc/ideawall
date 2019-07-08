@@ -1,7 +1,7 @@
 {
     "appname": "ideawall - 创意者桌面",
     "debug": true,
-    "publish": "2019.07.02",
+    "publish": "2019.07.09",
     "database": {
         "encrypt": false
     },

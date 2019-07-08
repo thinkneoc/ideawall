@@ -35,7 +35,7 @@ let appVar = {
     _lock: false,
     _rfirst: false,
     _guide: false,
-    _updatelog: 'http://bbs.iw.16inet.com/forum.php?mod=viewthread&tid=7',//更新日志地址
+    _updatelog: 'http://bbs.iw.16inet.com/forum.php?mod=viewthread&tid=8',//更新日志地址
     _sqllog: false && config.get("debug"),
     _dbath: workspace + "/data/iw.db",//本地数据库
     _apath: {
