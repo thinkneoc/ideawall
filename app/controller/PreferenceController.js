@@ -73,6 +73,9 @@ var vm = new Vue({
             if (preference.key === 'autoLaunch') {//开机自启动
                 this.setAutoLaunch(preference.value.enable);
             }
+            if (preference.key === 'hideDock') {//隐藏 Dock
+                proxy.ipc.send('ipc_preference_dock', nval);
+            }
             if (preference.sync === 2) {//同步到设备桌面
                 deviceMessage.syncUpdate();
             }

@@ -25,6 +25,7 @@ let model = new (function () {
             reboot: 1,//是否需要重新启动生效
             sync: 1,//是否需要同步到设备桌面
             explicit: 2,//是否显式
+            os: 'all',//系统平台限定
         },
     };
 });
@@ -39,6 +40,20 @@ let defaults = [
         sort: 15,
         reboot: 1,
         explicit: 2,
+        value: {
+            enable: true,
+        },
+    },
+    {
+        type: 'common',
+        formitem: 'switch',
+        key: 'hideDock',
+        name: '隐藏 Dock 栏图标',
+        description: '',
+        sort: 16,
+        reboot: 1,
+        explicit: 2,
+        os: 'darwin',
         value: {
             enable: true,
         },

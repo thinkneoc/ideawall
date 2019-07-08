@@ -63,6 +63,11 @@ if (!gotTheLock) {
         //关闭video画中画
         app.commandLine.appendSwitch('enable-picture-in-picture', 'disabled');
 
+        var pref_hidedock = preferenceModel.getByKey("hideDock");
+        pref_hidedock.value = JSON.parse(pref_hidedock.value);
+        if (pref_hidedock.value.enable) {
+            app.dock.hide();
+        }
 
         /**
          * 开机自启动鉴定[首次启动自动加入开机自启动]

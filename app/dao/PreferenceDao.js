@@ -17,6 +17,7 @@ const initscript = '' +
     '  "p_reboot" integer(1) DEFAULT 1,\n' +
     '  "p_sync" integer(1) DEFAULT 1,\n' +
     '  "p_explicit" integer(1) DEFAULT 2,\n' +
+    '  "p_os" text(10),\n' +
     '  CONSTRAINT "p_key_id" UNIQUE ("p_id" COLLATE NOCASE ASC) ON CONFLICT IGNORE\n' +
     ');';
 

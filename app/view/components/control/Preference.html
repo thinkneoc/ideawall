@@ -16,7 +16,7 @@
         <el-tabs v-model="menuInfoTab" tab-position="left" @tab-click="handleInfoTabClick">
             <el-tab-pane :disabled="lock" label="常规" name="common">
                 <el-form ref="form" :model="preferences">
-                    <template v-for="(item, index) in preferences">
+                    <template v-for="(item, index) in preferences" v-if="!(item.os && item.os !== proxy.appVar._platform)">
                         <el-form-item v-if="item.formitem == 'switch'">
                             <span slot="label">{{item.name}}<sup v-if="item.reboot == 2">*</sup></span>
                             <el-switch v-model="item.value.enable"

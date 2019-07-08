@@ -92,7 +92,7 @@ let appVar = {
     _version: App.getVersion(),//版本号
     _version_show: App.getVersion() + '  (Build ' + config.get('publish') + ')',//用于展示的版本信息
     _locale: App.getLocale(),//语言
-    _debug: (config.get("debug")), //debug模式
+    _debug: (config.get("debug") && !App.isPackaged), //debug模式: 开关 + 打包判定.
     _destory: false,//同于标识是否将要销毁.
     _previewId: '',//当前正在预览的桌面 id
     _previewwindow: {},//预览窗体
