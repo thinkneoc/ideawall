@@ -79,7 +79,7 @@
     },
     "win": {
       "target": "nsis",
-      "icon": "app/static/icon/256.ico"
+      "icon": "app/static/icon/128.ico"
     },
     "dmg": {
       "contents": [

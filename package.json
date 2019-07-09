@@ -1,8 +1,8 @@
 {
   "name": "ideawall",
   "author": "周曦 <1747128171@qq.com>",
-  "version": "1.2.2",
-  "description": "ideawall - 创意者桌面 [Window 版]",
+  "version": "1.2.1",
+  "description": "ideawall - 创意者桌面 [MacOs 版]",
   "private": true,
   "license": "",
   "main": "app/App.js",
@@ -37,8 +37,6 @@
   ],
   "build": {
     "compression": "maximum",
-    "npmRebuild": false,
-    "electronVersion": "5.0.4",
     "electronDownload": {
       "mirror": "https://npm.taobao.org/mirrors/electron/"
     },
@@ -46,7 +44,7 @@
     "productName": "ideawall",
     "copyright": "16inet.com",
     "directories": {
-      "output": "build/win32/"
+      "output": "build/mac/"
     },
     "files": [
       "**"
@@ -55,7 +53,7 @@
     "asarUnpack": [],
     "nsis": {
       "artifactName": "${name}_${version}_${os}${arch}.${ext}",
-      "uninstallDisplayName": "${name} ${version}",
+      "uninstallDisplayName": "${name}_${version}_${os}${arch}.${ext}",
       "shortcutName": "ideawall",
       "allowElevation": true,
       "runAfterFinish": true,
@@ -99,7 +97,7 @@
       ]
     },
     "mac": {
-      "icon": "app/static/icon/256.icns"
+      "icon": "app/static/icon/128.icns"
     },
     "publish": [
       {
