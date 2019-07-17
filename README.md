@@ -201,4 +201,5 @@ electron 胜在 API 丰富, 社区活跃. 但, 运行资源消耗稍高.
 - 其余服务器连接各项细节处理
 
 
+> The English version of README is not available for the time being because some services may not be accessible abroad.
 
