@@ -1,8 +1,6 @@
 # ideawall - 创意者桌面. 极致就是艺术. 
-
-### 下载
-gitee: [项目主页](https://gitee.com/istroy/ideawall)    [发行页](https://gitee.com/istroy/ideawall/releases)
-github: [项目主页](https://github.com/istroy/ideawall)    [发行页](https://github.com/istroy/ideawall/releases)
+ :fa-git-square:[项目主页](https://gitee.com/istroy/ideawall)    [发行页](https://gitee.com/istroy/ideawall/releases)
+ :fa-github:[项目主页](https://github.com/istroy/ideawall)    [发行页](https://github.com/istroy/ideawall/releases)
 
 ### 为什么没事蛋疼写这么一个东西?
 作为一个程序猿, 电脑桌面, 静态壁纸看久了没激情; 也用过很多动态壁纸软件, windows 下的雨滴桌面, 讲道理, 够强大, 但不够简洁明了. 火萤视频桌面, 越来越无厘头. 我特么只是想要一个动态桌面背景, 整那么多花里胡哨的. mac 下比较好用的就 iwall(收费). 讲真, 很强大, 几近完美. 但是, 明明可以有更棒的功能设计, 却没有. 并且, 它并没有 win 版. 
