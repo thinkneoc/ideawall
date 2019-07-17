@@ -23,7 +23,7 @@
 ### 还有一些废话~
 此项目为另外一个私人开发了一年的项目迁移改造, 提交记录可能并不明朗. 不要在意这些细节. 
 另外, 家里催婚, 女朋友不能辜负, 不能再耽误了, 所以最近, 准备找工作, 很忙, 可能不会提供更新. 有 bug 或心得和反馈, 请在客户端"反馈与支持"栏目提交, 或者在客户端内嵌社区中发帖. 
-特殊需求或拓展合作, 请Email @我. 
+特殊需求或拓展合作, 请Email @我(1747128171@qq.com). 
 有好工作推荐的也可以联系一下我, 本人主java. 全栈, 路很累, 不想再走了. 左手 electron, 跨桌面三端. 右手 uni, 跨七端. 要创业也够用了. 
 
 ### 技术选型
@@ -57,6 +57,13 @@ emmm... 自己写个 HTML, 打开 ideawall, 配置超桌, 右边高级配置, �
 
 ### 预览截图
 以下预览截图为 mac 1.2.1 版本截图情况, 详细差异自行斟酌.
+
+![整体预览](https://images.gitee.com/uploads/images/2019/0717/172927_de651da5_490173.png "1.png")
+![资源社区](https://images.gitee.com/uploads/images/2019/0717/172938_bb62f0d7_490173.png "2.png")
+![社区帖子](https://images.gitee.com/uploads/images/2019/0717/172947_8bc3755d_490173.png "2.5.png")
+![偏好设置-基础设置](https://images.gitee.com/uploads/images/2019/0717/172954_68397b1f_490173.png "3.png")
+![偏好设置-动画设置](https://images.gitee.com/uploads/images/2019/0717/173002_435adfbf_490173.png "4.png")
+![反馈与支持](https://images.gitee.com/uploads/images/2019/0717/173010_57c1250b_490173.png "5.png")
 
 
 ### 开发历程
