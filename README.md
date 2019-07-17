@@ -9,7 +9,7 @@
 (大神请绕道)
 
 - better-sqlite. 如果你后端转前端或全栈. 此项目中, 有完整编写封装的 sql 简易构建语法糖. 并且, 分层是 MVC (model + view + controller + dao + service), 只要你会 js, 懂点 es6, 无痛学习. 我相信你看一眼app目录结构会 会心一笑. 
-- electron-builder. 双 package.json, 完美打包设计. 不再有 electron 动不动打包 100M+ 的烦恼. 本项目目前打包 55M - 70M 左右. 其中, chromium 40M, sqlite 20M. 
+- electron-builder. 双 package.json结构, 完美打包设计. 不再有 electron 动不动打包 100M+ 的烦恼. 本项目目前打包 55M - 70M 左右. 其中, chromium 40M, sqlite 20M. 
 - element-ui 和 iview-ui, 兼容集成. 且, 为静态安装方式. 
 - electron 几近完整的 API 学习分享和体验. 
 - log4js.
@@ -19,12 +19,6 @@
 - 自动更新的设计策略.
 - 多 package.json 的跨平台开发方式.
 ...
-
-### 还有一些废话~
-此项目为另外一个私人开发了一年的项目迁移改造, 提交记录可能并不明朗. 不要在意这些细节. 
-另外, 家里催婚, 女朋友不能辜负, 不能再耽误了, 所以最近, 准备找工作, 很忙, 可能不会提供更新. 有 bug 或心得和反馈, 请在客户端"反馈与支持"栏目提交, 或者在客户端内嵌社区中发帖. 
-特殊需求或拓展合作, 请Email @我(1747128171@qq.com). 
-有好工作推荐的也可以联系一下我, 本人主java. 全栈, 路很累, 不想再走了. 左手 electron, 跨桌面三端. 右手 uni, 跨七端. 要创业也够用了. 
 
 ### 技术选型
 跨平台桌面软件, 并且要使用前端技术达到低成本高效益. 能满足条件的, 目前只有 electron, nw.js, 以及有道的 hex. 
@@ -61,7 +55,7 @@ emmm... 自己写个 HTML, 打开 ideawall, 配置超桌, 右边高级配置, �
 ![整体预览](https://images.gitee.com/uploads/images/2019/0717/172927_de651da5_490173.png "1.png")
 ![资源社区](https://images.gitee.com/uploads/images/2019/0717/172938_bb62f0d7_490173.png "2.png")
 ![社区帖子](https://images.gitee.com/uploads/images/2019/0717/172947_8bc3755d_490173.png "2.5.png")
-![偏好设置-基础设置](https://images.gitee.com/uploads/images/2019/0717/172954_68397b1f_490173.png "3.png")
+![偏好设置-常规设置](https://images.gitee.com/uploads/images/2019/0717/173410_9c23c602_490173.png "30.png")
 ![偏好设置-动画设置](https://images.gitee.com/uploads/images/2019/0717/173002_435adfbf_490173.png "4.png")
 ![反馈与支持](https://images.gitee.com/uploads/images/2019/0717/173010_57c1250b_490173.png "5.png")
 
@@ -233,6 +227,13 @@ emmm... 自己写个 HTML, 打开 ideawall, 配置超桌, 右边高级配置, �
 - 伴生开放平台
 - 其余服务器连接各项细节处理
 - 插件模式设计, 实现雨滴的功能, 按需取用(其实就是在图标层上加一个透明层, 可以搞, 但是目前是没必要的). 
+
+
+### 还有一些废话~
+此项目为另外一个私人开发了一年的项目迁移改造, 提交记录可能并不明朗. 不要在意这些细节. 
+另外, 家里催婚, 女朋友不能辜负, 不能再耽误了, 所以最近, 准备找工作, 很忙, 可能不会提供更新. 有 bug 或心得和反馈, 请在客户端"反馈与支持"栏目提交, 或者在客户端内嵌社区中发帖. 
+特殊需求或拓展合作, 请Email @我(1747128171@qq.com). 
+有好工作推荐的也可以联系一下我, 本人主java. 全栈, 路很累, 不想再走了. 左手 electron, 跨桌面三端. 右手 uni, 跨七端. 要创业也够用了. 
 
 
 
