@@ -1,4 +1,3 @@
- :fa-git-square: [项目主页](https://gitee.com/istroy/ideawall)    [发行页](https://gitee.com/istroy/ideawall/releases)    :fa-github: [项目主页](https://github.com/istroy/ideawall)    [发行页](https://github.com/istroy/ideawall/releases)
 # ideawall - 创意者桌面. 极致就是艺术. 
 
 [下载地址](https://gitee.com/istroy/ideawall/releases)
