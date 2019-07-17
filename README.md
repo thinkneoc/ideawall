@@ -8,7 +8,7 @@
 ### 本项目有哪些值得学习的地方?
 (大神请绕道)
 
-- better-sqlite. 如果你后端转前端或全栈. 此项目中, 有完整编写封装的 sql 简易构建语法糖. 并且, 分层是 MVC (model + view + controller + dao + service), 只要你会 js, 懂点 es6, 无痛学习.
+- better-sqlite. 如果你后端转前端或全栈. 此项目中, 有完整编写封装的 sql 简易构建语法糖. 并且, 分层是 MVC (model + view + controller + dao + service), 只要你会 js, 懂点 es6, 无痛学习. 我相信你看一眼app目录结构会 会心一笑. 
 - electron-builder. 双 package.json, 完美打包设计. 不再有 electron 动不动打包 100M+ 的烦恼. 本项目目前打包 55M - 70M 左右. 其中, chromium 40M, sqlite 20M. 
 - element-ui 和 iview-ui, 兼容集成. 且, 为静态安装方式. 
 - electron 几近完整的 API 学习分享和体验. 
