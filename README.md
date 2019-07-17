@@ -5,6 +5,22 @@
 
 所以, 我要做一个跨平台的, 完美的, 桌面层软件工具. 就算自己用, 这时间也花得值. 
 
+### 本项目有哪些值得学习的地方?
+(大神请绕道)
+
+- better-sqlite. 如果你后端转前端或全栈. 此项目中, 有完整编写封装的 sql 简易构建语法糖. 并且, 分层是 MVC (model + view + controller + dao + service), 只要你会 js, 懂点 es6, 无痛学习.
+- electron-builder. 双 package.json, 完美打包设计. 不再有 electron 动不动打包 100+M 的烦恼. 本项目目前打包 55M - 70M 左右. 其中, chromium 40M, sqlite 20M. 
+- element-ui 和 iview-ui, 兼容集成. 且, 为静态安装方式. 
+- electron 几近完整的 API 学习分享和体验. 
+- log4js.
+- 客户端邮件发送(Tip: 仅主进程调用). 
+- 压缩打包和解压.
+- 开机自启动.
+- 自动更新的设计策略.
+- 多 package.json 的跨平台开发方式.
+...
+
+
 ### 技术选型
 跨平台桌面软件, 并且要使用前端技术达到低成本高效益. 能满足条件的, 目前只有 electron, nw.js, 以及有道的 hex. 
 hex 不说了, 不完善.
