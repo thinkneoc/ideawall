@@ -57,6 +57,8 @@ emmm... 自己写个 HTML, 打开 ideawall, 配置超桌, 右边高级配置, �
 
 ![整体预览](https://images.gitee.com/uploads/images/2019/0717/172927_de651da5_490173.png "1.png")
 ![超桌预览](https://images.gitee.com/uploads/images/2019/0718/145042_f0e06fa4_490173.png "6.png")
+![我的桌面](https://images.gitee.com/uploads/images/2019/0718/225626_89ac644c_490173.png "8.png")
+![桌面商店](https://images.gitee.com/uploads/images/2019/0718/225433_3d0a4814_490173.png "7.png")
 ![资源社区](https://images.gitee.com/uploads/images/2019/0717/172938_bb62f0d7_490173.png "2.png")
 ![社区帖子](https://images.gitee.com/uploads/images/2019/0717/172947_8bc3755d_490173.png "2.5.png")
 ![偏好设置-常规设置](https://images.gitee.com/uploads/images/2019/0717/173410_9c23c602_490173.png "30.png")
