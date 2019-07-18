@@ -47,6 +47,8 @@ electron 胜在 API 丰富, 社区活跃. 但, 运行资源消耗稍高.
 ### 极客用法
 emmm... 自己写个 HTML, 打开 ideawall, 配置超桌, 右边高级配置, 桌面源选本地桌面源, 然后, 选择你的 HTML 文件. 最后, 超桌上右键, 为主屏幕启用. ojbk. 
 
+还有一种, 选超桌, 右边高级配置, 远程桌面源, 直接填写网址, 比如说, 必应, 然后, 你的桌面就是必应的每日一图了~ 简单粗暴~
+
 ### 开源声明
 此项目为产品级, 非脚手架工具级项目, 采用  **GPL 协议** , 禁止闭源商业发布, 仅供学习参考, 禁止  **未经作者许可**  擅自商业运营和各类证书申请, 违者必究. 
 
@@ -54,6 +56,7 @@ emmm... 自己写个 HTML, 打开 ideawall, 配置超桌, 右边高级配置, �
 以下预览截图为 mac 1.2.1 版本截图情况, 详细差异自行斟酌.
 
 ![整体预览](https://images.gitee.com/uploads/images/2019/0717/172927_de651da5_490173.png "1.png")
+![超桌预览](https://images.gitee.com/uploads/images/2019/0718/145042_f0e06fa4_490173.png "6.png")
 ![资源社区](https://images.gitee.com/uploads/images/2019/0717/172938_bb62f0d7_490173.png "2.png")
 ![社区帖子](https://images.gitee.com/uploads/images/2019/0717/172947_8bc3755d_490173.png "2.5.png")
 ![偏好设置-常规设置](https://images.gitee.com/uploads/images/2019/0717/173410_9c23c602_490173.png "30.png")
