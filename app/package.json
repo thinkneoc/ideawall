@@ -29,7 +29,7 @@
     "auto-launch": "^5.0.5",
     "better-sqlite3": "^5.4.0",
     "log4js": "^3.0.6",
-    "nodemailer": "^6.2.1",
+    "nodemailer": "^6.4.16",
     "nodemailer-smtp-transport": "^2.7.4",
     "unirest": "^0.5.1",
     "request": "^2.87.0",
