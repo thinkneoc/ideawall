@@ -1,5 +1,11 @@
 # ideawall - 创意者桌面. 极致就是艺术. 
 
+##############################################
+
+此项目已关闭. 服务端已停机. 项目代码供研读, 相互学习. (给您带来不便之处, 敬请谅解)
+
+##############################################
+
 下载地址: &nbsp;&nbsp;[Mac OSX](https://github.com/istroy/ideawall/releases/download/1.2.1.20190709/ideawall-1.2.1.dmg.zip)&nbsp;&nbsp;&nbsp;&nbsp;[Windows 7+](https://github.com/istroy/ideawall/releases/download/1.2.1.20190709/ideawall_1.2.1_win.exe)
 
 ### 为什么没事蛋疼写这么一个东西?
