@@ -28,7 +28,7 @@
     "async": "^2.6.1",
     "auto-launch": "^5.0.5",
     "better-sqlite3": "^5.4.0",
-    "log4js": "^3.0.6",
+    "log4js": "^6.4.0",
     "nodemailer": "^6.2.1",
     "nodemailer-smtp-transport": "^2.7.4",
     "unirest": "^0.5.1",
